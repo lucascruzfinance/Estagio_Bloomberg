@@ -6,7 +6,7 @@ Números citados abaixo vêm da base carregada (dados públicos até 27/10/2026,
 
 ## Antes de entrar na sala (10 min)
 
-1. `python scripts/demo.py` e abrir http://127.0.0.1:4173 (selo **DEMO** no topo indica base congelada).
+1. `python scripts/demo.py` e abrir http://127.0.0.1:4173 (selo **DEMO** no topo indica base congelada). Não substitua o `.env` desta máquina pelo `.env.example`: ele guarda a porta e a senha do banco local.
 2. Tela em 1366×768 ou maior; zoom do navegador em 100%.
 3. Abrir uma vez Ranking, Mapa e Conta 360 da Verde para aquecer o cache.
 4. Plano B sem internet: o mapa mostra os escritórios sobre fundo liso com aviso; todo o resto funciona. Se a API cair, rodar o mesmo comando de novo (sobe do zero em ~2 min).
@@ -19,7 +19,7 @@ Números citados abaixo vêm da base carregada (dados públicos até 27/10/2026,
    - Ranking (tecla `1`): 22 unidades das 12 contas; os bancos aparecem por mesa.
    - Selecionar **Verde Asset Management**: fit 64, timing 38, confiança 86. Por quê: 6 famílias de estratégia, 28,6% das estratégias com mandato exterior, mas captação líquida de −R$ 2,2 bi em 12 meses. Telefone e endereço vêm do cadastro da CVM, com link.
    - Mapa (tecla `2`): corredor da Faria Lima; ponto cheio é endereço exato, anel é aproximado.
-4. **Fecho (15 s).** Tudo tem fonte e data; o que não sei aparece como lacuna. O próximo passo é validar o ranking com vocês e medir se reduz o tempo de preparação.
+4. **Limitações e próximo passo (15 s).** Os pesos são premissas: ainda não há dado de conversão para calibrar. As mesas dos bancos são hipóteses, e os vínculos entre entidades precisam de revisão humana. O próximo passo é validar o ranking com vocês num piloto de 4 semanas e medir se reduz o tempo de preparação.
 
 ## Versão de 5 minutos
 

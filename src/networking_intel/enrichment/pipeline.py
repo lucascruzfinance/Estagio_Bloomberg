@@ -44,6 +44,7 @@ from networking_intel.enrichment.returns import (
 from networking_intel.enrichment.sources import get_source
 from networking_intel.etl.schemas import load_pilot_csv
 from networking_intel.etl.transform import stable_hash, transform_accounts
+from networking_intel.universe import ifdata
 
 logger = structlog.get_logger("networking_intel.enrichment.pipeline")
 
@@ -61,9 +62,6 @@ ROLE_EMAIL_KEYWORDS = (
     "ri",
     "risco",
     "ouvidoria",
-)
-IFDATA_URL = (
-    "https://olinda.bcb.gov.br/olinda/servico/IFDATA/versao/v1/odata/IfDataCadastro(AnoMes=@AnoMes)"
 )
 RULES = (
     "Fundos ligados a contas apenas por igualdade exata de CNPJ do gestor "
@@ -188,19 +186,19 @@ def fetch_daily_reports(
 
 
 def try_ifdata(ctx: RunContext) -> SourceRun:
-    """IF.data cadastro for the latest available quarter (bank identity cross-check)."""
-    quarters = [p for p in months_back(ctx.today, 12) if p.endswith(("03", "06", "09", "12"))]
-    errors = []
-    for period in reversed(quarters[-3:]):
-        # OData alias parameters ('@', '$') must stay unescaped in the query string.
-        url = f"{IFDATA_URL}?@AnoMes={period}&$format=json"
-        try:
-            artifact = ctx.fetcher.fetch("bcb_ifdata_cadastro", url, suffix=".json")
-        except SourceUnavailableError as error:
-            errors.append(f"{period}: {error.reason}")
-            continue
-        return SourceRun("bcb_ifdata_cadastro", "ok", artifact.fetched_at, None, 1, period)
-    return SourceRun("bcb_ifdata_cadastro", "unavailable", ctx.run_at, None, 0, "; ".join(errors))
+    """IF.data cadastro for the latest published quarter (bank identity cross-check).
+
+    A quarter not yet published answers HTTP 200 with an empty list: that is a
+    missing period, so the probe moves to the previous quarter.
+    """
+    try:
+        found, skipped = ifdata.latest_cadastro(ctx.fetcher, ctx.today)
+    except ifdata.IfDataUnavailableError as error:
+        return SourceRun(
+            "bcb_ifdata_cadastro", "unavailable", ctx.run_at, None, 0, "; ".join(error.reasons)
+        )
+    note = "; ".join([f"período {found.period}", *skipped])
+    return SourceRun("bcb_ifdata_cadastro", "ok", found.artifact.fetched_at, None, 1, note)
 
 
 def _dedup_class_nav(rows: Iterable[dict[str, Any]]) -> dict[str, float]:

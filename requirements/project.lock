@@ -47,6 +47,8 @@ h11==0.16.0
     # via
     #   httpcore
     #   uvicorn
+h3==4.5.0
+    # via -r project.in
 httpcore==1.0.9
     # via httpx
 httptools==0.9.0

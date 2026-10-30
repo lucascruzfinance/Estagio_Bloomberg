@@ -72,6 +72,73 @@ SOURCES: dict[str, SourceSpec] = {
             rate_limit_seconds=1.0,
         ),
         SourceSpec(
+            source_id="bcb_ifdata_valores",
+            publisher="Banco Central do Brasil",
+            title="IF.data — valores por relatório (Olinda)",
+            base_url="https://olinda.bcb.gov.br/olinda/servico/IFDATA/versao/v1/odata/",
+            data_nature="real",
+            licence="Dados abertos do Banco Central do Brasil",
+            attribution="Fonte: Banco Central do Brasil — IF.data",
+            max_age=timedelta(days=200),
+            rate_limit_seconds=1.0,
+        ),
+        SourceSpec(
+            source_id="bcb_sgs",
+            publisher="Banco Central do Brasil",
+            title="SGS — Sistema Gerenciador de Séries Temporais",
+            base_url="https://api.bcb.gov.br/dados/serie/",
+            data_nature="real",
+            licence="Dados abertos do Banco Central do Brasil",
+            attribution="Fonte: Banco Central do Brasil — SGS",
+            max_age=timedelta(days=3),
+            rate_limit_seconds=1.0,
+        ),
+        *(
+            SourceSpec(
+                source_id=source_id,
+                publisher="CVM",
+                title=title,
+                base_url=url,
+                data_nature="real",
+                licence="Open Database License (ODbL) — Portal de Dados Abertos da CVM",
+                attribution="Fonte: CVM — Dados Abertos",
+                max_age=timedelta(days=max_age_days),
+                rate_limit_seconds=1.0,
+            )
+            for source_id, title, url, max_age_days in (
+                (
+                    "cvm_cad_intermed",
+                    "Cadastro de Intermediários",
+                    "https://dados.cvm.gov.br/dados/INTERMED/CAD/DADOS/cad_intermed.zip",
+                    7,
+                ),
+                (
+                    "cvm_cad_fi_hist",
+                    "Cadastro de Fundos — histórico (pré-RCVM 175)",
+                    "https://dados.cvm.gov.br/dados/FI/CAD/DADOS/cad_fi_hist.zip",
+                    30,
+                ),
+                (
+                    "cvm_cda",
+                    "Composição e Diversificação das Aplicações (CDA)",
+                    "https://dados.cvm.gov.br/dados/FI/DOC/CDA/DADOS/",
+                    30,
+                ),
+                (
+                    "cvm_perfil_mensal",
+                    "Perfil Mensal de Fundos",
+                    "https://dados.cvm.gov.br/dados/FI/DOC/PERFIL_MENSAL/DADOS/",
+                    30,
+                ),
+                (
+                    "cvm_lamina",
+                    "Lâmina de Informações Essenciais",
+                    "https://dados.cvm.gov.br/dados/FI/DOC/LAMINA/DADOS/",
+                    30,
+                ),
+            )
+        ),
+        SourceSpec(
             source_id="osm_nominatim",
             publisher="OpenStreetMap Foundation",
             title="Nominatim geocoding",

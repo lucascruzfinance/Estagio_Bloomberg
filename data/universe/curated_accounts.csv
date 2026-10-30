@@ -1,0 +1,37 @@
+﻿account_key,display_name,wave,side,segment,rationale,primary_cnpj,entities,approval_status
+org-spx-capital,SPX Capital,pilot,buy_side,gestora independente,Conta do piloto (Prompts 1 a 7).,12330774000160,3,pending_human_review
+org-verde-asset,Verde Asset Management,pilot,buy_side,gestora independente,Conta do piloto (Prompts 1 a 7).,19749539000176,2,pending_human_review
+org-kapitalo,Kapitalo Investimentos,pilot,buy_side,gestora independente,Conta do piloto (Prompts 1 a 7).,11180009000148,3,pending_human_review
+org-ibiuna,Ibiúna Investimentos,pilot,buy_side,gestora independente,Conta do piloto (Prompts 1 a 7).,11918575000104,4,pending_human_review
+org-kinea,Kinea Investimentos,pilot,buy_side,gestora de grupo financeiro,Conta do piloto (Prompts 1 a 7).,08604187000144,2,pending_human_review
+org-patria,Pátria Investimentos,pilot,buy_side,gestora independente,Conta do piloto (Prompts 1 a 7).,12461756000117,6,pending_human_review
+org-vinci-compass,Vinci Compass,pilot,buy_side,gestora independente,Conta do piloto (Prompts 1 a 7).,11077576000173,14,pending_human_review
+org-constellation,Constellation Asset Management,pilot,buy_side,gestora independente,Conta do piloto (Prompts 1 a 7).,06182127000155,1,pending_human_review
+org-jive,Jive Investments,pilot,buy_side,gestora independente,Conta do piloto (Prompts 1 a 7).,12600032000107,4,pending_human_review
+org-portofino,Portofino Gestão de Recursos,pilot,buy_side,multi-family office,Conta do piloto (Prompts 1 a 7).,17590181000156,3,pending_human_review
+org-btg-pactual,BTG Pactual,pilot,sell_side,banco,Conta do piloto (Prompts 1 a 7).,09631542000137,5,pending_human_review
+org-itau-bba,Itaú BBA,pilot,sell_side,banco,Conta do piloto (Prompts 1 a 7).,60701190000104,1,pending_human_review
+w2-itau-asset,Itaú Asset Management,wave2,buy_side,Asset de banco (multiativo),"Uma das maiores gestoras do país pelo PL no registro da CVM; separa o buy side do Itaú BBA, que segue no piloto como banco por mesa.",40430971000196,1,pending_human_review
+w2-xp-asset,XP Asset Management,wave2,buy_side,"Plataforma multiestratégia (FI, FII, FIDC)","Família de gestoras do grupo XP na JK; ações, macro, crédito, imobiliário e alocação.",16789525000198,4,pending_human_review
+w2-santander-asset,Santander Asset Management,wave2,buy_side,Asset de banco global,Braço de gestão de banco global na JK; conta separada do Banco Santander (sell side).,10231177000152,1,pending_human_review
+w2-safra-asset,Safra Asset Management,wave2,buy_side,Asset de banco (família de fundos),Família de fundos grande na Paulista; gestora e administradora no mesmo CNPJ.,65913436000117,1,pending_human_review
+w2-ubs-asset,UBS Asset Management Brasil,wave2,buy_side,Asset global,Gestora global na Faria Lima; a corretora do grupo é administradora fiduciária.,11519438000105,2,pending_human_review
+w2-bnp-asset,BNP Paribas Asset Management Brasil,wave2,buy_side,Asset global,Gestora global de renda fixa e multimercado na JK.,02562663000125,1,pending_human_review
+w2-absolute,Absolute Investimentos,wave2,buy_side,Macro e crédito independente,PL elevado entre as gestoras independentes no registro da CVM; macro e crédito privado.,17285755000182,3,pending_human_review
+w2-genoa,Genoa Capital,wave2,buy_side,Macro independente,Gestora macro independente na JK.,34276448000154,1,pending_human_review
+w2-legacy,Legacy Capital,wave2,buy_side,Macro independente,Gestora macro independente na Faria Lima.,28674641000140,1,pending_human_review
+w2-capitania,Capitânia,wave2,buy_side,"Crédito privado, FII e alternativos",Crédito privado e imobiliário na Faria Lima; precificação de crédito é workflow central.,41793345000127,6,pending_human_review
+w2-vinland,Vinland Capital,wave2,buy_side,Crédito e macro,Crédito privado e macro; três entidades com a mesma marca no Itaim.,07341777000169,3,pending_human_review
+w2-quadra,Quadra Capital,wave2,buy_side,Crédito estruturado e FIDC,Crédito estruturado com FIDC; precificação e dados de crédito.,17707098000114,1,pending_human_review
+w2-guepardo,Guepardo Investimentos,wave2,buy_side,Ações fundamentalista,Ações long only na Faria Lima; research e screening.,07078144000100,1,pending_human_review
+w2-giant-steps,Giant Steps Capital,wave2,buy_side,Quant,Gestora quantitativa na Faria Lima; dados em volume e API.,17021922000188,1,pending_human_review
+w2-opportunity,Opportunity,wave2,buy_side,Ações e macro (RJ),"Casa tradicional do Leblon com ações, macro e private equity.",01608570000121,5,pending_human_review
+w2-arx,ARX Investimentos,wave2,buy_side,Multiestratégia (RJ),Multiestratégia no Leblon.,04408128000140,1,pending_human_review
+w2-dynamo,Dynamo,wave2,buy_side,Ações long only (RJ),Ações long only no Leblon; research fundamentalista.,72116353000162,3,pending_human_review
+w2-truxt,Truxt Investimentos,wave2,buy_side,Macro (RJ),Macro no Leblon.,23890968000136,1,pending_human_review
+w2-santander-bank,Banco Santander (Brasil),wave2,sell_side,Banco múltiplo por mesa,"Banco global na JK; tesouraria, sales & trading, câmbio, research e risco; corretoras do grupo.",90400888000142,4,pending_human_review
+w2-bradesco-bbi,Bradesco BBI,wave2,sell_side,Banco de investimento e corretora,Banco de investimento do Bradesco (Osasco) e corretora do grupo na JK.,06271464000119,3,pending_human_review
+w2-safra-bank,Banco Safra,wave2,sell_side,Banco múltiplo por mesa,Tesouraria e câmbio na Paulista; conta separada da Safra Asset.,58160789000128,3,pending_human_review
+w2-xp-investimentos,XP Investimentos (corretora e banco),wave2,sell_side,Corretora e banco,"Corretora e banco com sede em Botafogo; execução, distribuição e research.",02332886000104,4,pending_human_review
+w2-br-partners,BR Partners,wave2,sell_side,Banco de investimento boutique,Banco de investimento independente na Faria Lima 3732.,13220493000117,1,pending_human_review
+w2-bny-mellon,BNY Mellon (administração e custódia),wave2,sell_side,Administrador fiduciário e custodiante,Administrador fiduciário e custodiante de milhares de fundos; precificação e dados de referência.,02201501000161,2,pending_human_review

@@ -1,0 +1,398 @@
+# Onda 2 de contas curadas (Prompt 8): 24 contas propostas em prompts_codex.md, seção 5.
+#
+# Regras (as mesmas do registro do piloto, data/reference/identity_registry.yaml):
+# - Cada CNPJ foi localizado em 30/10/2026 no Cadastro de Administradores de Carteira
+#   (cad_adm_cart_pj.csv) ou no Cadastro de Intermediários (cad_intermed.csv) da CVM,
+#   ativo, e é validado pelos dígitos verificadores e pela presença no cadastro a cada
+#   execução do pipeline do universo.
+# - Nenhum vínculo vem de similaridade de nome. A marca comum no nome levou à busca; o
+#   vínculo proposto se apoia em razão social, endereço e conglomerado do IF.data.
+# - Tudo fica `pending_human_review` até um vendedor ou analista aprovar o grupo.
+# - side: buy_side (gestoras) ou sell_side (bancos, corretoras, administradores).
+version: wave2-v1
+as_of_date: "2026-10-30"
+accounts:
+  w2-itau-asset:
+    display_name: Itaú Asset Management
+    side: buy_side
+    segment: Asset de banco (multiativo)
+    rationale: Uma das maiores gestoras do país pelo PL no registro da CVM; separa o buy side do Itaú BBA, que segue no piloto como banco por mesa.
+    primary_cnpj: "40430971000196"
+    entities:
+      - cnpj: "40430971000196"
+        relation: primary_manager
+        relation_evidence: "Itaú Unibanco Asset Management Ltda., Av. Brig. Faria Lima 3500 (cad_adm_cart)."
+        approval_status: pending_human_review
+  w2-xp-asset:
+    display_name: XP Asset Management
+    side: buy_side
+    segment: Plataforma multiestratégia (FI, FII, FIDC)
+    rationale: Família de gestoras do grupo XP na JK; ações, macro, crédito, imobiliário e alocação.
+    primary_cnpj: "16789525000198"
+    entities:
+      - cnpj: "16789525000198"
+        relation: primary_manager
+        relation_evidence: "XP Vista Asset Management Ltda., Av. Pres. Juscelino Kubitschek (cad_adm_cart)."
+        approval_status: pending_human_review
+      - cnpj: "37918829000188"
+        relation: affiliate_manager
+        relation_evidence: "XP Allocation Asset Management Ltda., mesmo logradouro (JK)."
+        approval_status: pending_human_review
+      - cnpj: "07625200000189"
+        relation: affiliate_manager
+        relation_evidence: "XP Gestão de Recursos Ltda., mesmo logradouro (JK)."
+        approval_status: pending_human_review
+      - cnpj: "15289957000177"
+        relation: affiliate_manager
+        relation_evidence: "XP Advisory Gestão de Recursos Ltda., mesmo logradouro (JK)."
+        approval_status: pending_human_review
+  w2-santander-asset:
+    display_name: Santander Asset Management
+    side: buy_side
+    segment: Asset de banco global
+    rationale: Braço de gestão de banco global na JK; conta separada do Banco Santander (sell side).
+    primary_cnpj: "10231177000152"
+    entities:
+      - cnpj: "10231177000152"
+        relation: primary_manager
+        relation_evidence: "Santander Brasil Gestão de Recursos Ltda., Av. Pres. Juscelino Kubitschek (cad_adm_cart)."
+        approval_status: pending_human_review
+  w2-safra-asset:
+    display_name: Safra Asset Management
+    side: buy_side
+    segment: Asset de banco (família de fundos)
+    rationale: Família de fundos grande na Paulista; gestora e administradora no mesmo CNPJ.
+    primary_cnpj: "65913436000117"
+    entities:
+      - cnpj: "65913436000117"
+        relation: primary_manager
+        relation_evidence: "Safra Asset Corretora de Títulos e Valores Mobiliários S.A., Av. Paulista 2100 (cad_adm_cart, gestor e administrador)."
+        approval_status: pending_human_review
+  w2-ubs-asset:
+    display_name: UBS Asset Management Brasil
+    side: buy_side
+    segment: Asset global
+    rationale: Gestora global na Faria Lima; a corretora do grupo é administradora fiduciária.
+    primary_cnpj: "11519438000105"
+    entities:
+      - cnpj: "11519438000105"
+        relation: primary_manager
+        relation_evidence: "UBS Brasil Administradora de Valores Mobiliários Ltda., Av. Brig. Faria Lima 4440 (cad_adm_cart, gestor)."
+        approval_status: pending_human_review
+      - cnpj: "61809182000130"
+        relation: affiliate_manager
+        relation_evidence: "UBS (Brasil) Corretora de Valores S.A., administradora fiduciária (cad_adm_cart); confirmar se pertence à mesma conta."
+        approval_status: pending_human_review
+  w2-bnp-asset:
+    display_name: BNP Paribas Asset Management Brasil
+    side: buy_side
+    segment: Asset global
+    rationale: Gestora global de renda fixa e multimercado na JK.
+    primary_cnpj: "02562663000125"
+    entities:
+      - cnpj: "02562663000125"
+        relation: primary_manager
+        relation_evidence: "BNP Paribas Asset Management Brasil Ltda., Av. Pres. Juscelino Kubitschek (cad_adm_cart)."
+        approval_status: pending_human_review
+  w2-absolute:
+    display_name: Absolute Investimentos
+    side: buy_side
+    segment: Macro e crédito independente
+    rationale: PL elevado entre as gestoras independentes no registro da CVM; macro e crédito privado.
+    primary_cnpj: "17285755000182"
+    entities:
+      - cnpj: "17285755000182"
+        relation: primary_manager
+        relation_evidence: "Absolute Gestão de Investimentos Ltda., Rua Iguatemi 151 (cad_adm_cart)."
+        approval_status: pending_human_review
+      - cnpj: "47243769000102"
+        relation: affiliate_manager
+        relation_evidence: "Absolute Crédito Gestão de Investimentos Ltda., mesmo prédio (Rua Iguatemi 151)."
+        approval_status: pending_human_review
+      - cnpj: "14351454000111"
+        relation: affiliate_manager
+        relation_evidence: "Absolute Dhama Gestão de Investimentos Ltda., mesmo prédio (Rua Iguatemi 151)."
+        approval_status: pending_human_review
+  w2-genoa:
+    display_name: Genoa Capital
+    side: buy_side
+    segment: Macro independente
+    rationale: Gestora macro independente na JK.
+    primary_cnpj: "34276448000154"
+    entities:
+      - cnpj: "34276448000154"
+        relation: primary_manager
+        relation_evidence: "Genoa Capital Gestora de Recursos Ltda., Av. Juscelino Kubitschek 1600 (cad_adm_cart)."
+        approval_status: pending_human_review
+  w2-legacy:
+    display_name: Legacy Capital
+    side: buy_side
+    segment: Macro independente
+    rationale: Gestora macro independente na Faria Lima.
+    primary_cnpj: "28674641000140"
+    entities:
+      - cnpj: "28674641000140"
+        relation: primary_manager
+        relation_evidence: "Legacy Capital Gestora de Recursos Ltda., Av. Brig. Faria Lima 4221 (cad_adm_cart)."
+        approval_status: pending_human_review
+  w2-capitania:
+    display_name: Capitânia
+    side: buy_side
+    segment: Crédito privado, FII e alternativos
+    rationale: Crédito privado e imobiliário na Faria Lima; precificação de crédito é workflow central.
+    primary_cnpj: "41793345000127"
+    entities:
+      - cnpj: "41793345000127"
+        relation: primary_manager
+        relation_evidence: "Capitania Capital S.A., Av. Brig. Faria Lima (cad_adm_cart)."
+        approval_status: pending_human_review
+      - cnpj: "04274010000176"
+        relation: affiliate_manager
+        relation_evidence: "Capitânia Invest S/A, Av. Brig. Faria Lima (cad_adm_cart)."
+        approval_status: pending_human_review
+      - cnpj: "41475648000100"
+        relation: affiliate_manager
+        relation_evidence: "Capitânia Alternatives S/A, Av. Brig. Faria Lima, Torre Norte, 3º andar."
+        approval_status: pending_human_review
+      - cnpj: "41777833000140"
+        relation: affiliate_manager
+        relation_evidence: "Capitania Prev S.A., mesmo endereço (Torre Norte, 3º andar)."
+        approval_status: pending_human_review
+      - cnpj: "30949716000109"
+        relation: affiliate_manager
+        relation_evidence: "Capitânia HBC Consultoria e Gestão S.A., Av. Brig. Faria Lima 1485."
+        approval_status: pending_human_review
+      - cnpj: "66266698000108"
+        relation: affiliate_manager
+        relation_evidence: "Capitânia Special Situations Ltda., Av. Brig. Faria Lima."
+        approval_status: pending_human_review
+  w2-vinland:
+    display_name: Vinland Capital
+    side: buy_side
+    segment: Crédito e macro
+    rationale: Crédito privado e macro; três entidades com a mesma marca no Itaim.
+    primary_cnpj: "07341777000169"
+    entities:
+      - cnpj: "07341777000169"
+        relation: primary_manager
+        relation_evidence: "Vinland Capital Management Gestora de Recursos Ltda., Rua Amauri 255 (cad_adm_cart)."
+        approval_status: pending_human_review
+      - cnpj: "28541110000180"
+        relation: affiliate_manager
+        relation_evidence: "Vinland Capital Management II Gestora de Recursos Ltda., Rua Amauri 255."
+        approval_status: pending_human_review
+      - cnpj: "31846872000107"
+        relation: affiliate_manager
+        relation_evidence: "Vinland Capital Management Crédito Privado Gestora de Recursos Ltda., Rua Jerônimo da Veiga 45."
+        approval_status: pending_human_review
+  w2-quadra:
+    display_name: Quadra Capital
+    side: buy_side
+    segment: Crédito estruturado e FIDC
+    rationale: Crédito estruturado com FIDC; precificação e dados de crédito.
+    primary_cnpj: "17707098000114"
+    entities:
+      - cnpj: "17707098000114"
+        relation: primary_manager
+        relation_evidence: "Quadra Gestão de Recursos S.A., Rua Joaquim Floriano 940 (cad_adm_cart)."
+        approval_status: pending_human_review
+  w2-guepardo:
+    display_name: Guepardo Investimentos
+    side: buy_side
+    segment: Ações fundamentalista
+    rationale: Ações long only na Faria Lima; research e screening.
+    primary_cnpj: "07078144000100"
+    entities:
+      - cnpj: "07078144000100"
+        relation: primary_manager
+        relation_evidence: "Guepardo Investimentos Ltda., Av. Brig. Faria Lima 3015 (cad_adm_cart)."
+        approval_status: pending_human_review
+  w2-giant-steps:
+    display_name: Giant Steps Capital
+    side: buy_side
+    segment: Quant
+    rationale: Gestora quantitativa na Faria Lima; dados em volume e API.
+    primary_cnpj: "17021922000188"
+    entities:
+      - cnpj: "17021922000188"
+        relation: primary_manager
+        relation_evidence: "Giant Steps Capital Investimentos, Av. Brig. Faria Lima 4300 (cad_adm_cart)."
+        approval_status: pending_human_review
+  w2-opportunity:
+    display_name: Opportunity
+    side: buy_side
+    segment: Ações e macro (RJ)
+    rationale: Casa tradicional do Leblon com ações, macro e private equity.
+    primary_cnpj: "01608570000121"
+    entities:
+      - cnpj: "01608570000121"
+        relation: primary_manager
+        relation_evidence: "Opportunity Gestora de Recursos Ltda., Rua Visconde de Pirajá 351 (cad_adm_cart)."
+        approval_status: pending_human_review
+      - cnpj: "05395883000108"
+        relation: affiliate_manager
+        relation_evidence: "Opportunity Asset Administradora de Recursos de Terceiros Ltda., Rua Visconde de Pirajá."
+        approval_status: pending_human_review
+      - cnpj: "09647907000111"
+        relation: affiliate_manager
+        relation_evidence: "Opportunity Gestão de Investimentos e Recursos Ltda., Rua Visconde de Pirajá."
+        approval_status: pending_human_review
+      - cnpj: "33857830000199"
+        relation: affiliate_manager
+        relation_evidence: "Opportunity HDF Administradora de Recursos Ltda., Rua Visconde de Pirajá 351."
+        approval_status: pending_human_review
+      - cnpj: "03151030000197"
+        relation: affiliate_manager
+        relation_evidence: "Opportunity Private Equity Gestora de Recursos Ltda., Rua Visconde de Pirajá 351."
+        approval_status: pending_human_review
+  w2-arx:
+    display_name: ARX Investimentos
+    side: buy_side
+    segment: Multiestratégia (RJ)
+    rationale: Multiestratégia no Leblon.
+    primary_cnpj: "04408128000140"
+    entities:
+      - cnpj: "04408128000140"
+        relation: primary_manager
+        relation_evidence: "ARX Investimentos Ltda., Av. Borges de Medeiros 633 (cad_adm_cart)."
+        approval_status: pending_human_review
+  w2-dynamo:
+    display_name: Dynamo
+    side: buy_side
+    segment: Ações long only (RJ)
+    rationale: Ações long only no Leblon; research fundamentalista.
+    primary_cnpj: "72116353000162"
+    entities:
+      - cnpj: "72116353000162"
+        relation: primary_manager
+        relation_evidence: "Dynamo Administração de Recursos Ltda., Av. Ataulfo de Paiva (cad_adm_cart)."
+        approval_status: pending_human_review
+      - cnpj: "07880927000102"
+        relation: affiliate_manager
+        relation_evidence: "Dynamo Internacional Gestão de Recursos Ltda., mesmo logradouro."
+        approval_status: pending_human_review
+      - cnpj: "03215562000140"
+        relation: affiliate_manager
+        relation_evidence: "Dynamo V.C. Administradora de Recursos Ltda., mesmo logradouro."
+        approval_status: pending_human_review
+  w2-truxt:
+    display_name: Truxt Investimentos
+    side: buy_side
+    segment: Macro (RJ)
+    rationale: Macro no Leblon.
+    primary_cnpj: "23890968000136"
+    entities:
+      - cnpj: "23890968000136"
+        relation: primary_manager
+        relation_evidence: "Truxt Investimentos Ltda., Av. Ataulfo de Paiva 153 (cad_adm_cart)."
+        approval_status: pending_human_review
+  w2-santander-bank:
+    display_name: Banco Santander (Brasil)
+    side: sell_side
+    segment: Banco múltiplo por mesa
+    rationale: Banco global na JK; tesouraria, sales & trading, câmbio, research e risco; corretoras do grupo.
+    primary_cnpj: "90400888000142"
+    entities:
+      - cnpj: "90400888000142"
+        relation: bank_entity
+        relation_evidence: "Banco Santander (Brasil) S.A., Av. Pres. Juscelino Kubitschek (cad_intermed); líder do conglomerado prudencial no IF.data."
+        approval_status: pending_human_review
+      - cnpj: "51014223000149"
+        relation: bank_entity
+        relation_evidence: "Santander Institucional Corretora de Câmbio e Valores Mobiliários, Av. Pres. Juscelino Kubitschek (cad_intermed)."
+        approval_status: pending_human_review
+      - cnpj: "29162769000198"
+        relation: bank_entity
+        relation_evidence: "Santander Corretora de Títulos e Valores Mobiliários S/A, Rua Boa Vista 263 (cad_intermed)."
+        approval_status: pending_human_review
+      - cnpj: "03502968000104"
+        relation: bank_entity
+        relation_evidence: "Santander Distribuidora de Títulos e Valores Mobiliários S.A. (cad_intermed)."
+        approval_status: pending_human_review
+  w2-bradesco-bbi:
+    display_name: Bradesco BBI
+    side: sell_side
+    segment: Banco de investimento e corretora
+    rationale: Banco de investimento do Bradesco (Osasco) e corretora do grupo na JK.
+    primary_cnpj: "06271464000119"
+    entities:
+      - cnpj: "06271464000119"
+        relation: bank_entity
+        relation_evidence: "Banco Bradesco BBI S.A., Núcleo Cidade de Deus, Osasco (cad_intermed); conglomerado Bradesco no IF.data."
+        approval_status: pending_human_review
+      - cnpj: "61855045000132"
+        relation: bank_entity
+        relation_evidence: "Bradesco S/A CTVM, Av. Pres. Juscelino Kubitschek (cad_intermed)."
+        approval_status: pending_human_review
+      - cnpj: "60746948000112"
+        relation: bank_entity
+        relation_evidence: "Banco Bradesco S.A., Núcleo Cidade de Deus, Osasco (cad_intermed); líder do conglomerado."
+        approval_status: pending_human_review
+  w2-safra-bank:
+    display_name: Banco Safra
+    side: sell_side
+    segment: Banco múltiplo por mesa
+    rationale: Tesouraria e câmbio na Paulista; conta separada da Safra Asset.
+    primary_cnpj: "58160789000128"
+    entities:
+      - cnpj: "58160789000128"
+        relation: bank_entity
+        relation_evidence: "Banco Safra S/A, Av. Paulista 2100 (cad_intermed); líder do conglomerado prudencial no IF.data."
+        approval_status: pending_human_review
+      - cnpj: "03017677000120"
+        relation: bank_entity
+        relation_evidence: "Banco J. Safra S.A., Av. Paulista 2150 (cad_intermed); mesmo conglomerado no IF.data."
+        approval_status: pending_human_review
+      - cnpj: "01638542000157"
+        relation: bank_entity
+        relation_evidence: "Safra Distribuidora de Títulos e Valores Mobiliários Ltda., Av. Paulista 2100 (cad_intermed)."
+        approval_status: pending_human_review
+  w2-xp-investimentos:
+    display_name: XP Investimentos (corretora e banco)
+    side: sell_side
+    segment: Corretora e banco
+    rationale: Corretora e banco com sede em Botafogo; execução, distribuição e research.
+    primary_cnpj: "02332886000104"
+    entities:
+      - cnpj: "02332886000104"
+        relation: bank_entity
+        relation_evidence: "XP Investimentos CCTVM S.A., Praia de Botafogo 501 (cad_intermed)."
+        approval_status: pending_human_review
+      - cnpj: "33264668000103"
+        relation: bank_entity
+        relation_evidence: "Banco XP S.A., Praia de Botafogo 501 (cad_intermed); líder do conglomerado prudencial XP no IF.data."
+        approval_status: pending_human_review
+      - cnpj: "05389174000101"
+        relation: bank_entity
+        relation_evidence: "XP Serviços Financeiros DTVM Ltda., Praia de Botafogo 501 (cad_intermed)."
+        approval_status: pending_human_review
+      - cnpj: "44475245000140"
+        relation: bank_entity
+        relation_evidence: "XP Distribuidora de Títulos e Valores Mobiliários Ltda., Praia de Botafogo 501 (cad_intermed)."
+        approval_status: pending_human_review
+  w2-br-partners:
+    display_name: BR Partners
+    side: sell_side
+    segment: Banco de investimento boutique
+    rationale: Banco de investimento independente na Faria Lima 3732.
+    primary_cnpj: "13220493000117"
+    entities:
+      - cnpj: "13220493000117"
+        relation: bank_entity
+        relation_evidence: "BR Partners Banco de Investimento S.A., Av. Brig. Faria Lima 3732 (cad_intermed); conglomerado próprio no IF.data."
+        approval_status: pending_human_review
+  w2-bny-mellon:
+    display_name: BNY Mellon (administração e custódia)
+    side: sell_side
+    segment: Administrador fiduciário e custodiante
+    rationale: Administrador fiduciário e custodiante de milhares de fundos; precificação e dados de referência.
+    primary_cnpj: "02201501000161"
+    entities:
+      - cnpj: "02201501000161"
+        relation: bank_entity
+        relation_evidence: "BNY Mellon Serviços Financeiros DTVM S.A., Av. República do Chile 330 (cad_intermed); administrador no registro de fundos."
+        approval_status: pending_human_review
+      - cnpj: "42272526000170"
+        relation: bank_entity
+        relation_evidence: "BNY Mellon Banco S.A., Av. República do Chile 330 (cad_intermed); líder do conglomerado no IF.data."
+        approval_status: pending_human_review

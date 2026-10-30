@@ -15,6 +15,9 @@ import type {
   ScoreExplanation,
   ScoreRow,
   SearchHit,
+  UniverseDetail,
+  UniverseRow,
+  UniverseSummary,
 } from './types'
 
 // Data changes only when a new load runs; revalidation is cheap (ETag), so we
@@ -134,5 +137,54 @@ export const useSearch = (q: string) =>
     queryFn: ({ signal }) => apiGet<SearchHit[]>('/api/v1/search', { q, limit: 8 }, signal),
     enabled: q.trim().length >= 2,
     placeholderData: keepPreviousData,
+    staleTime: STALE,
+  })
+
+export interface UniverseFilters {
+  tier: string | null
+  side: string | null
+  kind: string | null
+  centre: string | null
+  q: string | null
+  sort: string
+  page: number
+  pageSize: number
+}
+
+export const useUniverseSummary = () =>
+  useQuery({
+    queryKey: ['universe-summary'],
+    queryFn: ({ signal }) => apiGet<UniverseSummary>('/api/v1/universe/summary', {}, signal),
+    staleTime: STALE,
+  })
+
+export const useUniverse = (filters: UniverseFilters) =>
+  useQuery({
+    queryKey: ['universe', filters],
+    queryFn: ({ signal }) =>
+      apiGet<Page<UniverseRow>>(
+        '/api/v1/universe',
+        {
+          tier: filters.tier ?? undefined,
+          side: filters.side ?? undefined,
+          kind: filters.kind ?? undefined,
+          centre: filters.centre ?? undefined,
+          q: filters.q ?? undefined,
+          sort: filters.sort,
+          order: filters.sort === 'name' ? 'asc' : 'desc',
+          page: filters.page,
+          page_size: filters.pageSize,
+        },
+        signal,
+      ),
+    placeholderData: keepPreviousData,
+    staleTime: STALE,
+  })
+
+export const useUniverseEntity = (cnpj: string | null) =>
+  useQuery({
+    queryKey: ['universe-entity', cnpj],
+    queryFn: ({ signal }) => apiGet<UniverseDetail>(`/api/v1/universe/${cnpj}`, {}, signal),
+    enabled: Boolean(cnpj),
     staleTime: STALE,
   })

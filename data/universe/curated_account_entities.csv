@@ -1,0 +1,103 @@
+﻿account_key,cnpj,relation,business_unit,approval_status,relation_evidence,found_in_registry
+org-spx-capital,12330774000160,primary_manager,,pending_human_review,"Sede RJ (Rua Humaitá, 275) coincide com o endereço do Excel e o site oficial.",True
+org-spx-capital,10632282000101,affiliate_manager,,pending_human_review,"Mesmo endereço SP do Excel (Faria Lima, 3732, 21º) e domínio spxcapital.com.",True
+org-spx-capital,42617367000107,affiliate_manager,,pending_human_review,Mesmo endereço SP e domínio spxcapital.com.,True
+org-verde-asset,19749539000176,primary_manager,,pending_human_review,"Razão social, endereço e telefone coincidem com o Excel.",True
+org-verde-asset,55777175000100,affiliate_manager,,pending_human_review,Mesmo prédio e telefone; marca Verde Agro & Imobiliário.,True
+org-kapitalo,11180009000148,primary_manager,,pending_human_review,Endereço e telefone coincidem com o Excel.,True
+org-kapitalo,20429285000198,affiliate_manager,,pending_human_review,Marca Kapitalo Ciclo; e-mail de compliance @kapitalo.com.br.,True
+org-kapitalo,40113816000146,affiliate_manager,,pending_human_review,Marca Kapitalo Nexo; mesmo endereço e telefone.,True
+org-ibiuna,11918575000104,primary_manager,,pending_human_review,Alias do Excel cita 'Ibiuna Macro Gestão de Recursos'; mesmo endereço.,True
+org-ibiuna,18506057000122,affiliate_manager,,pending_human_review,Ibiuna Ações; mesmo endereço e domínio ibiunainvest.com.br.,True
+org-ibiuna,19493000000107,affiliate_manager,,pending_human_review,Ibiuna Crédito; mesmo endereço e domínio.,True
+org-ibiuna,49223404000133,affiliate_manager,,pending_human_review,Ibiuna Previdência; mesmo endereço e domínio.,True
+org-kinea,08604187000144,primary_manager,,pending_human_review,"Endereço (Rua Minas de Prata, 30) e site coincidem com o Excel.",True
+org-kinea,04661817000161,affiliate_manager,,pending_human_review,Kinea Private Equity; mesmo endereço e site.,True
+org-patria,12461756000117,primary_manager,,pending_human_review,CNPJ já citado na fonte de verificação do Excel; endereço coincide.,True
+org-patria,35096963000115,affiliate_manager,,pending_human_review,Pátria High Growth; mesmo prédio e domínio patria.com.,True
+org-patria,38300262000144,affiliate_manager,,pending_human_review,Pátria VBI Asset; domínio patria.com.,True
+org-patria,11274775000171,affiliate_manager,,pending_human_review,Pátria VBI Real Estate; domínio patria.com.,True
+org-patria,17054901000169,affiliate_manager,,pending_human_review,Pátria VBI Securities; domínio patria.com.,True
+org-patria,41483516000111,affiliate_manager,,pending_human_review,VBI Administração; compliance@patria.com.,True
+org-vinci-compass,11077576000173,primary_manager,,pending_human_review,"Vinci Gestora; endereço RJ (Bartolomeu Mitre, 336) coincide com o Excel.",True
+org-vinci-compass,43573693000114,affiliate_manager,,pending_human_review,"Endereço SP do Excel (Faria Lima, 3555) e compliance@vincicompass.com.",True
+org-vinci-compass,10917835000164,affiliate_manager,,pending_human_review,Vinci Equities; compliance@vincicompass.com.,True
+org-vinci-compass,11079478000175,affiliate_manager,,pending_human_review,Vinci Capital; compliance@vincicompass.com.,True
+org-vinci-compass,31982447000137,affiliate_manager,,pending_human_review,Vinci CG; compliance@vincicompass.com.,True
+org-vinci-compass,20052540000126,affiliate_manager,,pending_human_review,Vinci GGN; compliance@vincicompass.com.,True
+org-vinci-compass,20859417000111,affiliate_manager,,pending_human_review,Vinci Infraestrutura; domínio vincipartners.com.,True
+org-vinci-compass,43705850000106,affiliate_manager,,pending_human_review,Vinci MAV; compliance@vincicompass.com.,True
+org-vinci-compass,13838015000175,affiliate_manager,,pending_human_review,Vinci Real Estate; compliance@vincicompass.com.,True
+org-vinci-compass,37658373000164,affiliate_manager,,pending_human_review,Vinci Real Estate Selection; mesmo endereço SP.,True
+org-vinci-compass,37980655000183,affiliate_manager,,pending_human_review,Vinci Real Estate Ventures; compliance@vincicompass.com.,True
+org-vinci-compass,16954358000193,affiliate_manager,,pending_human_review,Vinci SPS; compliance@vincicompass.com.,True
+org-vinci-compass,13421810000163,affiliate_manager,,pending_human_review,Vinci Soluções de Investimentos; domínio vincipartners.com.,True
+org-vinci-compass,04264390000168,affiliate_manager,,pending_human_review,Lacan Investimentos; compliance@vincicompass.com e telefone da Vinci. Confirmar aquisição.,True
+org-constellation,06182127000155,primary_manager,,pending_human_review,"Endereço (Faria Lima, 3311, 4º) e domínio const.com.br coincidem com o Excel.",True
+org-jive,12600032000107,primary_manager,,pending_human_review,"Nome comercial JIVE; endereço Faria Lima, 1485 coincide com o Excel.",True
+org-jive,07170960000149,affiliate_manager,,pending_human_review,Jive High Yield; grc@jivemaua.com.br.,True
+org-jive,09561568000156,affiliate_manager,,pending_human_review,Mauá Capital Investimentos Alternativos; grc@jivemaua.com.br.,True
+org-jive,04608171000159,affiliate_manager,,pending_human_review,Mauá Capital Real Estate; grc@jivemaua.com.br.,True
+org-portofino,17590181000156,primary_manager,,pending_human_review,Razão social idêntica ao nome canônico; endereço e telefone coincidem.,True
+org-portofino,07913960000191,affiliate_manager,,pending_human_review,"PMFO Esportes; mesmo endereço, telefone e domínio pmfo.com.br.",True
+org-portofino,62653145000149,affiliate_manager,,pending_human_review,Portofino Internacional; mesmo endereço e domínio.,True
+org-btg-pactual,30306294000145,bank_entity,,pending_human_review,Banco BTG Pactual S/A no cadastro CVM (registro de gestor cancelado); identidade do banco.,True
+org-btg-pactual,09631542000137,primary_manager,Asset Management,pending_human_review,"Endereço SP do Excel (Faria Lima, 3477, 14º) coincide com o registro CVM.",True
+org-btg-pactual,29650082000100,affiliate_manager,Asset Management,pending_human_review,BTG Pactual Asset Management S/A DTVM; domínio btgpactual.com.,True
+org-btg-pactual,07625159000140,affiliate_manager,Asset Management,pending_human_review,BTG Pactual Gestora de Investimentos Alternativos; domínio btgpactual.com.,True
+org-btg-pactual,12695840000103,affiliate_manager,Asset Management,pending_human_review,BTG Pactual Family Office/Wealth; domínio btgpactual.com.,True
+org-itau-bba,60701190000104,bank_entity,Investment Banking e Mercados,pending_human_review,Itaú Unibanco S.A. (administrador fiduciário na CVM). Itaú BBA é a marca de atacado; confirmar entidade da mesa.,True
+w2-itau-asset,40430971000196,primary_manager,,pending_human_review,"Itaú Unibanco Asset Management Ltda., Av. Brig. Faria Lima 3500 (cad_adm_cart).",True
+w2-xp-asset,16789525000198,primary_manager,,pending_human_review,"XP Vista Asset Management Ltda., Av. Pres. Juscelino Kubitschek (cad_adm_cart).",True
+w2-xp-asset,37918829000188,affiliate_manager,,pending_human_review,"XP Allocation Asset Management Ltda., mesmo logradouro (JK).",True
+w2-xp-asset,07625200000189,affiliate_manager,,pending_human_review,"XP Gestão de Recursos Ltda., mesmo logradouro (JK).",True
+w2-xp-asset,15289957000177,affiliate_manager,,pending_human_review,"XP Advisory Gestão de Recursos Ltda., mesmo logradouro (JK).",True
+w2-santander-asset,10231177000152,primary_manager,,pending_human_review,"Santander Brasil Gestão de Recursos Ltda., Av. Pres. Juscelino Kubitschek (cad_adm_cart).",True
+w2-safra-asset,65913436000117,primary_manager,,pending_human_review,"Safra Asset Corretora de Títulos e Valores Mobiliários S.A., Av. Paulista 2100 (cad_adm_cart, gestor e administrador).",True
+w2-ubs-asset,11519438000105,primary_manager,,pending_human_review,"UBS Brasil Administradora de Valores Mobiliários Ltda., Av. Brig. Faria Lima 4440 (cad_adm_cart, gestor).",True
+w2-ubs-asset,61809182000130,affiliate_manager,,pending_human_review,"UBS (Brasil) Corretora de Valores S.A., administradora fiduciária (cad_adm_cart); confirmar se pertence à mesma conta.",True
+w2-bnp-asset,02562663000125,primary_manager,,pending_human_review,"BNP Paribas Asset Management Brasil Ltda., Av. Pres. Juscelino Kubitschek (cad_adm_cart).",True
+w2-absolute,17285755000182,primary_manager,,pending_human_review,"Absolute Gestão de Investimentos Ltda., Rua Iguatemi 151 (cad_adm_cart).",True
+w2-absolute,47243769000102,affiliate_manager,,pending_human_review,"Absolute Crédito Gestão de Investimentos Ltda., mesmo prédio (Rua Iguatemi 151).",True
+w2-absolute,14351454000111,affiliate_manager,,pending_human_review,"Absolute Dhama Gestão de Investimentos Ltda., mesmo prédio (Rua Iguatemi 151).",True
+w2-genoa,34276448000154,primary_manager,,pending_human_review,"Genoa Capital Gestora de Recursos Ltda., Av. Juscelino Kubitschek 1600 (cad_adm_cart).",True
+w2-legacy,28674641000140,primary_manager,,pending_human_review,"Legacy Capital Gestora de Recursos Ltda., Av. Brig. Faria Lima 4221 (cad_adm_cart).",True
+w2-capitania,41793345000127,primary_manager,,pending_human_review,"Capitania Capital S.A., Av. Brig. Faria Lima (cad_adm_cart).",True
+w2-capitania,04274010000176,affiliate_manager,,pending_human_review,"Capitânia Invest S/A, Av. Brig. Faria Lima (cad_adm_cart).",True
+w2-capitania,41475648000100,affiliate_manager,,pending_human_review,"Capitânia Alternatives S/A, Av. Brig. Faria Lima, Torre Norte, 3º andar.",True
+w2-capitania,41777833000140,affiliate_manager,,pending_human_review,"Capitania Prev S.A., mesmo endereço (Torre Norte, 3º andar).",True
+w2-capitania,30949716000109,affiliate_manager,,pending_human_review,"Capitânia HBC Consultoria e Gestão S.A., Av. Brig. Faria Lima 1485.",True
+w2-capitania,66266698000108,affiliate_manager,,pending_human_review,"Capitânia Special Situations Ltda., Av. Brig. Faria Lima.",True
+w2-vinland,07341777000169,primary_manager,,pending_human_review,"Vinland Capital Management Gestora de Recursos Ltda., Rua Amauri 255 (cad_adm_cart).",True
+w2-vinland,28541110000180,affiliate_manager,,pending_human_review,"Vinland Capital Management II Gestora de Recursos Ltda., Rua Amauri 255.",True
+w2-vinland,31846872000107,affiliate_manager,,pending_human_review,"Vinland Capital Management Crédito Privado Gestora de Recursos Ltda., Rua Jerônimo da Veiga 45.",True
+w2-quadra,17707098000114,primary_manager,,pending_human_review,"Quadra Gestão de Recursos S.A., Rua Joaquim Floriano 940 (cad_adm_cart).",True
+w2-guepardo,07078144000100,primary_manager,,pending_human_review,"Guepardo Investimentos Ltda., Av. Brig. Faria Lima 3015 (cad_adm_cart).",True
+w2-giant-steps,17021922000188,primary_manager,,pending_human_review,"Giant Steps Capital Investimentos, Av. Brig. Faria Lima 4300 (cad_adm_cart).",True
+w2-opportunity,01608570000121,primary_manager,,pending_human_review,"Opportunity Gestora de Recursos Ltda., Rua Visconde de Pirajá 351 (cad_adm_cart).",True
+w2-opportunity,05395883000108,affiliate_manager,,pending_human_review,"Opportunity Asset Administradora de Recursos de Terceiros Ltda., Rua Visconde de Pirajá.",True
+w2-opportunity,09647907000111,affiliate_manager,,pending_human_review,"Opportunity Gestão de Investimentos e Recursos Ltda., Rua Visconde de Pirajá.",True
+w2-opportunity,33857830000199,affiliate_manager,,pending_human_review,"Opportunity HDF Administradora de Recursos Ltda., Rua Visconde de Pirajá 351.",True
+w2-opportunity,03151030000197,affiliate_manager,,pending_human_review,"Opportunity Private Equity Gestora de Recursos Ltda., Rua Visconde de Pirajá 351.",True
+w2-arx,04408128000140,primary_manager,,pending_human_review,"ARX Investimentos Ltda., Av. Borges de Medeiros 633 (cad_adm_cart).",True
+w2-dynamo,72116353000162,primary_manager,,pending_human_review,"Dynamo Administração de Recursos Ltda., Av. Ataulfo de Paiva (cad_adm_cart).",True
+w2-dynamo,07880927000102,affiliate_manager,,pending_human_review,"Dynamo Internacional Gestão de Recursos Ltda., mesmo logradouro.",True
+w2-dynamo,03215562000140,affiliate_manager,,pending_human_review,"Dynamo V.C. Administradora de Recursos Ltda., mesmo logradouro.",True
+w2-truxt,23890968000136,primary_manager,,pending_human_review,"Truxt Investimentos Ltda., Av. Ataulfo de Paiva 153 (cad_adm_cart).",True
+w2-santander-bank,90400888000142,bank_entity,,pending_human_review,"Banco Santander (Brasil) S.A., Av. Pres. Juscelino Kubitschek (cad_intermed); líder do conglomerado prudencial no IF.data.",True
+w2-santander-bank,51014223000149,bank_entity,,pending_human_review,"Santander Institucional Corretora de Câmbio e Valores Mobiliários, Av. Pres. Juscelino Kubitschek (cad_intermed).",True
+w2-santander-bank,29162769000198,bank_entity,,pending_human_review,"Santander Corretora de Títulos e Valores Mobiliários S/A, Rua Boa Vista 263 (cad_intermed).",True
+w2-santander-bank,03502968000104,bank_entity,,pending_human_review,Santander Distribuidora de Títulos e Valores Mobiliários S.A. (cad_intermed).,True
+w2-bradesco-bbi,06271464000119,bank_entity,,pending_human_review,"Banco Bradesco BBI S.A., Núcleo Cidade de Deus, Osasco (cad_intermed); conglomerado Bradesco no IF.data.",True
+w2-bradesco-bbi,61855045000132,bank_entity,,pending_human_review,"Bradesco S/A CTVM, Av. Pres. Juscelino Kubitschek (cad_intermed).",True
+w2-bradesco-bbi,60746948000112,bank_entity,,pending_human_review,"Banco Bradesco S.A., Núcleo Cidade de Deus, Osasco (cad_intermed); líder do conglomerado.",True
+w2-safra-bank,58160789000128,bank_entity,,pending_human_review,"Banco Safra S/A, Av. Paulista 2100 (cad_intermed); líder do conglomerado prudencial no IF.data.",True
+w2-safra-bank,03017677000120,bank_entity,,pending_human_review,"Banco J. Safra S.A., Av. Paulista 2150 (cad_intermed); mesmo conglomerado no IF.data.",True
+w2-safra-bank,01638542000157,bank_entity,,pending_human_review,"Safra Distribuidora de Títulos e Valores Mobiliários Ltda., Av. Paulista 2100 (cad_intermed).",True
+w2-xp-investimentos,02332886000104,bank_entity,,pending_human_review,"XP Investimentos CCTVM S.A., Praia de Botafogo 501 (cad_intermed).",True
+w2-xp-investimentos,33264668000103,bank_entity,,pending_human_review,"Banco XP S.A., Praia de Botafogo 501 (cad_intermed); líder do conglomerado prudencial XP no IF.data.",True
+w2-xp-investimentos,05389174000101,bank_entity,,pending_human_review,"XP Serviços Financeiros DTVM Ltda., Praia de Botafogo 501 (cad_intermed).",True
+w2-xp-investimentos,44475245000140,bank_entity,,pending_human_review,"XP Distribuidora de Títulos e Valores Mobiliários Ltda., Praia de Botafogo 501 (cad_intermed).",True
+w2-br-partners,13220493000117,bank_entity,,pending_human_review,"BR Partners Banco de Investimento S.A., Av. Brig. Faria Lima 3732 (cad_intermed); conglomerado próprio no IF.data.",True
+w2-bny-mellon,02201501000161,bank_entity,,pending_human_review,"BNY Mellon Serviços Financeiros DTVM S.A., Av. República do Chile 330 (cad_intermed); administrador no registro de fundos.",True
+w2-bny-mellon,42272526000170,bank_entity,,pending_human_review,"BNY Mellon Banco S.A., Av. República do Chile 330 (cad_intermed); líder do conglomerado no IF.data.",True

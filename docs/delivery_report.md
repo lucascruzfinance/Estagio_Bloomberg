@@ -14,15 +14,15 @@ Este relatório separa três perguntas que não podem ser confundidas:
 
 | Camada | Ferramenta | Resultado |
 |---|---|---|
-| Python: estilo e tipos | ruff, ruff format, mypy --strict | RESULTADO_PY_LINT |
-| Python: unidade + integração (PostgreSQL 16 + PostGIS reais) | pytest | RESULTADO_PYTEST |
+| Python: estilo e tipos | ruff, ruff format, mypy --strict | aprovado (58 arquivos, mypy em modo estrito) |
+| Python: unidade + integração (PostgreSQL 16 + PostGIS reais) | pytest | 118 aprovados, nenhum pulado (integração inclusa) |
 | Dependências | pip-audit (projeto e dev), npm audit | sem vulnerabilidades conhecidas |
-| Dashboard: estilo e tipos | oxlint, tsc | RESULTADO_FE_LINT |
-| Dashboard: componentes e jornadas | Vitest + Testing Library + MSW | RESULTADO_VITEST |
-| Dashboard: ponta a ponta | Playwright em 1366×768 e 1440×900, axe (WCAG 2 A/AA), sem internet | RESULTADO_E2E |
-| Subida do zero | cópia limpa do repositório → venv + `pip install` do lock + `npm ci` + `scripts/demo.py --check` em banco novo | RESULTADO_FRESH |
+| Dashboard: estilo e tipos | oxlint, tsc | 0 erros; 7 avisos de Fast Refresh (helpers co-localizados, sem efeito funcional) |
+| Dashboard: componentes e jornadas | Vitest + Testing Library + MSW | 25 aprovados |
+| Dashboard: ponta a ponta | Playwright em 1366×768 e 1440×900, axe (WCAG 2 A/AA), sem internet | 26 aprovados no servidor de desenvolvimento e 26 no build de produção (com CSP ativa) |
+| Subida do zero | cópia limpa do repositório → venv + `pip install` do lock + `npm ci` + `scripts/demo.py --check` em banco novo | aprovado; a primeira tentativa revelou que o `.gitignore` excluía `frontend/src/lib` (corrigido) |
 | Determinismo do seed | impressão digital do conteúdo em dois bancos criados do zero e no banco de trabalho | idêntica (`34f15cd40d894faa`) |
-| Validação independente por amostragem | `scripts/validate_sample.py` (biblioteca padrão, sem importar o pipeline) | RESULTADO_VALIDACAO |
+| Validação independente por amostragem | `scripts/validate_sample.py` (biblioteca padrão, sem importar o pipeline) | 8 de 8 blocos aprovados, 593 itens conferidos |
 
 ### O que a amostragem independente confirma
 
@@ -49,6 +49,8 @@ Este relatório separa três perguntas que não podem ser confundidas:
 | Explicação dizia "0 fundos" onde não havia fundos mapeados | Sugeria uma observação inexistente | Texto de ausência explícito |
 | Rate limit atingido por rajadas legítimas do dashboard | Erro em navegação rápida | Limite local 600/min e nova tentativa automática em 429 |
 | Cabeçalho `server: uvicorn` | Exposição de tecnologia | `--no-server-header` |
+| `.gitignore` do template Python ignorava qualquer pasta `lib/`, incluindo `frontend/src/lib` | Um clone do repositório não compilaria o dashboard | Regra ancorada na raiz (`/lib/`); confirmado pela instalação do zero |
+| Instrução `Copy-Item .env.example .env` do README sobrescrevia um `.env` existente | A senha local do banco foi perdida durante o uso e a API deixou de autenticar | Senha restaurada; README só copia se o arquivo não existir; `demo.py` falha em 5 s com mensagem clara se a conexão for recusada |
 
 ### Limitações técnicas conhecidas
 
@@ -79,3 +81,44 @@ Depende do time Bloomberg. Propostas concretas:
 - Vínculos de afiliadas e entidades bancárias em `data/reference/identity_registry.yaml` (todos marcados `pending_human_review`).
 - 9 conflitos pendentes entre planilha e cadastro oficial em `data/review/conflicts.csv`.
 - Premissas das 12 mesas de bancos em `config/scoring/opportunity_v1.yaml`.
+
+## 4. Fase 2 (prompts 8 a 11): o que foi entregue em 30/10/2026
+
+Entregue e validado:
+
+- **Universo SP/RJ** (Prompt 8), pacote `networking_intel.universe`:
+  - 1.447 entidades (1.228 buy side, 219 sell side), 1.331 grupos econômicos e 30.710 classes de fundos;
+  - Informe Diário de 37 meses, CDA, Perfil Mensal, Lâmina e histórico cadastral;
+  - IF.data com 1.274 instituições de SP/RJ, período 06/2026. O trimestre ainda não publicado responde vazio e passou a ser tratado como ausente; antes era aceito como "ok";
+  - SGS (CDI, IPCA, PTAX);
+  - 544 prédios geocodificados, com índice H3.
+- **Onda 2**: 24 contas curadas com CNPJ conferido (`docs/curated_wave2.md`), todas pendentes de revisão humana.
+- **Banco**: migração 0003 com 18 tabelas e carga idempotente por substituição (1.036.609 linhas diárias, 163.177 mensais, 25.009 por gestora e mês), integrada ao `scripts/demo.py`.
+- **API**: `/api/v1/universe`, `/universe/summary` e `/universe/{cnpj}` (PL e captação mês a mês, maiores fundos, fonte).
+- **Dashboard**: tela 6, "Universo SP/RJ".
+- **Documentos gerados pelo código**: `docs/universe.md`, `docs/curated_wave2.md` e `docs/data_sources.md`; guia de estudo em `GUIA.md`.
+- **Testes novos**:
+  - unidade: geografia, prédio, IF.data com período vazio, CDA, deduplicação classe/subclasse, precedência de grupos;
+  - reconciliação das contagens com os arquivos brutos;
+  - integração: carga duas vezes, nenhum vínculo aprovado por nome, nenhum status comercial inventado.
+
+Validação da fase 2: pytest 128 aprovados (unidade + integração com PostGIS), ruff e mypy --strict limpos (76 arquivos), Vitest 25, typecheck do dashboard limpo, `scripts/demo.py --check` aprovado em banco novo com o universo (impressão digital do seed `1a3f3e5739065d00`, substitui a anterior). Snapshot versionado: 52 MB no total (universo 34 MB).
+
+Defeitos de dados encontrados e tratados:
+
+- 3 fundos com PL de R$ 16,7 trilhões no registro (erro de unidade) ficam fora das somas;
+- linhas diárias repetidas no arquivo da CVM são deduplicadas;
+- o arquivo 202509 do IF.data traz linhas duplicadas;
+- os arquivos anteriores à RCVM 175 usam outro layout.
+
+Pendente (planejado em `prompts_codex.md`, não executado por prazo):
+
+- **Prompt 9**:
+  - modelo `opportunity-v2` sobre o universo, com normalização por porte e evidência de mesas via IF.data;
+  - analytics de fundo (matriz mês a mês contra o CDI, drawdown, percentil entre pares, aceleração de captação);
+  - segmentos e personas;
+  - endpoints de análise de fundo.
+- **Prompt 10**: telas Fundo 360, Sell side, Radar, Segmentos, e mapa por prédio com rota de visita.
+- **Prompt 11**: CI, reorganização de testes e documentos por domínio, checagem automática dos números citados, Playwright das novas jornadas.
+- **Geocodificação**: completar os prédios restantes numa execução online sem `--offline`.
+

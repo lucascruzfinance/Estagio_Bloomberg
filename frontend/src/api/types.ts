@@ -41,3 +41,7 @@ export const TIERS = [
   'Evidência insuficiente',
 ] as const
 export type Tier = (typeof TIERS)[number]
+
+export type UniverseRow = S['UniverseRow']
+export type UniverseDetail = S['UniverseDetail']
+export type UniverseSummary = S['UniverseSummary']
