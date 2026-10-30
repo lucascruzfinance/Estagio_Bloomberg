@@ -486,3 +486,75 @@ class Health(ApiModel):
 class Readiness(ApiModel):
     status: Literal["ready", "not_ready"]
     checks: dict[str, Any]
+
+
+# --- Territory universe (Prompt 8) ---
+
+
+class UniverseRow(ApiModel):
+    cnpj: str = Field(pattern=CNPJ_PATTERN)
+    legal_name: str
+    trade_name: str | None = None
+    group_key: str
+    group_name: str
+    kinds: list[str]
+    primary_kind: str
+    side: Literal["buy_side", "sell_side"]
+    coverage_tier: Literal["curated", "radar", "universe"]
+    curated_account_key: str | None = None
+    centre: str | None = None
+    city: str | None = None
+    state: str | None = None
+    registration_date: date | None = None
+    active_classes: int
+    selected_classes: int
+    nav_brl: float | None = Field(None, description="PL não FIC no último Informe Diário (R$).")
+    nav_month: date | None = None
+    net_flow_12m_brl: float | None = Field(None, description="Captação líquida 12m, não FIC (R$).")
+    funds_administered: int
+    nav_administered_brl: float | None = None
+    latitude: float | None = None
+    longitude: float | None = None
+    geocode_precision: str
+    building_key: str | None = None
+
+
+class UniverseMonth(ApiModel):
+    month: date
+    nav_brl: float | None = None
+    inflow_brl: float | None = None
+    outflow_brl: float | None = None
+    net_flow_brl: float | None = None
+    investors: int | None = None
+    classes_reporting: int
+
+
+class UniverseFund(ApiModel):
+    class_cnpj: str
+    class_name: str
+    classification: str | None = None
+    anbima_classification: str | None = None
+    nav_brl: float | None = None
+    return_12m: float | None = Field(None, description="Variação da cota em 12 meses (mensal).")
+    net_flow_12m_brl: float | None = None
+    is_selected: bool
+
+
+class UniverseDetail(UniverseRow):
+    phone_official: str | None = None
+    website_official: str | None = None
+    street: str | None = None
+    complement: str | None = None
+    district: str | None = None
+    group_members: int
+    monthly: list[UniverseMonth]
+    top_funds: list[UniverseFund]
+    source: dict[str, Any]
+
+
+class UniverseSummary(ApiModel):
+    as_of: dict[str, Any]
+    totals: dict[str, int]
+    by_centre: list[dict[str, Any]]
+    by_kind: list[dict[str, Any]]
+    radar_recent: list[UniverseRow]

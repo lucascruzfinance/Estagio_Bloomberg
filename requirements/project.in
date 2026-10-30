@@ -26,3 +26,6 @@ tenacity
 structlog
 prometheus-client
 
+
+# Geography: H3 hexagons for density maps (business days come from the CVM/BCB series themselves)
+h3

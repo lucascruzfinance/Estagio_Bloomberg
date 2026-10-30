@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, Path, Query, Request
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from networking_intel.api import API_VERSION, repository
+from networking_intel.api import API_VERSION, repository, universe_repository
 from networking_intel.api.db import get_session
 from networking_intel.api.errors import ApiError
 from networking_intel.api.schemas import (
@@ -33,6 +33,9 @@ from networking_intel.api.schemas import (
     ScoreRow,
     SearchHit,
     SignalOut,
+    UniverseDetail,
+    UniverseRow,
+    UniverseSummary,
 )
 
 SessionDep = Annotated[Session, Depends(get_session)]
@@ -570,3 +573,80 @@ def list_conflicts(
         offset=(page - 1) * page_size,
     )
     return _page(data, total, page, page_size, "severity", "asc")
+
+
+# ------------------------------------------------------------------ universe (Prompt 8)
+
+UniverseKind = Literal[
+    "gestora",
+    "banco_multiplo",
+    "banco_investimento",
+    "caixa_economica",
+    "corretora",
+    "distribuidora",
+    "administrador_fiduciario",
+    "custodiante",
+    "escriturador",
+    "infraestrutura_mercado",
+]
+
+
+@api.get(
+    "/universe",
+    response_model=Page[UniverseRow],
+    tags=["universo"],
+    summary="Gestoras e intermediários de SP/RJ (CVM), com PL e captação do Informe Diário",
+)
+def list_universe(
+    session: SessionDep,
+    tier: Literal["curated", "radar", "universe"] | None = None,
+    side: Literal["buy_side", "sell_side"] | None = None,
+    kind: UniverseKind | None = None,
+    centre: Annotated[str | None, Query(max_length=48, description="Ex.: Faria Lima.")] = None,
+    q: Annotated[
+        str | None, Query(min_length=2, max_length=80, description="Nome, grupo ou CNPJ.")
+    ] = None,
+    sort: Literal["nav", "net_flow", "name", "registered", "administered", "classes"] = "nav",
+    order: Order = "desc",
+    page: PageNumber = 1,
+    page_size: PageSize = 50,
+) -> dict[str, Any]:
+    data, total = universe_repository.list_universe(
+        session,
+        tier=tier,
+        side=side,
+        kind=kind,
+        centre=centre,
+        q=q,
+        sort=sort,
+        order=order,
+        limit=page_size,
+        offset=(page - 1) * page_size,
+    )
+    return _page(data, total, page, page_size, sort, order)
+
+
+@api.get(
+    "/universe/summary",
+    response_model=UniverseSummary,
+    tags=["universo"],
+    summary="Totais do universo por centro, tipo e camada; gestoras novas",
+)
+def get_universe_summary(session: SessionDep) -> dict[str, Any]:
+    return universe_repository.universe_summary(session)
+
+
+@api.get(
+    "/universe/{cnpj}",
+    response_model=UniverseDetail,
+    tags=["universo"],
+    summary="Entidade do universo com PL e captação mês a mês (36 meses) e maiores fundos",
+    responses=NOT_FOUND,
+)
+def get_universe_entity(
+    session: SessionDep, cnpj: Annotated[str, Path(pattern=CNPJ_PATTERN)]
+) -> dict[str, Any]:
+    detail = universe_repository.universe_detail(session, cnpj)
+    if detail is None:
+        raise ApiError(404, f"CNPJ {cnpj} fora do universo.", code="not_found")
+    return detail

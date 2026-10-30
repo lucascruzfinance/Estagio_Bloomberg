@@ -293,6 +293,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/universe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Gestoras e intermediários de SP/RJ (CVM), com PL e captação do Informe Diário */
+        get: operations["list_universe_api_v1_universe_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/universe/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Totais do universo por centro, tipo e camada; gestoras novas */
+        get: operations["get_universe_summary_api_v1_universe_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/universe/{cnpj}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Entidade do universo com PL e captação mês a mês (36 meses) e maiores fundos */
+        get: operations["get_universe_entity_api_v1_universe__cnpj__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1046,6 +1097,12 @@ export interface components {
             data: components["schemas"]["SignalOut"][];
             meta: components["schemas"]["PageMeta"];
         };
+        /** Page[UniverseRow] */
+        Page_UniverseRow_: {
+            /** Data */
+            data: components["schemas"]["UniverseRow"][];
+            meta: components["schemas"]["PageMeta"];
+        };
         /** PerformancePoint */
         PerformancePoint: {
             /**
@@ -1331,6 +1388,219 @@ export interface components {
              * @description Hash do arquivo bruto imutável no cache.
              */
             sha256?: string | null;
+        };
+        /** UniverseDetail */
+        UniverseDetail: {
+            /** Cnpj */
+            cnpj: string;
+            /** Legal Name */
+            legal_name: string;
+            /** Trade Name */
+            trade_name?: string | null;
+            /** Group Key */
+            group_key: string;
+            /** Group Name */
+            group_name: string;
+            /** Kinds */
+            kinds: string[];
+            /** Primary Kind */
+            primary_kind: string;
+            /**
+             * Side
+             * @enum {string}
+             */
+            side: "buy_side" | "sell_side";
+            /**
+             * Coverage Tier
+             * @enum {string}
+             */
+            coverage_tier: "curated" | "radar" | "universe";
+            /** Curated Account Key */
+            curated_account_key?: string | null;
+            /** Centre */
+            centre?: string | null;
+            /** City */
+            city?: string | null;
+            /** State */
+            state?: string | null;
+            /** Registration Date */
+            registration_date?: string | null;
+            /** Active Classes */
+            active_classes: number;
+            /** Selected Classes */
+            selected_classes: number;
+            /**
+             * Nav Brl
+             * @description PL não FIC no último Informe Diário (R$).
+             */
+            nav_brl?: number | null;
+            /** Nav Month */
+            nav_month?: string | null;
+            /**
+             * Net Flow 12M Brl
+             * @description Captação líquida 12m, não FIC (R$).
+             */
+            net_flow_12m_brl?: number | null;
+            /** Funds Administered */
+            funds_administered: number;
+            /** Nav Administered Brl */
+            nav_administered_brl?: number | null;
+            /** Latitude */
+            latitude?: number | null;
+            /** Longitude */
+            longitude?: number | null;
+            /** Geocode Precision */
+            geocode_precision: string;
+            /** Building Key */
+            building_key?: string | null;
+            /** Phone Official */
+            phone_official?: string | null;
+            /** Website Official */
+            website_official?: string | null;
+            /** Street */
+            street?: string | null;
+            /** Complement */
+            complement?: string | null;
+            /** District */
+            district?: string | null;
+            /** Group Members */
+            group_members: number;
+            /** Monthly */
+            monthly: components["schemas"]["UniverseMonth"][];
+            /** Top Funds */
+            top_funds: components["schemas"]["UniverseFund"][];
+            /** Source */
+            source: {
+                [key: string]: unknown;
+            };
+        };
+        /** UniverseFund */
+        UniverseFund: {
+            /** Class Cnpj */
+            class_cnpj: string;
+            /** Class Name */
+            class_name: string;
+            /** Classification */
+            classification?: string | null;
+            /** Anbima Classification */
+            anbima_classification?: string | null;
+            /** Nav Brl */
+            nav_brl?: number | null;
+            /**
+             * Return 12M
+             * @description Variação da cota em 12 meses (mensal).
+             */
+            return_12m?: number | null;
+            /** Net Flow 12M Brl */
+            net_flow_12m_brl?: number | null;
+            /** Is Selected */
+            is_selected: boolean;
+        };
+        /** UniverseMonth */
+        UniverseMonth: {
+            /**
+             * Month
+             * Format: date
+             */
+            month: string;
+            /** Nav Brl */
+            nav_brl?: number | null;
+            /** Inflow Brl */
+            inflow_brl?: number | null;
+            /** Outflow Brl */
+            outflow_brl?: number | null;
+            /** Net Flow Brl */
+            net_flow_brl?: number | null;
+            /** Investors */
+            investors?: number | null;
+            /** Classes Reporting */
+            classes_reporting: number;
+        };
+        /** UniverseRow */
+        UniverseRow: {
+            /** Cnpj */
+            cnpj: string;
+            /** Legal Name */
+            legal_name: string;
+            /** Trade Name */
+            trade_name?: string | null;
+            /** Group Key */
+            group_key: string;
+            /** Group Name */
+            group_name: string;
+            /** Kinds */
+            kinds: string[];
+            /** Primary Kind */
+            primary_kind: string;
+            /**
+             * Side
+             * @enum {string}
+             */
+            side: "buy_side" | "sell_side";
+            /**
+             * Coverage Tier
+             * @enum {string}
+             */
+            coverage_tier: "curated" | "radar" | "universe";
+            /** Curated Account Key */
+            curated_account_key?: string | null;
+            /** Centre */
+            centre?: string | null;
+            /** City */
+            city?: string | null;
+            /** State */
+            state?: string | null;
+            /** Registration Date */
+            registration_date?: string | null;
+            /** Active Classes */
+            active_classes: number;
+            /** Selected Classes */
+            selected_classes: number;
+            /**
+             * Nav Brl
+             * @description PL não FIC no último Informe Diário (R$).
+             */
+            nav_brl?: number | null;
+            /** Nav Month */
+            nav_month?: string | null;
+            /**
+             * Net Flow 12M Brl
+             * @description Captação líquida 12m, não FIC (R$).
+             */
+            net_flow_12m_brl?: number | null;
+            /** Funds Administered */
+            funds_administered: number;
+            /** Nav Administered Brl */
+            nav_administered_brl?: number | null;
+            /** Latitude */
+            latitude?: number | null;
+            /** Longitude */
+            longitude?: number | null;
+            /** Geocode Precision */
+            geocode_precision: string;
+            /** Building Key */
+            building_key?: string | null;
+        };
+        /** UniverseSummary */
+        UniverseSummary: {
+            /** As Of */
+            as_of: {
+                [key: string]: unknown;
+            };
+            /** Totals */
+            totals: {
+                [key: string]: number;
+            };
+            /** By Centre */
+            by_centre: {
+                [key: string]: unknown;
+            }[];
+            /** By Kind */
+            by_kind: {
+                [key: string]: unknown;
+            }[];
+            /** Radar Recent */
+            radar_recent: components["schemas"]["UniverseRow"][];
         };
     };
     responses: never;
@@ -2204,6 +2474,173 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Page_ConflictOut_"];
+                };
+            };
+            /** @description Parâmetro inválido (RFC 7807). */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Rate limit local excedido; ver Retry-After. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Erro interno sem detalhes sensíveis. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    list_universe_api_v1_universe_get: {
+        parameters: {
+            query?: {
+                tier?: ("curated" | "radar" | "universe") | null;
+                side?: ("buy_side" | "sell_side") | null;
+                kind?: ("gestora" | "banco_multiplo" | "banco_investimento" | "caixa_economica" | "corretora" | "distribuidora" | "administrador_fiduciario" | "custodiante" | "escriturador" | "infraestrutura_mercado") | null;
+                /** @description Ex.: Faria Lima. */
+                centre?: string | null;
+                /** @description Nome, grupo ou CNPJ. */
+                q?: string | null;
+                sort?: "nav" | "net_flow" | "name" | "registered" | "administered" | "classes";
+                /** @description Direção da ordenação. */
+                order?: "asc" | "desc";
+                /** @description Página, a partir de 1. */
+                page?: number;
+                /** @description Itens por página (máx. 200). */
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_UniverseRow_"];
+                };
+            };
+            /** @description Parâmetro inválido (RFC 7807). */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Rate limit local excedido; ver Retry-After. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Erro interno sem detalhes sensíveis. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_universe_summary_api_v1_universe_summary_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UniverseSummary"];
+                };
+            };
+            /** @description Parâmetro inválido (RFC 7807). */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Rate limit local excedido; ver Retry-After. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Erro interno sem detalhes sensíveis. */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_universe_entity_api_v1_universe__cnpj__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                cnpj: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UniverseDetail"];
+                };
+            };
+            /** @description Recurso inexistente. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Problem"];
                 };
             };
             /** @description Parâmetro inválido (RFC 7807). */

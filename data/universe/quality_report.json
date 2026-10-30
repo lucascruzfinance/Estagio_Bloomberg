@@ -1,0 +1,338 @@
+{
+  "version": "universe-v1.0.0",
+  "run_at": "2026-10-30T18:49:28+00:00",
+  "today": "2026-10-30",
+  "window": {
+    "start": "2023-10-01",
+    "months": [
+      "202310",
+      "202311",
+      "202312",
+      "202401",
+      "202402",
+      "202403",
+      "202404",
+      "202405",
+      "202406",
+      "202407",
+      "202408",
+      "202409",
+      "202410",
+      "202411",
+      "202412",
+      "202501",
+      "202502",
+      "202503",
+      "202504",
+      "202505",
+      "202506",
+      "202507",
+      "202508",
+      "202509",
+      "202510",
+      "202511",
+      "202512",
+      "202601",
+      "202602",
+      "202603",
+      "202604",
+      "202605",
+      "202606",
+      "202607",
+      "202608",
+      "202609",
+      "202610"
+    ]
+  },
+  "ifdata_period": "202606",
+  "sources": [
+    {
+      "source_id": "bcb_ifdata_cadastro",
+      "status": "ok",
+      "data_as_of": "202606",
+      "artifacts": 1,
+      "note": "202609: resposta vazia (período ainda não publicado)"
+    },
+    {
+      "source_id": "bcb_ifdata_valores",
+      "status": "ok",
+      "data_as_of": "202606",
+      "artifacts": 6,
+      "note": "resumo: 202606, 202603, 202512, 202509, 202506; DRE: 202606; 202609: resposta vazia (período ainda não publicado)"
+    },
+    {
+      "source_id": "bcb_sgs",
+      "status": "ok",
+      "data_as_of": "2026-10-29",
+      "artifacts": 3,
+      "note": "cdi: 794 pontos até 2026-10-29; ipca: 38 pontos até 2026-09-01; ptax_usd: 795 pontos até 2026-10-30"
+    },
+    {
+      "source_id": "cvm_cad_adm_cart",
+      "status": "ok",
+      "data_as_of": "2026-10-29",
+      "artifacts": 1,
+      "note": ""
+    },
+    {
+      "source_id": "cvm_cad_fi_hist",
+      "status": "ok",
+      "data_as_of": "2026-10-30",
+      "artifacts": 1,
+      "note": "último evento no arquivo: 2026-10-29"
+    },
+    {
+      "source_id": "cvm_cad_intermed",
+      "status": "ok",
+      "data_as_of": "2026-10-30",
+      "artifacts": 1,
+      "note": ""
+    },
+    {
+      "source_id": "cvm_cda",
+      "status": "ok",
+      "data_as_of": "202609",
+      "artifacts": 3,
+      "note": "202610: offline and not cached"
+    },
+    {
+      "source_id": "cvm_inf_diario",
+      "status": "ok",
+      "data_as_of": "202610",
+      "artifacts": 37,
+      "note": ""
+    },
+    {
+      "source_id": "cvm_lamina",
+      "status": "ok",
+      "data_as_of": "202609",
+      "artifacts": 1,
+      "note": "202610: offline and not cached"
+    },
+    {
+      "source_id": "cvm_perfil_mensal",
+      "status": "ok",
+      "data_as_of": "202609",
+      "artifacts": 3,
+      "note": "202610: offline and not cached"
+    },
+    {
+      "source_id": "cvm_registro_fundo_classe",
+      "status": "ok",
+      "data_as_of": "2026-10-29",
+      "artifacts": 1,
+      "note": ""
+    },
+    {
+      "source_id": "osm_nominatim",
+      "status": "ok",
+      "data_as_of": null,
+      "artifacts": 544,
+      "note": "254/544 prédios com precisão de porta"
+    }
+  ],
+  "anomalies": {
+    "registry_fund_nav_above_cap": [
+      {
+        "fund_cnpj": "40997857000142",
+        "fund_name": "MARE FUNDO DE INVESTIMENTO MULTIMERCADO RESPONSABILIDADE LIMITADA",
+        "nav_brl": 16681769898106.04,
+        "nav_date": "2025-08-14"
+      },
+      {
+        "fund_cnpj": "46975107000156",
+        "fund_name": "SERENA FUNDO DE INVESTIMENTO MULTIMERCADO RESPONSABILIDADE LIMITADA",
+        "nav_brl": 16681767146501.24,
+        "nav_date": "2025-08-14"
+      },
+      {
+        "fund_cnpj": "47525165000140",
+        "fund_name": "SOLE FUNDO DE INVESTIMENTO MULTIMERCADO RESPONSABILIDADE LIMITADA",
+        "nav_brl": 16681769901785.62,
+        "nav_date": "2025-08-14"
+      }
+    ],
+    "daily_nav_above_cap": []
+  },
+  "curated_gaps": [],
+  "snapshot_bytes": {
+    "bank_financials.parquet": 182952,
+    "bank_institutions.csv": 255315,
+    "benchmarks.csv": 175525,
+    "buildings.csv": 172582,
+    "curated_account_entities.csv": 15199,
+    "curated_accounts.csv": 6152,
+    "economic_groups.csv": 70807,
+    "entities.csv": 829395,
+    "fund_classes.parquet": 930180,
+    "fund_daily_curated.parquet": 17905937,
+    "fund_events.csv": 3424679,
+    "fund_holdings.csv": 3501446,
+    "fund_laminas.csv": 89656,
+    "fund_monthly.parquet": 4437228,
+    "fund_profiles.csv": 2632057,
+    "group_memberships.csv": 192891,
+    "manager_monthly.parquet": 391205,
+    "quality_report.json": 9058,
+    "source_manifest.csv": 73083
+  },
+  "snapshot_total_bytes": 35295347,
+  "counts": {
+    "entities": 1447,
+    "by_kind": {
+      "administrador_fiduciario": 122,
+      "banco_investimento": 10,
+      "banco_multiplo": 62,
+      "corretora": 49,
+      "custodiante": 135,
+      "distribuidora": 84,
+      "escriturador": 68,
+      "gestora": 1240,
+      "infraestrutura_mercado": 9
+    },
+    "by_primary_kind": {
+      "administrador_fiduciario": 12,
+      "banco_investimento": 10,
+      "banco_multiplo": 62,
+      "corretora": 44,
+      "custodiante": 8,
+      "distribuidora": 69,
+      "gestora": 1233,
+      "infraestrutura_mercado": 9
+    },
+    "by_side": {
+      "buy_side": 1228,
+      "sell_side": 219
+    },
+    "by_tier": {
+      "curated": 102,
+      "radar": 174,
+      "universe": 1171
+    },
+    "by_centre": {
+      "Barra / São Conrado (RJ)": {
+        "administrador_fiduciario": 1,
+        "banco_multiplo": 1,
+        "corretora": 2,
+        "distribuidora": 2,
+        "gestora": 29
+      },
+      "Berrini / Chucri Zaidan": {
+        "administrador_fiduciario": 1,
+        "banco_multiplo": 7,
+        "distribuidora": 4,
+        "gestora": 44
+      },
+      "Botafogo (RJ)": {
+        "banco_multiplo": 3,
+        "corretora": 1,
+        "distribuidora": 3,
+        "gestora": 23
+      },
+      "Centro (RJ)": {
+        "banco_multiplo": 1,
+        "corretora": 1,
+        "custodiante": 2,
+        "distribuidora": 6,
+        "gestora": 25
+      },
+      "Centro (SP)": {
+        "administrador_fiduciario": 1,
+        "corretora": 1,
+        "gestora": 3,
+        "infraestrutura_mercado": 1
+      },
+      "Cidade Jardim / Jardins": {
+        "banco_multiplo": 1,
+        "corretora": 2,
+        "distribuidora": 3,
+        "gestora": 96,
+        "infraestrutura_mercado": 1
+      },
+      "Faria Lima": {
+        "administrador_fiduciario": 3,
+        "banco_investimento": 3,
+        "banco_multiplo": 11,
+        "corretora": 16,
+        "custodiante": 1,
+        "distribuidora": 18,
+        "gestora": 306,
+        "infraestrutura_mercado": 4
+      },
+      "JK / Vila Olímpia": {
+        "administrador_fiduciario": 6,
+        "banco_investimento": 4,
+        "banco_multiplo": 15,
+        "corretora": 13,
+        "custodiante": 2,
+        "distribuidora": 20,
+        "gestora": 443,
+        "infraestrutura_mercado": 2
+      },
+      "Leblon / Ipanema (RJ)": {
+        "distribuidora": 3,
+        "gestora": 134
+      },
+      "Osasco": {
+        "banco_multiplo": 3,
+        "distribuidora": 3
+      },
+      "Outros bairros (RJ)": {
+        "gestora": 7
+      },
+      "Outros bairros (SP)": {
+        "banco_multiplo": 8,
+        "corretora": 2,
+        "distribuidora": 3,
+        "gestora": 82
+      },
+      "Paulista": {
+        "banco_investimento": 3,
+        "banco_multiplo": 12,
+        "corretora": 6,
+        "custodiante": 3,
+        "distribuidora": 4,
+        "gestora": 40,
+        "infraestrutura_mercado": 1
+      },
+      "fora do universo": {
+        "gestora": 1
+      }
+    },
+    "managers_with_active_classes": 1007,
+    "groups": 1331,
+    "entities_by_group_basis": {
+      "cnpj_root": 1165,
+      "curated_registry": 102,
+      "ifdata_conglomerate": 180
+    },
+    "group_suggestions_pending": 122,
+    "curated_accounts": 36,
+    "curated_entities": 102,
+    "curated_gaps": 0,
+    "classes": 30710,
+    "classes_active": 30702,
+    "classes_selected": 5226,
+    "daily_rows_curated": 1036609,
+    "daily_series_curated": 1571,
+    "monthly_rows": 163177,
+    "monthly_series": 5240,
+    "manager_month_rows": 25009,
+    "inf_diario_rows_read": 19713352,
+    "holdings_rows": 15346,
+    "profile_rows": 15300,
+    "lamina_rows": 354,
+    "manager_events": 22580,
+    "ifdata_institutions": 1274,
+    "ifdata_values": 33264,
+    "benchmark_points": 1627,
+    "buildings": 544,
+    "buildings_by_precision": {
+      "address": 254,
+      "none": 175,
+      "street": 112,
+      "unknown": 3
+    },
+    "entities_geocoded": 869
+  }
+}

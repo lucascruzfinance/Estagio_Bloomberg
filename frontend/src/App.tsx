@@ -11,6 +11,7 @@ import { AccountScreen } from './screens/AccountScreen'
 import { CompareScreen } from './screens/CompareScreen'
 import { PriorityScreen } from './screens/PriorityScreen'
 import { QualityScreen } from './screens/QualityScreen'
+import { UniverseScreen } from './screens/UniverseScreen'
 
 const MapScreen = lazy(() => import('./screens/MapScreen').then((module) => ({ default: module.MapScreen })))
 
@@ -53,6 +54,7 @@ function Layout() {
           />
           <Route path="/comparar" element={<CompareScreen />} />
           <Route path="/qualidade" element={<QualityScreen />} />
+          <Route path="/universo" element={<UniverseScreen />} />
           <Route path="/contas" element={<AccountScreen />} />
           <Route path="/contas/:accountId" element={<AccountScreen />} />
           <Route path="*" element={<Navigate to="/" replace />} />

@@ -12,6 +12,7 @@ from sqlalchemy import (
     CheckConstraint,
     Date,
     DateTime,
+    Float,
     ForeignKey,
     Index,
     Integer,
@@ -22,7 +23,7 @@ from sqlalchemy import (
     func,
     text,
 )
-from sqlalchemy.dialects.postgresql import JSONB, UUID
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from networking_intel.db.base import Base
@@ -669,4 +670,402 @@ class FieldProvenance(Base):
         CheckConstraint(CONFIDENCE_CHECK, name="ck_field_provenance_confidence"),
         CheckConstraint("value_hash ~ '^[0-9a-f]{64}$'", name="ck_field_provenance_hash"),
         Index("ix_field_provenance_entity", "entity_type", "entity_id"),
+    )
+
+
+# --- Territory universe (Prompt 8, migration 0003). Constraints live in the migration. ---
+
+
+class EconomicGroup(Base, TimestampMixin):
+    __tablename__ = "economic_groups"
+
+    group_key: Mapped[str] = mapped_column(String(64), primary_key=True)
+    group_name: Mapped[str] = mapped_column(Text, nullable=False)
+    basis: Mapped[str] = mapped_column(String(32), nullable=False)
+    members: Mapped[int] = mapped_column(Integer, nullable=False)
+
+
+class UniverseEntity(Base, TimestampMixin):
+    __tablename__ = "universe_entities"
+
+    cnpj: Mapped[str] = mapped_column(String(14), primary_key=True)
+    cnpj_root: Mapped[str] = mapped_column(String(8), nullable=False)
+    legal_name: Mapped[str] = mapped_column(Text, nullable=False)
+    trade_name: Mapped[str | None] = mapped_column(Text)
+    kinds: Mapped[list[str]] = mapped_column(ARRAY(Text), nullable=False)
+    primary_kind: Mapped[str] = mapped_column(String(32), nullable=False)
+    side: Mapped[str] = mapped_column(String(16), nullable=False)
+    coverage_tier: Mapped[str] = mapped_column(String(16), nullable=False)
+    curated_account_key: Mapped[str | None] = mapped_column(String(64))
+    registration_category: Mapped[str | None] = mapped_column(Text)
+    registration_date: Mapped[date | None] = mapped_column(Date)
+    street: Mapped[str | None] = mapped_column(Text)
+    complement: Mapped[str | None] = mapped_column(Text)
+    district: Mapped[str | None] = mapped_column(Text)
+    city: Mapped[str | None] = mapped_column(String(120))
+    state: Mapped[str | None] = mapped_column(String(2))
+    postal_code: Mapped[str | None] = mapped_column(String(8))
+    centre: Mapped[str | None] = mapped_column(String(48))
+    centre_basis: Mapped[str | None] = mapped_column(String(16))
+    building_key: Mapped[str | None] = mapped_column(Text)
+    location: Mapped[Any | None] = mapped_column(
+        Geometry(geometry_type="POINT", srid=4326, spatial_index=False)
+    )
+    geocode_precision: Mapped[str] = mapped_column(String(16), nullable=False, default="none")
+    geocode_is_exact: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    geocode_status: Mapped[str | None] = mapped_column(String(32))
+    h3_r8: Mapped[str | None] = mapped_column(String(16))
+    h3_r9: Mapped[str | None] = mapped_column(String(16))
+    phone_official: Mapped[str | None] = mapped_column(String(20))
+    website_official: Mapped[str | None] = mapped_column(Text)
+    group_key: Mapped[str] = mapped_column(
+        String(64), ForeignKey("economic_groups.group_key", ondelete="RESTRICT"), nullable=False
+    )
+    ifdata_cod_inst: Mapped[str | None] = mapped_column(String(16))
+    ifdata_conglomerate: Mapped[str | None] = mapped_column(String(16))
+    active_classes: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    selected_classes: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    nav_registry_non_fic_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    nav_daily_report_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    nav_daily_report_month: Mapped[date | None] = mapped_column(Date)
+    funds_administered: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    nav_administered_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=False
+    )
+    as_of_date: Mapped[date] = mapped_column(Date, nullable=False)
+
+
+class GroupMembership(Base, TimestampMixin):
+    __tablename__ = "group_memberships"
+
+    cnpj: Mapped[str] = mapped_column(
+        String(14), ForeignKey("universe_entities.cnpj", ondelete="CASCADE"), primary_key=True
+    )
+    group_key: Mapped[str] = mapped_column(
+        String(64), ForeignKey("economic_groups.group_key", ondelete="CASCADE"), nullable=False
+    )
+    basis: Mapped[str] = mapped_column(String(32), nullable=False)
+    approval_status: Mapped[str] = mapped_column(String(32), nullable=False)
+    evidence: Mapped[str] = mapped_column(Text, nullable=False)
+
+
+class CuratedAccountRecord(Base, TimestampMixin):
+    __tablename__ = "curated_accounts"
+
+    account_key: Mapped[str] = mapped_column(String(64), primary_key=True)
+    display_name: Mapped[str] = mapped_column(Text, nullable=False)
+    wave: Mapped[str] = mapped_column(String(16), nullable=False)
+    side: Mapped[str] = mapped_column(String(16), nullable=False)
+    segment: Mapped[str] = mapped_column(Text, nullable=False)
+    rationale: Mapped[str] = mapped_column(Text, nullable=False)
+    primary_cnpj: Mapped[str] = mapped_column(String(14), nullable=False)
+    approval_status: Mapped[str] = mapped_column(String(32), nullable=False)
+    organization_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("organizations.id", ondelete="SET NULL")
+    )
+
+
+class CuratedAccountEntity(Base, TimestampMixin):
+    __tablename__ = "curated_account_entities"
+
+    account_key: Mapped[str] = mapped_column(
+        String(64), ForeignKey("curated_accounts.account_key", ondelete="CASCADE"), nullable=False
+    )
+    cnpj: Mapped[str] = mapped_column(
+        String(14), ForeignKey("universe_entities.cnpj", ondelete="CASCADE"), primary_key=True
+    )
+    relation: Mapped[str] = mapped_column(String(32), nullable=False)
+    business_unit: Mapped[str | None] = mapped_column(Text)
+    approval_status: Mapped[str] = mapped_column(String(32), nullable=False)
+    relation_evidence: Mapped[str] = mapped_column(Text, nullable=False)
+
+
+class UniverseFundClass(Base, TimestampMixin):
+    __tablename__ = "universe_fund_classes"
+
+    class_cnpj: Mapped[str] = mapped_column(String(14), primary_key=True)
+    fund_cnpj: Mapped[str] = mapped_column(String(14), nullable=False)
+    manager_cnpj: Mapped[str] = mapped_column(
+        String(14), ForeignKey("universe_entities.cnpj", ondelete="CASCADE"), nullable=False
+    )
+    administrator_cnpj: Mapped[str | None] = mapped_column(String(14))
+    custodian_cnpj: Mapped[str | None] = mapped_column(String(14))
+    class_name: Mapped[str] = mapped_column(Text, nullable=False)
+    fund_type: Mapped[str | None] = mapped_column(Text)
+    class_type: Mapped[str | None] = mapped_column(Text)
+    classification: Mapped[str | None] = mapped_column(Text)
+    anbima_classification: Mapped[str | None] = mapped_column(Text)
+    benchmark: Mapped[str | None] = mapped_column(Text)
+    condominium: Mapped[str | None] = mapped_column(String(16))
+    is_exclusive: Mapped[bool | None] = mapped_column(Boolean)
+    is_fic: Mapped[bool | None] = mapped_column(Boolean)
+    target_investor: Mapped[str | None] = mapped_column(Text)
+    status: Mapped[str] = mapped_column(Text, nullable=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    is_selected: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    registry_nav_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    registry_nav_date: Mapped[date | None] = mapped_column(Date)
+    constitution_date: Mapped[date | None] = mapped_column(Date)
+    class_start_date: Mapped[date | None] = mapped_column(Date)
+    cancel_date: Mapped[date | None] = mapped_column(Date)
+    allows_full_offshore: Mapped[bool | None] = mapped_column(Boolean)
+    nav_anomaly: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    curated_account_key: Mapped[str | None] = mapped_column(String(64))
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=False
+    )
+
+
+class FundDaily(Base):
+    __tablename__ = "fund_daily"
+
+    class_cnpj: Mapped[str] = mapped_column(
+        String(14),
+        ForeignKey("universe_fund_classes.class_cnpj", ondelete="CASCADE"),
+        primary_key=True,
+    )
+    subclass_id: Mapped[str] = mapped_column(String(32), primary_key=True)
+    date: Mapped[date] = mapped_column(Date, primary_key=True)
+    quota: Mapped[float | None] = mapped_column(Float(53))
+    nav_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    inflow_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    outflow_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    investors: Mapped[int | None] = mapped_column(Integer)
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=False
+    )
+
+
+class FundMonthly(Base):
+    __tablename__ = "fund_monthly"
+
+    class_cnpj: Mapped[str] = mapped_column(
+        String(14),
+        ForeignKey("universe_fund_classes.class_cnpj", ondelete="CASCADE"),
+        primary_key=True,
+    )
+    subclass_id: Mapped[str] = mapped_column(String(32), primary_key=True)
+    month: Mapped[date] = mapped_column(Date, primary_key=True)
+    first_date: Mapped[date] = mapped_column(Date, nullable=False)
+    last_date: Mapped[date] = mapped_column(Date, nullable=False)
+    quota_first: Mapped[float | None] = mapped_column(Float(53))
+    quota_end: Mapped[float | None] = mapped_column(Float(53))
+    nav_end_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    investors_end: Mapped[int | None] = mapped_column(Integer)
+    inflow_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    outflow_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    days_reported: Mapped[int] = mapped_column(Integer, nullable=False)
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=False
+    )
+
+
+class ManagerMonthly(Base):
+    __tablename__ = "manager_monthly"
+
+    manager_cnpj: Mapped[str] = mapped_column(
+        String(14), ForeignKey("universe_entities.cnpj", ondelete="CASCADE"), primary_key=True
+    )
+    month: Mapped[date] = mapped_column(Date, primary_key=True)
+    nav_end_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    inflow_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    outflow_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    investors_end: Mapped[int | None] = mapped_column(BigInteger)
+    classes_reporting: Mapped[int] = mapped_column(Integer, nullable=False)
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=False
+    )
+
+
+class FundHoldingsSummary(Base):
+    __tablename__ = "fund_holdings_summary"
+
+    class_cnpj: Mapped[str] = mapped_column(
+        String(14),
+        ForeignKey("universe_fund_classes.class_cnpj", ondelete="CASCADE"),
+        primary_key=True,
+    )
+    month: Mapped[date] = mapped_column(Date, primary_key=True)
+    as_of_date: Mapped[date | None] = mapped_column(Date)
+    nav_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    positions: Mapped[int] = mapped_column(Integer, nullable=False)
+    derivative_positions: Mapped[int] = mapped_column(Integer, nullable=False)
+    top10_share: Mapped[float | None] = mapped_column(Float(53))
+    pct_public_bonds_repo: Mapped[float | None] = mapped_column(Float(53))
+    pct_fund_quotas: Mapped[float | None] = mapped_column(Float(53))
+    pct_equities: Mapped[float | None] = mapped_column(Float(53))
+    pct_private_credit: Mapped[float | None] = mapped_column(Float(53))
+    pct_derivatives: Mapped[float | None] = mapped_column(Float(53))
+    pct_foreign: Mapped[float | None] = mapped_column(Float(53))
+    pct_cash: Mapped[float | None] = mapped_column(Float(53))
+    pct_other: Mapped[float | None] = mapped_column(Float(53))
+    pct_confidential: Mapped[float | None] = mapped_column(Float(53))
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=False
+    )
+
+
+class FundProfileMonthly(Base):
+    __tablename__ = "fund_profile_monthly"
+
+    class_cnpj: Mapped[str] = mapped_column(
+        String(14),
+        ForeignKey("universe_fund_classes.class_cnpj", ondelete="CASCADE"),
+        primary_key=True,
+    )
+    as_of_date: Mapped[date] = mapped_column(Date, primary_key=True)
+    pct_nav_retail: Mapped[float | None] = mapped_column(Float(53))
+    pct_nav_private_banking: Mapped[float | None] = mapped_column(Float(53))
+    pct_nav_institutional: Mapped[float | None] = mapped_column(Float(53))
+    pct_nav_funds: Mapped[float | None] = mapped_column(Float(53))
+    pct_nav_non_resident: Mapped[float | None] = mapped_column(Float(53))
+    pct_nav_distributors: Mapped[float | None] = mapped_column(Float(53))
+    pct_nav_other: Mapped[float | None] = mapped_column(Float(53))
+    investors: Mapped[int | None] = mapped_column(Integer)
+    derivatives_notional_brl: Mapped[Decimal | None] = mapped_column(Numeric(22, 2))
+    var_pct: Mapped[float | None] = mapped_column(Float(53))
+    var_model: Mapped[str | None] = mapped_column(Text)
+    stress_pct: Mapped[float | None] = mapped_column(Float(53))
+    private_credit_pct: Mapped[float | None] = mapped_column(Float(53))
+    largest_investor_pct: Mapped[float | None] = mapped_column(Float(53))
+    days_to_liquidate_half: Mapped[float | None] = mapped_column(Float(53))
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=False
+    )
+
+
+class FundLamina(Base):
+    __tablename__ = "fund_laminas"
+
+    class_cnpj: Mapped[str] = mapped_column(
+        String(14),
+        ForeignKey("universe_fund_classes.class_cnpj", ondelete="CASCADE"),
+        primary_key=True,
+    )
+    subclass_id: Mapped[str] = mapped_column(String(32), primary_key=True)
+    as_of_date: Mapped[date | None] = mapped_column(Date)
+    trade_name: Mapped[str | None] = mapped_column(Text)
+    max_foreign_pct: Mapped[str | None] = mapped_column(Text)
+    max_private_credit_pct: Mapped[str | None] = mapped_column(Text)
+    max_leverage_pct: Mapped[str | None] = mapped_column(Text)
+    admin_fee_pct: Mapped[str | None] = mapped_column(Text)
+    performance_fee: Mapped[str | None] = mapped_column(Text)
+    min_initial_investment_brl: Mapped[str | None] = mapped_column(Text)
+    risk_class: Mapped[str | None] = mapped_column(Text)
+    benchmark: Mapped[str | None] = mapped_column(Text)
+    redemption_payment_days: Mapped[str | None] = mapped_column(Text)
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=False
+    )
+
+
+class FundRegistryEvent(Base):
+    __tablename__ = "fund_registry_events"
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    fund_cnpj: Mapped[str] = mapped_column(String(14), nullable=False)
+    manager_cnpj: Mapped[str] = mapped_column(
+        String(14), ForeignKey("universe_entities.cnpj", ondelete="CASCADE"), nullable=False
+    )
+    event_type: Mapped[str] = mapped_column(String(16), nullable=False)
+    event_date: Mapped[date] = mapped_column(Date, nullable=False)
+    counterparty_cnpj: Mapped[str | None] = mapped_column(String(14))
+    counterparty_name: Mapped[str | None] = mapped_column(Text)
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=False
+    )
+
+
+class BankInstitution(Base):
+    __tablename__ = "bank_institutions"
+
+    cod_inst: Mapped[str] = mapped_column(String(16), primary_key=True)
+    name: Mapped[str] = mapped_column(Text, nullable=False)
+    is_conglomerate: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    tcb: Mapped[str | None] = mapped_column(Text)
+    td: Mapped[str | None] = mapped_column(Text)
+    tc: Mapped[str | None] = mapped_column(Text)
+    segment: Mapped[str | None] = mapped_column(Text)
+    sr: Mapped[str | None] = mapped_column(Text)
+    state: Mapped[str | None] = mapped_column(String(2))
+    city: Mapped[str | None] = mapped_column(String(120))
+    financial_conglomerate: Mapped[str | None] = mapped_column(String(16))
+    prudential_conglomerate: Mapped[str | None] = mapped_column(String(16))
+    leader_cnpj_root: Mapped[str | None] = mapped_column(String(8))
+    activity_start: Mapped[str | None] = mapped_column(Text)
+    period: Mapped[str] = mapped_column(String(6), nullable=False)
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=False
+    )
+
+
+class BankFinancial(Base):
+    __tablename__ = "bank_financials"
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    cod_inst: Mapped[str] = mapped_column(
+        String(16), ForeignKey("bank_institutions.cod_inst", ondelete="CASCADE"), nullable=False
+    )
+    period: Mapped[str] = mapped_column(String(6), nullable=False)
+    report: Mapped[str] = mapped_column(String(4), nullable=False)
+    report_name: Mapped[str] = mapped_column(Text, nullable=False)
+    group_name: Mapped[str] = mapped_column(Text, nullable=False)
+    account_code: Mapped[str] = mapped_column(String(16), nullable=False)
+    metric: Mapped[str] = mapped_column(Text, nullable=False)
+    value: Mapped[Decimal | None] = mapped_column(Numeric(26, 2))
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=False
+    )
+
+
+class Benchmark(Base):
+    __tablename__ = "benchmarks"
+
+    series_key: Mapped[str] = mapped_column(String(16), primary_key=True)
+    date: Mapped[date] = mapped_column(Date, primary_key=True)
+    value: Mapped[float] = mapped_column(Float(53), nullable=False)
+    unit: Mapped[str] = mapped_column(String(32), nullable=False)
+    sgs_code: Mapped[int] = mapped_column(Integer, nullable=False)
+    source_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=False
+    )
+
+
+class Building(Base):
+    __tablename__ = "buildings"
+
+    building_key: Mapped[str] = mapped_column(Text, primary_key=True)
+    tenants: Mapped[int] = mapped_column(Integer, nullable=False)
+    location: Mapped[Any | None] = mapped_column(
+        Geometry(geometry_type="POINT", srid=4326, spatial_index=False)
+    )
+    precision: Mapped[str] = mapped_column(String(16), nullable=False)
+    is_exact: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False)
+    display_name: Mapped[str | None] = mapped_column(Text)
+    h3_r8: Mapped[str | None] = mapped_column(String(16))
+    h3_r9: Mapped[str | None] = mapped_column(String(16))
+    provider: Mapped[str] = mapped_column(Text, nullable=False)
+    attribution: Mapped[str] = mapped_column(Text, nullable=False)
+    fetched_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    source_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sources.id", ondelete="RESTRICT"), nullable=True
+    )
+
+
+class CrmStatus(Base):
+    """Commercial status imported from the CRM; empty until real data exists."""
+
+    __tablename__ = "crm_status"
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    account_key: Mapped[str | None] = mapped_column(String(64))
+    cnpj: Mapped[str | None] = mapped_column(String(14))
+    status: Mapped[str] = mapped_column(String(32), nullable=False)
+    relationship: Mapped[str | None] = mapped_column(String(16))
+    as_of_date: Mapped[date] = mapped_column(Date, nullable=False)
+    source_note: Mapped[str] = mapped_column(Text, nullable=False)
+    imported_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
     )

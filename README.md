@@ -1,83 +1,140 @@
 # Prospecção de contas: sales intelligence explicável
 
-MVP que prioriza 12 contas-piloto (gestoras, family office e mesas de dois bancos) para o time de vendas, separando **fit**, **timing** e **confiança dos dados**, com fonte e data para cada número. Não é previsão de compra.
+Ferramenta para o time de vendas da Bloomberg no Brasil decidir **quem visitar, em qual área e com qual conversa**. Ela separa **fit** (o workflow depende de dados?), **timing** (há uma mudança recente que abre conversa?) e **confiança** (quanto disso tem fonte recente), com fonte e data em cada número. Não é previsão de compra.
 
-## Demo em um comando
+> **Novo no projeto? Leia o [GUIA.md](GUIA.md)**: o que é, como funciona, critérios, pontuação, fontes, bibliotecas, números para citar e roteiro para os avaliadores.
 
-Pré-requisitos: Python 3.11, Node.js 20+ e um PostgreSQL 16 com PostGIS acessível (Docker ou o pacote portátil descrito abaixo).
+O que tem dentro:
+
+- **Contas curadas e pontuadas** (telas 1 a 5): 12 contas-piloto (gestoras, family office e mesas de BTG e Itaú BBA) com score explicável, mais 24 contas da onda 2 mapeadas por CNPJ, pendentes de revisão humana.
+- **Universo SP/RJ** (tela 6): 1.447 gestoras, bancos, corretoras e administradores ativos na CVM em São Paulo, Rio de Janeiro e Osasco, com grupo econômico, centro financeiro, PL e captação mês a mês de 36 meses.
+
+---
+
+## Como executar (Windows, nesta máquina)
+
+Tudo no **PowerShell**, dentro da pasta do projeto:
+
+```powershell
+cd C:\Users\Lucas\Desktop\Estagio_Bloomberg
+```
+
+### Passo 1: subir o app (um comando)
+
+O comando liga sozinho o PostgreSQL local se ele estiver desligado.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\demo.py
+```
+
+Espere a linha **`[demo] pronto: abra http://127.0.0.1:4173`**. Leva cerca de 2 minutos: o comando carrega o banco, compila o dashboard e sobe a API e o dashboard. **Deixe essa janela aberta** enquanto usa o app.
+
+### Passo 2: abrir no navegador
+
+**http://127.0.0.1:4173**
+
+O selo **DEMO** no topo indica a base congelada (dados públicos de outubro/2026). Para encerrar, volte ao PowerShell e aperte `Ctrl+C`.
+
+### Se algo der errado
+
+| Mensagem | O que fazer |
+|---|---|
+| `porta(s) 8000, 4173 já em uso` | Já existe um app aberto. Feche a outra janela do PowerShell (`Ctrl+C`) ou rode `.\.venv\Scripts\python.exe scripts\demo.py --api-port 8010 --web-port 4180` e abra http://127.0.0.1:4180 |
+| `não foi possível conectar em localhost:5433` | O banco não ligou sozinho. Confira com `C:\Users\Lucas\tools\pgsql16\pgsql\bin\pg_ctl.exe -D C:\Users\Lucas\tools\pgdata16 status`; se estiver parado, troque `status` por `start` |
+| `password authentication failed` | O `.env` foi trocado. **Nunca** copie o `.env.example` por cima do `.env` desta máquina; ele guarda a senha local |
+| `npm não encontrado` | Instale o Node.js 20+ e abra um PowerShell novo |
+| A página abre mas o mapa fica sem fundo | Sem internet o mapa perde só o fundo; os pontos continuam |
+
+Para verificar tudo sem abrir o navegador: `.\.venv\Scripts\python.exe scripts\demo.py --check` (sobe, testa cada camada e encerra).
+
+### Primeira instalação em outra máquina
+
+Pré-requisitos: Python 3.11, Node.js 20+ e PostgreSQL 16 com PostGIS (portátil ou `docker compose up --build -d db migrate`).
 
 ```powershell
 py -3.11 -m venv .venv
 .\.venv\Scripts\pip.exe install -r requirements\dev.lock
-Copy-Item .env.example .env        # ajuste DATABASE_URL e a senha
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }   # depois ajuste porta e senha do banco no .env
 .\.venv\Scripts\python.exe scripts\demo.py
 ```
 
-Abra http://127.0.0.1:4173. O comando cria o banco se faltar, migra, faz o seed determinístico das 12 contas a partir dos arquivos versionados (sem rede), compila o dashboard e sobe API e dashboard em **modo DEMO** (selo no topo; base congelada de 27/10/2026). `--check` verifica todas as camadas e encerra; `--database-url` aponta para outro banco.
+---
 
-Sem internet tudo funciona; só o mapa perde o fundo (os escritórios continuam posicionados, com aviso).
+## Como navegar
 
-### Banco de dados
+| Tecla | Tela | Para quê |
+|---|---|---|
+| `1` | **Prioridade** | Ranking das 22 unidades pontuadas (bancos por mesa). O ponto é o observado; a faixa cinza é o quanto pode mudar com o que falta |
+| `2` | **Mapa** | Escritórios do piloto. Ponto cheio = endereço exato; anel = aproximado |
+| `3` | **Comparador** | Até 5 unidades lado a lado |
+| `4` | **Qualidade dos dados** | Atualização das fontes e fila de revisão humana |
+| `5` | **Conta 360** | Preparação de reunião: fatores, fundos, contatos institucionais, workflows hipotéticos |
+| `6` | **Universo SP/RJ** | Território completo com filtros (buy/sell side, curada/radar/universo, tipo, centro). Clique numa linha para ver PL e captação mês a mês, maiores fundos e fonte |
+| `/` | **Busca** | Conta, alias ou CNPJ |
 
-Com Docker:
+Roteiros de 90 segundos e de 5 minutos: [docs/demo_script.md](docs/demo_script.md).
 
-```powershell
-docker compose up --build -d db migrate
-```
+---
 
-Sem Docker nem administrador (Windows): PostgreSQL 16 portátil (binários da EnterpriseDB) + bundle PostGIS (OSGeo) extraídos em `C:\Users\Lucas\tools\pgsql16`, cluster em `C:\Users\Lucas\tools\pgdata16`, porta 5433, só localhost:
+## Como funciona, em uma página
 
-```powershell
-C:\Users\Lucas\tools\pgsql16\pgsql\bin\pg_ctl.exe -D C:\Users\Lucas\tools\pgdata16 -l C:\Users\Lucas\tools\pgdata16\server.log start
-```
+1. **Dados públicos** (CVM, Banco Central, OpenStreetMap) são baixados com cache imutável em `data/raw/` (fora do git).
+2. **Pipelines em Python** cruzam tudo por **CNPJ exato**; nome parecido só vira sugestão para revisão. O resultado vai para `data/enriched/`, `data/scored/` e `data/universe/`, que são versionados e alimentam a demo offline.
+3. **PostgreSQL + PostGIS** guarda os dados com proveniência; a **API FastAPI** é somente leitura.
+4. O **dashboard em React** mostra tudo, sempre com fonte e data.
+
+Detalhes, critérios e pesos: [GUIA.md](GUIA.md).
 
 ## Documentação
 
-| Documento                                                                                                            | Conteúdo                                                                            |
-| -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| `docs/demo_script.md`                                                                                              | Roteiro de 90 s e de 5 min, plano B e perguntas prováveis                           |
-| `docs/architecture.md`                                                                                             | Diagrama e decisões de trade-off                                                    |
-| `docs/delivery_report.md`                                                                                          | O que foi validado tecnicamente, o que falta validar economicamente e comercialmente |
-| `docs/pilot_metrics.md`                                                                                            | Métricas do piloto (definições, sem resultados inventados)                        |
-| `docs/validation_report.md`                                                                                        | Validação independente por amostragem (gerada por script)                          |
-| `docs/security_review.md`                                                                                          | Segurança, dependências, logs e LGPD                                               |
-| `docs/data_audit.md`, `docs/enrichment_quality_report.md`, `docs/opportunity_model_report.md`, `docs/api.md` | Relatórios dos prompts 1, 3, 4 e 5                                                  |
+| Documento | Conteúdo |
+|---|---|
+| [GUIA.md](GUIA.md) | **Comece aqui**: projeto, critérios, pontuação, fontes, bibliotecas, perguntas prováveis |
+| [docs/demo_script.md](docs/demo_script.md) | Roteiro da apresentação e plano B |
+| [docs/universe.md](docs/universe.md) | Universo SP/RJ: centros, maiores grupos, sell side, administradores, radar |
+| [docs/curated_wave2.md](docs/curated_wave2.md) | As 24 contas da onda 2, com CNPJs e evidência |
+| [docs/data_sources.md](docs/data_sources.md) | Catálogo de fontes com status verificado |
+| [docs/delivery_report.md](docs/delivery_report.md) | O que foi validado e o que falta |
+| [docs/architecture.md](docs/architecture.md) | Arquitetura e decisões |
+| [docs/opportunity_model_report.md](docs/opportunity_model_report.md) | Modelo de pontuação, sensibilidade e limitações |
+| [docs/validation_report.md](docs/validation_report.md) | Validação independente por amostragem |
+| [docs/security_review.md](docs/security_review.md) | Segurança e LGPD |
+| [prompts_codex.md](prompts_codex.md) | Revisão crítica e plano dos próximos passos |
 
-## Pipeline completo (atualizar os dados)
+---
+
+## Para desenvolvedores
+
+### Atualizar os dados (online, com cache)
 
 ```powershell
 $env:PYTHONPATH='src'
 .\.venv\Scripts\alembic.exe upgrade head
 .\.venv\Scripts\python.exe -m networking_intel.etl.cli               # 12 contas da planilha tratada
-.\.venv\Scripts\python.exe -m networking_intel.enrichment.cli        # CVM, BCB, Nominatim (online, com cache)
+.\.venv\Scripts\python.exe -m networking_intel.enrichment.cli        # CVM, BCB, Nominatim
 .\.venv\Scripts\python.exe -m networking_intel.scoring.cli           # fit, timing, confiança
-.\.venv\Scripts\python.exe -m networking_intel.etl.load_enriched     # carga idempotente no banco
-.\.venv\Scripts\uvicorn.exe networking_intel.api.app:create_app --factory --port 8000 --no-server-header
+.\.venv\Scripts\python.exe -m networking_intel.etl.load_enriched     # carga no banco
+.\.venv\Scripts\python.exe -m networking_intel.universe.cli          # universo SP/RJ (~1 min com cache)
+.\.venv\Scripts\python.exe -m networking_intel.etl.load_universe     # carga do universo
 ```
 
-- Enriquecimento: `--offline` usa só o cache bruto `data/raw/` (fora do git); `--skip-geocode` pula o Nominatim.
-- Revisão humana: `data/review/conflicts.csv` e `data/reference/identity_registry.yaml`.
-- Modelo: pesos e premissas em `config/scoring/opportunity_v1.yaml` (mude `model_version` a cada alteração); sinais curados com fonte em `data/reference/commercial_signals.csv`.
-- API: OpenAPI em http://localhost:8000/docs; `/health`, `/ready`, `/metrics`.
+`--offline` usa só o cache bruto; `--skip-geocode` pula o Nominatim.
 
-Dashboard em modo desenvolvimento (API em `:8000`):
+### Modo desenvolvimento
 
 ```powershell
-cd frontend
-npm install
-npm run dev        # http://localhost:5173; teclas 1–5 trocam de tela, / busca
+$env:PYTHONPATH='src'; .\.venv\Scripts\uvicorn.exe networking_intel.api.app:create_app --factory --port 8000
+cd frontend; npm run dev        # http://localhost:5173 (em outro PowerShell)
 ```
 
-## Testes e validação
+API documentada em http://localhost:8000/docs.
+
+### Testes
 
 ```powershell
 .\.venv\Scripts\ruff.exe check src scripts tests migrations
 .\.venv\Scripts\mypy.exe src scripts tests
 $env:TEST_DATABASE_URL = (Select-String -Path .env -Pattern '^TEST_DATABASE_URL=(.*)').Matches.Groups[1].Value
-.\.venv\Scripts\python.exe -m pytest -q                      # unitários + integração com PostGIS
-.\.venv\Scripts\python.exe scripts\validate_sample.py        # validação independente (API em :8000)
-
-cd frontend
-npm run lint; npm run typecheck; npm test                   # oxlint, tsc, Vitest
-npm run test:e2e                                             # Playwright 1366×768 e 1440×900, axe, offline
+.\.venv\Scripts\python.exe -m pytest -q          # 128 testes, inclui integração com PostGIS
+cd frontend; npm run lint; npm run typecheck; npm test; npm run test:e2e
 ```

@@ -22,6 +22,7 @@ export function Nav() {
     { key: '2', to: '/mapa', label: 'Mapa', keepSearch: true },
     { key: '3', to: '/comparar', label: `Comparador${compare.length ? ` (${compare.length})` : ''}`, keepSearch: true },
     { key: '4', to: '/qualidade', label: 'Qualidade dos dados', keepSearch: false },
+    { key: '6', to: '/universo', label: 'Universo SP/RJ', keepSearch: false },
   ]
 
   useEffect(() => {

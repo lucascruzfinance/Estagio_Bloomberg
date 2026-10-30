@@ -4,9 +4,10 @@
     python scripts/demo.py --check      # same, then verify every layer and exit
     python scripts/demo.py --database-url postgresql+psycopg://.../networking_demo
 
-Steps: create the database if missing -> migrate -> deterministic seed of the 12
-pilot accounts from files in the repository (no network) -> content fingerprint ->
-build the dashboard -> start the API (APP_DATA_MODE=demo) and the dashboard.
+Steps: check the ports -> create the database if missing -> migrate -> deterministic
+seed of the 12 pilot accounts and of the SP/RJ universe from files in the repository
+(no network) -> content fingerprint -> build the dashboard -> start the API
+(APP_DATA_MODE=demo) and the dashboard.
 The basemap is the only online dependency; without internet the map still shows
 the offices over a plain background and says so.
 """
@@ -19,6 +20,7 @@ import json
 import os
 import shutil
 import signal
+import socket
 import subprocess
 import sys
 import time
@@ -33,10 +35,12 @@ from alembic import command  # noqa: E402
 from alembic.config import Config  # noqa: E402
 from sqlalchemy import create_engine, text  # noqa: E402
 from sqlalchemy.engine import make_url  # noqa: E402
+from sqlalchemy.exc import OperationalError  # noqa: E402
 
 from networking_intel.config import get_settings  # noqa: E402
 from networking_intel.etl.load import run_etl  # noqa: E402
 from networking_intel.etl.load_enriched import run_enriched_load  # noqa: E402
+from networking_intel.etl.load_universe import expected_counts, run_universe_load  # noqa: E402
 
 FINGERPRINT_QUERIES = {
     "organizations": "SELECT account_id, cnpj, legal_name FROM organizations ORDER BY account_id",
@@ -56,6 +60,16 @@ FINGERPRINT_QUERIES = {
         "SELECT unit_key, rank, tier, priority_point, fit_point, timing_point, confidence "
         "FROM opportunity_scores ORDER BY unit_key"
     ),
+    "universe_entities": (
+        "SELECT cnpj, coverage_tier, primary_kind, side, group_key, centre, geocode_precision, "
+        "round(ST_X(location)::numeric, 6), round(ST_Y(location)::numeric, 6) "
+        "FROM universe_entities ORDER BY cnpj"
+    ),
+    "universe_series": (
+        "SELECT (SELECT count(*) FROM fund_daily), (SELECT count(*) FROM fund_monthly), "
+        "(SELECT sum(nav_end_brl) FROM manager_monthly), (SELECT count(*) FROM bank_financials), "
+        "(SELECT count(*) FROM benchmarks)"
+    ),
 }
 
 
@@ -63,11 +77,27 @@ def log(message: str) -> None:
     print(f"[demo] {message}", flush=True)
 
 
+class DatabaseUnavailableError(RuntimeError):
+    pass
+
+
 def ensure_database(url: str) -> None:
     parsed = make_url(url)
-    admin = create_engine(parsed.set(database="postgres"), isolation_level="AUTOCOMMIT")
+    admin = create_engine(
+        parsed.set(database="postgres"),
+        isolation_level="AUTOCOMMIT",
+        connect_args={"connect_timeout": 5},
+    )
     try:
-        with admin.connect() as connection:
+        try:
+            connection_context = admin.connect()
+        except OperationalError as error:
+            raise DatabaseUnavailableError(
+                f"não foi possível conectar em {parsed.host}:{parsed.port} como {parsed.username}. "
+                "Confira se o PostgreSQL está rodando e se a porta e a senha do .env estão certas "
+                f"({type(error.orig).__name__})."
+            ) from None
+        with connection_context as connection:
             exists = connection.execute(
                 text("SELECT 1 FROM pg_database WHERE datname = :name"), {"name": parsed.database}
             ).scalar()
@@ -76,6 +106,26 @@ def ensure_database(url: str) -> None:
                 connection.execute(text(f'CREATE DATABASE "{parsed.database}"'))
     finally:
         admin.dispose()
+
+
+# Portable PostgreSQL (no admin rights) used on the presentation laptop; overridable.
+PG_CTL = Path(os.environ.get("PG_CTL_PATH", Path.home() / "tools/pgsql16/pgsql/bin/pg_ctl.exe"))
+PG_DATA = Path(os.environ.get("PGDATA_PATH", Path.home() / "tools/pgdata16"))
+
+
+def start_local_postgres() -> bool:
+    """Start the portable cluster if it exists and is stopped. True when it was started."""
+    if not (PG_CTL.exists() and PG_DATA.exists()):
+        return False
+    status = subprocess.run([str(PG_CTL), "-D", str(PG_DATA), "status"], capture_output=True)
+    if status.returncode == 0:
+        return False
+    log("PostgreSQL desligado: ligando o servidor local")
+    started = subprocess.run(
+        [str(PG_CTL), "-D", str(PG_DATA), "-l", str(PG_DATA / "server.log"), "-w", "start"],
+        capture_output=True,
+    )
+    return started.returncode == 0
 
 
 def migrate(url: str) -> None:
@@ -92,7 +142,9 @@ def fingerprint(url: str) -> tuple[str, dict[str, int]]:
     with engine.connect() as connection:
         for name, sql in FINGERPRINT_QUERIES.items():
             rows = connection.execute(text(sql)).all()
-            counts[name] = len(rows) if name != "observations" else int(rows[0][0])
+            counts[name] = (
+                int(rows[0][0]) if name in {"observations", "universe_series"} else len(rows)
+            )
             digest.update(name.encode())
             digest.update(json.dumps([list(r) for r in rows], default=str).encode())
     engine.dispose()
@@ -106,6 +158,8 @@ def seed(url: str) -> tuple[str, dict[str, int]]:
     run_etl(ROOT / "data/staging/pilot_accounts.csv", url)
     log("carga do enriquecimento e dos scores versionados (sem rede)")
     run_enriched_load(ROOT, url)
+    log("carga do universo SP/RJ (gestoras, sell side, séries de fundos)")
+    run_universe_load(ROOT, url)
     return fingerprint(url)
 
 
@@ -140,6 +194,12 @@ def stop(process: subprocess.Popen[bytes]) -> None:
         process.kill()
 
 
+def port_in_use(port: int) -> bool:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+        probe.settimeout(0.5)
+        return probe.connect_ex(("127.0.0.1", port)) == 0
+
+
 def build_frontend() -> None:
     npm = shutil.which("npm")
     if npm is None:
@@ -169,6 +229,14 @@ def check(api: str, web: str) -> list[str]:
     accounts = get_json(f"{api}/api/v1/accounts?page_size=200")
     if accounts["meta"]["total"] != 12:
         problems.append(f"esperava 12 contas, veio {accounts['meta']['total']}")
+    universe = get_json(f"{api}/api/v1/universe/summary")
+    expected = expected_counts(ROOT)["universe_entities"]
+    if universe["totals"]["entities"] != expected:
+        problems.append(
+            f"universo: esperava {expected} entidades, veio {universe['totals']['entities']}"
+        )
+    if universe["totals"]["curated_accounts"] != 36:
+        problems.append("universo: esperava 36 contas curadas (piloto + onda 2)")
     offices = get_json(f"{api}/api/v1/map/offices")
     if offices["meta"]["count"] == 0:
         problems.append("nenhum escritório georreferenciado")
@@ -194,9 +262,30 @@ def main() -> int:
     parser.add_argument("--web-port", type=int, default=4173)
     args = parser.parse_args()
 
+    busy = [
+        p
+        for p in (args.api_port, None if args.no_frontend else args.web_port)
+        if p and port_in_use(p)
+    ]
+    if busy:
+        log(
+            f"ERRO: porta(s) {', '.join(map(str, busy))} já em uso (outra API/dashboard aberto). "
+            "Feche a janela antiga com Ctrl+C ou rode com --api-port 8010 --web-port 4180."
+        )
+        return 3
     url = args.database_url or get_settings().database_url
     log(f"banco {make_url(url).render_as_string(hide_password=True)}")
-    ensure_database(url)
+    try:
+        ensure_database(url)
+    except DatabaseUnavailableError as error:
+        if not start_local_postgres():
+            log(f"ERRO: {error}")
+            return 2
+        try:
+            ensure_database(url)
+        except DatabaseUnavailableError as retry_error:
+            log(f"ERRO: {retry_error}")
+            return 2
     digest, counts = seed(url)
     log(f"impressão digital do seed {digest[:16]} {json.dumps(counts)}")
 

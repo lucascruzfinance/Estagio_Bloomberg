@@ -1,6 +1,6 @@
 # Validação independente por amostragem
 
-Gerado em 2026-10-30 07:19 UTC por `scripts/validate_sample.py` contra `http://127.0.0.1:8000` (semente 20261030).
+Gerado em 2026-10-30 16:29 UTC por `scripts/validate_sample.py` contra `http://127.0.0.1:8000` (semente 20261030).
 
 O script não importa o pipeline: recalcula com a biblioteca padrão a partir dos zips brutos da CVM no cache imutável, dos pesos do YAML e das respostas brutas do Nominatim.
 
