@@ -1,0 +1,237 @@
+# Modelo explicável de priorização comercial (Prompt 4).
+#
+# Não é probabilidade de compra nem relação causal. São três saídas separadas:
+#   fit      — o workflow da unidade usa intensamente dados, ativos e ferramentas?
+#   timing   — há sinais recentes de mudança que abrem uma conversa agora?
+#   confiança — quanto da pontuação está apoiado em fonte verificável e recente?
+# Pesos são premissas editáveis. Toda mudança exige novo `model_version`.
+model_version: opportunity-v1.0.0
+description: >-
+  Priorização explicável para preparação de contas. Pesos definidos por julgamento
+  especialista, sem variável-alvo histórica; calibrar quando houver resultados de
+  oportunidades registrados (ver calibration.py).
+
+fit:
+  workflow_complexity:
+    weight: 0.30
+    label: Complexidade e intensidade de dados do workflow
+    description: Intensidade média de dados das estratégias próprias (classes abertas, não-FIC), pela tabela family_data_intensity.
+  asset_breadth:
+    weight: 0.20
+    label: Amplitude de ativos
+    description: Número de famílias de estratégia distintas entre as estratégias próprias (abertas, não-FIC).
+  international:
+    weight: 0.15
+    label: Atuação internacional
+    description: Parcela das estratégias próprias que podem aplicar 100% no exterior ou são classificadas como exterior.
+  data_api_need:
+    weight: 0.15
+    label: Necessidade de dados/API
+    description: Classes/subclasses não-FIC com cota diária a precificar, controlar e reportar (proxy).
+  user_potential:
+    weight: 0.20
+    label: Potencial de usuários
+    description: Escala do PL não-FIC como proxy de equipe de gestão, risco e research (headcount não coletado).
+
+timing:
+  product_launches:
+    weight: 0.25
+    label: Lançamento de produtos
+    description: Fundos abertos (não exclusivos) constituídos nos últimos 12 meses (data de constituição CVM); exclusivos são reportados à parte.
+  net_flows:
+    weight: 0.20
+    label: Captação/resgates
+    description: Captação líquida 12m sobre o PL das classes com série completa.
+  expansion:
+    weight: 0.15
+    label: Expansão
+    description: Novas entidades reguladas pela CVM no grupo nos últimos 24 meses.
+  hiring:
+    weight: 0.15
+    label: Contratações
+    description: Sinais curados de contratação com fonte (data/reference/commercial_signals.csv).
+  m_and_a:
+    weight: 0.10
+    label: M&A
+    description: Sinais curados de fusões, aquisições ou parcerias com fonte.
+  operational_change:
+    weight: 0.05
+    label: Mudanças operacionais
+    description: Sinais curados de troca de sistemas, administrador, custodiante ou regulação.
+  performance:
+    weight: 0.10
+    label: Performance relativa
+    description: Excesso de retorno 12m ponderado por PL contra a mediana da mesma classificação CVM.
+
+limits:
+  max_performance_weight: 0.10
+
+scales:
+  workflow_complexity: {kind: linear, low: 0.30, high: 1.0}
+  asset_breadth: {kind: linear, low: 1, high: 8}
+  international: {kind: linear, low: 0.0, high: 0.30}
+  data_api_need: {kind: log, low: 10, high: 1500}
+  user_potential: {kind: log, low: 2.0e8, high: 3.0e11}
+  product_launches: {kind: log1p, low: 0, high: 30}
+  net_flows: {kind: linear, low: -0.20, high: 0.20}
+  expansion: {kind: linear, low: 0, high: 2}
+  performance: {kind: linear, low: -0.10, high: 0.10}
+  manual_signal: {kind: linear, low: 0, high: 2}
+
+evidence_rules:
+  min_net_flow_nav_coverage: 0.50
+  min_performance_nav_coverage: 0.30
+  launch_window_days: 365
+  expansion_window_days: 730
+  manual_signal_validity_days: 365
+
+priority_index:
+  fit: 0.60
+  timing: 0.40
+
+tiers:
+  fit_high: 60
+  timing_high: 50
+  min_fit_coverage: 0.60
+  min_timing_coverage: 0.40
+
+confidence:
+  evidence_coverage: 0.35
+  identity: 0.20
+  freshness: 0.15
+  conflicts: 0.15
+  comparability: 0.15
+  pending_identity_factor: 0.60
+  conflicts_for_zero: 5
+
+reason_thresholds:
+  positive: 0.65
+  negative: 0.30
+
+# Intensidade de dados por família de estratégia (premissa editável): quanto o
+# workflow de gestão depende de preços, research, risco e execução multiativos.
+family_data_intensity:
+  Multimercado: 1.0
+  Cambial: 1.0
+  Ações: 0.8
+  Crédito estruturado (FIDC): 0.8
+  Renda fixa: 0.6
+  Private equity (FIP): 0.6
+  Previdência: 0.5
+  Agro (FIAGRO): 0.5
+  Imobiliário: 0.3
+  Outros: 0.3
+
+# Bancos: cada mesa/área é pontuada separadamente. `entity_cnpjs` liga a mesa a
+# entidades CVM (evidência); `priors` são premissas especialistas editáveis usadas
+# apenas quando não há evidência — o relatório as marca como premissa.
+bank_desks:
+  org-btg-pactual:
+    - key: asset_management
+      name: Asset Management
+      entity_cnpjs: ["09631542000137", "29650082000100", "07625159000140"]
+      products: [TERMINAL, PORT, BQUANT, EMSX, DATA_LICENSE]
+    - key: wealth_family_office
+      name: Wealth & Family Office
+      entity_cnpjs: ["12695840000103"]
+      products: [TERMINAL, PORT]
+    - key: sales_trading_treasury
+      name: Sales & Trading e Tesouraria
+      priors: {workflow_complexity: 0.90, asset_breadth: 0.90, international: 0.80, data_api_need: 0.90, user_potential: 0.90}
+      products: [TERMINAL, BPIPE, FXGO, EMSX, DATA_LICENSE]
+    - key: investment_banking
+      name: Investment Banking (ECM/DCM/M&A)
+      priors: {workflow_complexity: 0.60, asset_breadth: 0.50, international: 0.70, data_api_need: 0.40, user_potential: 0.60}
+      products: [TERMINAL, BQL]
+    - key: research
+      name: Research
+      priors: {workflow_complexity: 0.60, asset_breadth: 0.70, international: 0.50, data_api_need: 0.60, user_potential: 0.60}
+      products: [TERMINAL, BQUANT, DATA_LICENSE]
+    - key: risk_compliance
+      name: Risco e Compliance
+      priors: {workflow_complexity: 0.70, asset_breadth: 0.80, international: 0.60, data_api_need: 0.80, user_potential: 0.50}
+      products: [MARS, BVAL, DATA_LICENSE, COMPLIANCE]
+    - key: enterprise_data
+      name: Market Data / Tecnologia
+      priors: {workflow_complexity: 0.70, asset_breadth: 0.90, international: 0.60, data_api_need: 1.00, user_potential: 0.70}
+      products: [DATA_LICENSE, BPIPE, ENTERPRISE_ACCESS_POINT]
+  org-itau-bba:
+    - key: investment_banking_e_mercados
+      name: Investment Banking e Mercados
+      priors: {workflow_complexity: 0.70, asset_breadth: 0.70, international: 0.70, data_api_need: 0.60, user_potential: 0.70}
+      products: [TERMINAL, BQL]
+    - key: sales_trading_treasury
+      name: Sales & Trading e Tesouraria
+      priors: {workflow_complexity: 0.90, asset_breadth: 0.90, international: 0.80, data_api_need: 0.90, user_potential: 0.90}
+      products: [TERMINAL, BPIPE, FXGO, EMSX, DATA_LICENSE]
+    - key: research
+      name: Research
+      priors: {workflow_complexity: 0.60, asset_breadth: 0.70, international: 0.50, data_api_need: 0.60, user_potential: 0.60}
+      products: [TERMINAL, BQUANT, DATA_LICENSE]
+    - key: risk_compliance
+      name: Risco e Compliance
+      priors: {workflow_complexity: 0.70, asset_breadth: 0.80, international: 0.60, data_api_need: 0.80, user_potential: 0.50}
+      products: [MARS, BVAL, DATA_LICENSE, COMPLIANCE]
+    - key: enterprise_data
+      name: Market Data / Tecnologia
+      priors: {workflow_complexity: 0.70, asset_breadth: 0.90, international: 0.60, data_api_need: 1.00, user_potential: 0.70}
+      products: [DATA_LICENSE, BPIPE, ENTERPRISE_ACCESS_POINT]
+
+products:
+  TERMINAL: {name: Bloomberg Terminal, workflow: "Research, monitoramento de mercado, notícias e analytics multiativos"}
+  BQL: {name: BQL (Bloomberg Query Language), workflow: "Screening e comparáveis em escala no Excel/Python"}
+  BQUANT: {name: BQuant, workflow: "Pesquisa quantitativa e backtesting em Python"}
+  PORT: {name: PORT, workflow: "Risco, atribuição de performance e análise de carteira"}
+  EMSX: {name: EMSX, workflow: "Execução e roteamento de ordens"}
+  FXGO: {name: FXGO, workflow: "Execução eletrônica de câmbio"}
+  AIM: {name: AIM, workflow: "Gestão de ordens e compliance pré-trade (OMS)"}
+  BVAL: {name: BVAL, workflow: "Precificação independente de ativos ilíquidos e crédito"}
+  MARS: {name: MARS, workflow: "Risco de mercado, XVA e valuation de derivativos"}
+  DATA_LICENSE: {name: Data License, workflow: "Dados de referência, preços e históricos por arquivo/API"}
+  BPIPE: {name: B-PIPE, workflow: "Dados em tempo real para aplicações internas"}
+  ENTERPRISE_ACCESS_POINT: {name: Enterprise Access Point, workflow: "Datasets curados para times de dados"}
+  COMPLIANCE: {name: Soluções de compliance, workflow: "Comunicação, vigilância e regulatório"}
+
+# Regras de associação de produtos para gestoras (hipóteses de workflow).
+product_rules:
+  - when: {dominant_family: Multimercado}
+    products: [TERMINAL, PORT, BQUANT, EMSX]
+    rationale: Macro/multimercado opera juros, câmbio e derivativos com risco multiativo.
+  - when: {dominant_family: Ações}
+    products: [TERMINAL, BQL, PORT]
+    rationale: Gestão de ações depende de dados de empresas, screening e atribuição.
+  - when: {has_family: Crédito estruturado (FIDC)}
+    products: [TERMINAL, BVAL, DATA_LICENSE]
+    rationale: Crédito estruturado exige precificação independente e dados de referência.
+  - when: {has_family: Private equity (FIP)}
+    products: [TERMINAL, BQL]
+    rationale: Private equity usa comparáveis, transações e dados de empresas.
+  - when: {min_factor: {international: 0.6}}
+    products: [TERMINAL, AIM]
+    rationale: Alocação relevante no exterior aumenta necessidade de dados globais e controle de ordens.
+  - when: {min_factor: {data_api_need: 0.6}}
+    products: [DATA_LICENSE]
+    rationale: Muitas classes com cota diária indicam demanda por dados em escala para backoffice e risco.
+  - when: {institution_type: multi-family office}
+    products: [PORT, TERMINAL]
+    rationale: Family office consolida carteiras multiativos e reporta a famílias.
+
+# Expectativas de domínio usadas para detectar rankings absurdos. São reportadas
+# como pass/fail; uma falha é investigada, nunca corrigida ajustando pesos às cegas.
+sanity_expectations:
+  - higher: org-btg-pactual:asset-management
+    lower: org-constellation
+    output: fit
+    rationale: Plataforma multiestratégia de grande porte vs boutique de ações de estratégia única.
+  - higher: org-kinea
+    lower: org-constellation
+    output: fit
+    rationale: Gestora multiproduto com alternativos vs boutique de ações.
+  - higher: org-itau-bba:sales-trading-treasury
+    lower: org-itau-bba:investment-banking-e-mercados
+    output: fit
+    rationale: Mesa de trading usa dados em tempo real e execução de forma mais intensa que banking.
+  - higher: org-spx-capital
+    lower: org-portofino
+    output: fit
+    rationale: Macro multiestratégia global vs multi-family office.

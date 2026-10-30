@@ -1,0 +1,80 @@
+name: networking-sales-intelligence
+
+services:
+  db:
+    image: postgis/postgis:16-3.6
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-networking}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-development-only-change-me}
+      POSTGRES_DB: ${POSTGRES_DB:-networking}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  migrate:
+    build:
+      context: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-networking}:${POSTGRES_PASSWORD:-local-development-only-change-me}@db:5432/${POSTGRES_DB:-networking}
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["alembic", "upgrade", "head"]
+    restart: "no"
+
+  seed:
+    build:
+      context: .
+    profiles: ["tools"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-networking}:${POSTGRES_PASSWORD:-local-development-only-change-me}@db:5432/${POSTGRES_DB:-networking}
+      ETL_INPUT_PATH: /app/data/staging/pilot_accounts.csv
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    command: ["python", "-m", "networking_intel.etl.cli"]
+    restart: "no"
+
+  load:
+    build:
+      context: .
+    profiles: ["tools"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-networking}:${POSTGRES_PASSWORD:-local-development-only-change-me}@db:5432/${POSTGRES_DB:-networking}
+    volumes:
+      - ./data:/app/data:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["python", "-m", "networking_intel.etl.load_enriched"]
+    restart: "no"
+
+  api:
+    build:
+      context: .
+    environment:
+      APP_ENV: ${APP_ENV:-local}
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-networking}:${POSTGRES_PASSWORD:-local-development-only-change-me}@db:5432/${POSTGRES_DB:-networking}
+      API_TRUSTED_HOSTS: ${API_TRUSTED_HOSTS:-localhost,127.0.0.1}
+      API_CORS_ORIGINS: ${API_CORS_ORIGINS:-http://localhost:5173,http://127.0.0.1:5173}
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  postgres_data:

@@ -1,0 +1,12 @@
+-r analysis.in
+
+pytest
+pytest-cov
+pytest-asyncio
+ruff
+mypy
+pip-audit
+pip-tools
+types-PyYAML
+types-openpyxl
+

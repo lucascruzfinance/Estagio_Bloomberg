@@ -1,0 +1,13 @@
+﻿account_id,canonical_name,institution_type,analysis_unit,source_sheet,source_row,source_locator,human_approval_required
+org-spx-capital,SPX Capital,gestora independente,organização,Hedge Fund E,3,'Hedge Fund E'!A3:I3,true
+org-verde-asset,Verde Asset Management,gestora independente,organização,Hedge Fund E,4,'Hedge Fund E'!A4:I4,true
+org-kapitalo,Kapitalo Investimentos,gestora independente,organização,Hedge Fund E,5,'Hedge Fund E'!A5:I5,true
+org-ibiuna,Ibiúna Investimentos,gestora independente,organização,Hedge Fund E,6,'Hedge Fund E'!A6:I6,true
+org-kinea,Kinea Investimentos,gestora de grupo financeiro,organização,Asset E,18,'Asset E'!A18:I18,true
+org-patria,Pátria Investimentos,gestora independente,organização,PE E,9,'PE E'!A9:I9,true
+org-vinci-compass,Vinci Compass,gestora independente,organização,Asset E,20,'Asset E'!A20:I20,true
+org-constellation,Constellation Asset Management,gestora independente,organização,Asset E,35,'Asset E'!A35:I35,true
+org-jive,Jive Investments,gestora independente,organização,Asset E,46,'Asset E'!A46:I46,true
+org-portofino,Portofino Gestão de Recursos,multi-family office,organização,Family Office E,3,'Family Office E'!A3:I3,true
+org-btg-pactual,BTG Pactual,banco,mesa/área,PE E,3,'PE E'!A3:I3,true
+org-itau-bba,Itaú BBA,banco,mesa/área,IB E,4,'IB E'!A4:I4,true

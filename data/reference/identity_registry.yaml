@@ -1,0 +1,248 @@
+# Registro curado de identidade jurídica das 12 contas-piloto (Prompt 3).
+#
+# Regras:
+# - Cada CNPJ foi localizado no Cadastro de Administradores de Carteira da CVM
+#   (cad_adm_cart_pj.csv, dados.cvm.gov.br, arquivo de 2026-10-29) e é validado
+#   pelos dígitos verificadores e pela presença no cadastro a cada execução.
+# - Nenhum vínculo é criado por similaridade de nome: só os CNPJs listados aqui
+#   são usados para mapear fundos (registro_fundo.CPF_CNPJ_Gestor).
+# - `relation` descreve o papel da entidade na conta; `relation_evidence` diz por
+#   que o vínculo foi proposto. Afiliadas ficam `pending_human_review` até um
+#   vendedor/analista confirmar o grupo econômico.
+# - `business_unit` vincula entidades de bancos a mesas/áreas (BTG, Itaú).
+version: prompt3-v1
+as_of_date: "2026-10-29"
+accounts:
+  org-spx-capital:
+    primary_cnpj: "12330774000160"
+    entities:
+      - cnpj: "12330774000160"
+        relation: primary_manager
+        relation_evidence: "Sede RJ (Rua Humaitá, 275) coincide com o endereço do Excel e o site oficial."
+        approval_status: pending_human_review
+      - cnpj: "10632282000101"
+        relation: affiliate_manager
+        relation_evidence: "Mesmo endereço SP do Excel (Faria Lima, 3732, 21º) e domínio spxcapital.com."
+        approval_status: pending_human_review
+      - cnpj: "42617367000107"
+        relation: affiliate_manager
+        relation_evidence: "Mesmo endereço SP e domínio spxcapital.com."
+        approval_status: pending_human_review
+  org-verde-asset:
+    primary_cnpj: "19749539000176"
+    entities:
+      - cnpj: "19749539000176"
+        relation: primary_manager
+        relation_evidence: "Razão social, endereço e telefone coincidem com o Excel."
+        approval_status: pending_human_review
+      - cnpj: "55777175000100"
+        relation: affiliate_manager
+        relation_evidence: "Mesmo prédio e telefone; marca Verde Agro & Imobiliário."
+        approval_status: pending_human_review
+  org-kapitalo:
+    primary_cnpj: "11180009000148"
+    entities:
+      - cnpj: "11180009000148"
+        relation: primary_manager
+        relation_evidence: "Endereço e telefone coincidem com o Excel."
+        approval_status: pending_human_review
+      - cnpj: "20429285000198"
+        relation: affiliate_manager
+        relation_evidence: "Marca Kapitalo Ciclo; e-mail de compliance @kapitalo.com.br."
+        approval_status: pending_human_review
+      - cnpj: "40113816000146"
+        relation: affiliate_manager
+        relation_evidence: "Marca Kapitalo Nexo; mesmo endereço e telefone."
+        approval_status: pending_human_review
+  org-ibiuna:
+    primary_cnpj: "11918575000104"
+    entities:
+      - cnpj: "11918575000104"
+        relation: primary_manager
+        relation_evidence: "Alias do Excel cita 'Ibiuna Macro Gestão de Recursos'; mesmo endereço."
+        approval_status: pending_human_review
+      - cnpj: "18506057000122"
+        relation: affiliate_manager
+        relation_evidence: "Ibiuna Ações; mesmo endereço e domínio ibiunainvest.com.br."
+        approval_status: pending_human_review
+      - cnpj: "19493000000107"
+        relation: affiliate_manager
+        relation_evidence: "Ibiuna Crédito; mesmo endereço e domínio."
+        approval_status: pending_human_review
+      - cnpj: "49223404000133"
+        relation: affiliate_manager
+        relation_evidence: "Ibiuna Previdência; mesmo endereço e domínio."
+        approval_status: pending_human_review
+  org-kinea:
+    primary_cnpj: "08604187000144"
+    entities:
+      - cnpj: "08604187000144"
+        relation: primary_manager
+        relation_evidence: "Endereço (Rua Minas de Prata, 30) e site coincidem com o Excel."
+        approval_status: pending_human_review
+      - cnpj: "04661817000161"
+        relation: affiliate_manager
+        relation_evidence: "Kinea Private Equity; mesmo endereço e site."
+        approval_status: pending_human_review
+  org-patria:
+    primary_cnpj: "12461756000117"
+    entities:
+      - cnpj: "12461756000117"
+        relation: primary_manager
+        relation_evidence: "CNPJ já citado na fonte de verificação do Excel; endereço coincide."
+        approval_status: pending_human_review
+      - cnpj: "35096963000115"
+        relation: affiliate_manager
+        relation_evidence: "Pátria High Growth; mesmo prédio e domínio patria.com."
+        approval_status: pending_human_review
+      - cnpj: "38300262000144"
+        relation: affiliate_manager
+        relation_evidence: "Pátria VBI Asset; domínio patria.com."
+        approval_status: pending_human_review
+      - cnpj: "11274775000171"
+        relation: affiliate_manager
+        relation_evidence: "Pátria VBI Real Estate; domínio patria.com."
+        approval_status: pending_human_review
+      - cnpj: "17054901000169"
+        relation: affiliate_manager
+        relation_evidence: "Pátria VBI Securities; domínio patria.com."
+        approval_status: pending_human_review
+      - cnpj: "41483516000111"
+        relation: affiliate_manager
+        relation_evidence: "VBI Administração; compliance@patria.com."
+        approval_status: pending_human_review
+  org-vinci-compass:
+    primary_cnpj: "11077576000173"
+    entities:
+      - cnpj: "11077576000173"
+        relation: primary_manager
+        relation_evidence: "Vinci Gestora; endereço RJ (Bartolomeu Mitre, 336) coincide com o Excel."
+        approval_status: pending_human_review
+      - cnpj: "43573693000114"
+        relation: affiliate_manager
+        relation_evidence: "Endereço SP do Excel (Faria Lima, 3555) e compliance@vincicompass.com."
+        approval_status: pending_human_review
+      - cnpj: "10917835000164"
+        relation: affiliate_manager
+        relation_evidence: "Vinci Equities; compliance@vincicompass.com."
+        approval_status: pending_human_review
+      - cnpj: "11079478000175"
+        relation: affiliate_manager
+        relation_evidence: "Vinci Capital; compliance@vincicompass.com."
+        approval_status: pending_human_review
+      - cnpj: "31982447000137"
+        relation: affiliate_manager
+        relation_evidence: "Vinci CG; compliance@vincicompass.com."
+        approval_status: pending_human_review
+      - cnpj: "20052540000126"
+        relation: affiliate_manager
+        relation_evidence: "Vinci GGN; compliance@vincicompass.com."
+        approval_status: pending_human_review
+      - cnpj: "20859417000111"
+        relation: affiliate_manager
+        relation_evidence: "Vinci Infraestrutura; domínio vincipartners.com."
+        approval_status: pending_human_review
+      - cnpj: "43705850000106"
+        relation: affiliate_manager
+        relation_evidence: "Vinci MAV; compliance@vincicompass.com."
+        approval_status: pending_human_review
+      - cnpj: "13838015000175"
+        relation: affiliate_manager
+        relation_evidence: "Vinci Real Estate; compliance@vincicompass.com."
+        approval_status: pending_human_review
+      - cnpj: "37658373000164"
+        relation: affiliate_manager
+        relation_evidence: "Vinci Real Estate Selection; mesmo endereço SP."
+        approval_status: pending_human_review
+      - cnpj: "37980655000183"
+        relation: affiliate_manager
+        relation_evidence: "Vinci Real Estate Ventures; compliance@vincicompass.com."
+        approval_status: pending_human_review
+      - cnpj: "16954358000193"
+        relation: affiliate_manager
+        relation_evidence: "Vinci SPS; compliance@vincicompass.com."
+        approval_status: pending_human_review
+      - cnpj: "13421810000163"
+        relation: affiliate_manager
+        relation_evidence: "Vinci Soluções de Investimentos; domínio vincipartners.com."
+        approval_status: pending_human_review
+      - cnpj: "04264390000168"
+        relation: affiliate_manager
+        relation_evidence: "Lacan Investimentos; compliance@vincicompass.com e telefone da Vinci. Confirmar aquisição."
+        approval_status: pending_human_review
+  org-constellation:
+    primary_cnpj: "06182127000155"
+    entities:
+      - cnpj: "06182127000155"
+        relation: primary_manager
+        relation_evidence: "Endereço (Faria Lima, 3311, 4º) e domínio const.com.br coincidem com o Excel."
+        approval_status: pending_human_review
+  org-jive:
+    primary_cnpj: "12600032000107"
+    entities:
+      - cnpj: "12600032000107"
+        relation: primary_manager
+        relation_evidence: "Nome comercial JIVE; endereço Faria Lima, 1485 coincide com o Excel."
+        approval_status: pending_human_review
+      - cnpj: "07170960000149"
+        relation: affiliate_manager
+        relation_evidence: "Jive High Yield; grc@jivemaua.com.br."
+        approval_status: pending_human_review
+      - cnpj: "09561568000156"
+        relation: affiliate_manager
+        relation_evidence: "Mauá Capital Investimentos Alternativos; grc@jivemaua.com.br."
+        approval_status: pending_human_review
+      - cnpj: "04608171000159"
+        relation: affiliate_manager
+        relation_evidence: "Mauá Capital Real Estate; grc@jivemaua.com.br."
+        approval_status: pending_human_review
+  org-portofino:
+    primary_cnpj: "17590181000156"
+    entities:
+      - cnpj: "17590181000156"
+        relation: primary_manager
+        relation_evidence: "Razão social idêntica ao nome canônico; endereço e telefone coincidem."
+        approval_status: pending_human_review
+      - cnpj: "07913960000191"
+        relation: affiliate_manager
+        relation_evidence: "PMFO Esportes; mesmo endereço, telefone e domínio pmfo.com.br."
+        approval_status: pending_human_review
+      - cnpj: "62653145000149"
+        relation: affiliate_manager
+        relation_evidence: "Portofino Internacional; mesmo endereço e domínio."
+        approval_status: pending_human_review
+  org-btg-pactual:
+    primary_cnpj: "09631542000137"
+    entities:
+      - cnpj: "30306294000145"
+        relation: bank_entity
+        relation_evidence: "Banco BTG Pactual S/A no cadastro CVM (registro de gestor cancelado); identidade do banco."
+        approval_status: pending_human_review
+      - cnpj: "09631542000137"
+        relation: primary_manager
+        relation_evidence: "Endereço SP do Excel (Faria Lima, 3477, 14º) coincide com o registro CVM."
+        business_unit: Asset Management
+        approval_status: pending_human_review
+      - cnpj: "29650082000100"
+        relation: affiliate_manager
+        relation_evidence: "BTG Pactual Asset Management S/A DTVM; domínio btgpactual.com."
+        business_unit: Asset Management
+        approval_status: pending_human_review
+      - cnpj: "07625159000140"
+        relation: affiliate_manager
+        relation_evidence: "BTG Pactual Gestora de Investimentos Alternativos; domínio btgpactual.com."
+        business_unit: Asset Management
+        approval_status: pending_human_review
+      - cnpj: "12695840000103"
+        relation: affiliate_manager
+        relation_evidence: "BTG Pactual Family Office/Wealth; domínio btgpactual.com."
+        business_unit: Asset Management
+        approval_status: pending_human_review
+  org-itau-bba:
+    primary_cnpj: "60701190000104"
+    entities:
+      - cnpj: "60701190000104"
+        relation: bank_entity
+        relation_evidence: "Itaú Unibanco S.A. (administrador fiduciário na CVM). Itaú BBA é a marca de atacado; confirmar entidade da mesa."
+        business_unit: Investment Banking e Mercados
+        approval_status: pending_human_review

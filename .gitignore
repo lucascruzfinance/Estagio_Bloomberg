@@ -14,8 +14,8 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+/lib/
+/lib64/
 parts/
 sdist/
 var/
@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Prompt 3 raw cache and bulky derived panels
+data/raw/
+# data/enriched/fund_daily.parquet is versioned: the offline demo seed needs it

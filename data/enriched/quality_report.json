@@ -1,0 +1,1035 @@
+{
+  "version": "prompt3-v1",
+  "run_at": "2026-10-30T04:58:52+00:00",
+  "fund_reference_date": "2026-10-27",
+  "freshness": [
+    {
+      "source_id": "cvm_cad_adm_cart",
+      "title": "Cadastro de Administradores de Carteira",
+      "status": "fresh",
+      "data_as_of": "2026-10-29",
+      "fetched_at": "2026-10-30T04:02:35.618412+00:00",
+      "age_days": 1,
+      "max_age_days": 7,
+      "artifacts": 1,
+      "detail": ""
+    },
+    {
+      "source_id": "cvm_registro_fundo_classe",
+      "title": "Registro de Fundos, Classes e Subclasses (RCVM 175)",
+      "status": "fresh",
+      "data_as_of": "2026-10-29",
+      "fetched_at": "2026-10-30T04:02:36.505272+00:00",
+      "age_days": 1,
+      "max_age_days": 7,
+      "artifacts": 1,
+      "detail": ""
+    },
+    {
+      "source_id": "cvm_inf_diario",
+      "title": "Informe Diário de Fundos de Investimento",
+      "status": "fresh",
+      "data_as_of": "2026-10-27",
+      "fetched_at": "2026-10-30T04:03:17.649417+00:00",
+      "age_days": 3,
+      "max_age_days": 7,
+      "artifacts": 13,
+      "detail": ""
+    },
+    {
+      "source_id": "bcb_ifdata_cadastro",
+      "title": "IF.data — cadastro de instituições (Olinda)",
+      "status": "unavailable",
+      "data_as_of": null,
+      "fetched_at": "2026-10-30T04:58:52+00:00",
+      "age_days": null,
+      "max_age_days": 200,
+      "artifacts": 0,
+      "detail": "202609: HTTP 500 after retries; 202606: HTTP 500 after retries; 202603: HTTP 500 after retries"
+    },
+    {
+      "source_id": "osm_nominatim",
+      "title": "Nominatim geocoding",
+      "status": "fresh",
+      "data_as_of": "2026-10-30",
+      "fetched_at": "2026-10-30T04:10:53.128048+00:00",
+      "age_days": 0,
+      "max_age_days": 365,
+      "artifacts": 22,
+      "detail": "13/22 endereços com precisão de porta"
+    }
+  ],
+  "accounts": [
+    {
+      "account_id": "org-spx-capital",
+      "canonical_name": "SPX Capital",
+      "institution_type": "gestora independente",
+      "analysis_unit": "organização",
+      "primary_cnpj": "12330774000160",
+      "primary_cnpj_formatted": "12.330.774/0001-60",
+      "legal_name": "SPX GESTÃO DE RECURSOS LTDA",
+      "official_address": "RUA HUMAITA , 275 / 5 ANDAR, HUMAITA, RIO DE JANEIRO/RJ, CEP 22261-000",
+      "official_phone": "+552132031900",
+      "entities_registered": 3,
+      "entities_found": 3,
+      "geocode_precision": "address",
+      "latitude": -22.9605246,
+      "longitude": -43.2025579,
+      "portfolio_directors": 1,
+      "active_classes": 236,
+      "fic_classes": 171,
+      "classes_with_daily_report": 210,
+      "classes_without_daily_report_by_type": {
+        "FII": 10,
+        "FIP": 16
+      },
+      "share_classes_with_daily_report": 213,
+      "comparable_12m_share": 0.8779342723004695,
+      "nav_brl_non_fic": 33185456633.529995,
+      "net_flow_12m_brl_non_fic": -13744324769.879997,
+      "net_flow_nav_coverage": 0.9112147994244253,
+      "median_return_12m_by_classification": {
+        "Ações Livre": {
+          "median": 0.24344784497922456,
+          "share_classes": 5
+        },
+        "Multimercados Estrat. Específica": {
+          "median": 0.12523876283375202,
+          "share_classes": 2
+        },
+        "Multimercados Invest. no Exterior": {
+          "median": 0.04164626116943526,
+          "share_classes": 9
+        },
+        "Multimercados Livre": {
+          "median": 0.3105806783702256,
+          "share_classes": 3
+        },
+        "Multimercados Macro": {
+          "median": 0.09334457698521159,
+          "share_classes": 2
+        },
+        "Previdência Multimercado Livre": {
+          "median": 0.11291540046657211,
+          "share_classes": 6
+        },
+        "Previdência RF Duração Livre Crédito Liv": {
+          "median": 0.1382073818020182,
+          "share_classes": 1
+        },
+        "Renda Fixa Duração Livre Crédito Livre": {
+          "median": 0.07736601767993767,
+          "share_classes": 4
+        },
+        "Renda Fixa Simples": {
+          "median": 0.14309917605815503,
+          "share_classes": 1
+        }
+      },
+      "gaps": [
+        "classes ativas sem Informe Diário atualizado (FII: 10, FIP: 16)"
+      ],
+      "open_conflicts": 2
+    },
+    {
+      "account_id": "org-verde-asset",
+      "canonical_name": "Verde Asset Management",
+      "institution_type": "gestora independente",
+      "analysis_unit": "organização",
+      "primary_cnpj": "19749539000176",
+      "primary_cnpj_formatted": "19.749.539/0001-76",
+      "legal_name": "VERDE ASSET MANAGEMENT S.A.",
+      "official_address": "AVENIDA BRIGADEIRO FARIA LIMA, 3.600, 11º ANDAR (PARTE), ITAIM BIBI, SÃO PAULO/SP, CEP 04538-132",
+      "official_phone": "+551149358500",
+      "entities_registered": 2,
+      "entities_found": 2,
+      "geocode_precision": "address",
+      "latitude": -23.5876044,
+      "longitude": -46.682402,
+      "portfolio_directors": 1,
+      "active_classes": 125,
+      "fic_classes": 77,
+      "classes_with_daily_report": 117,
+      "classes_without_daily_report_by_type": {
+        "FIDC": 6,
+        "FII": 2
+      },
+      "share_classes_with_daily_report": 117,
+      "comparable_12m_share": 0.9572649572649573,
+      "nav_brl_non_fic": 12035700380.220001,
+      "net_flow_12m_brl_non_fic": -2240809157.9900007,
+      "net_flow_nav_coverage": 1.0,
+      "median_return_12m_by_classification": {
+        "Ações Dividendos": {
+          "median": 0.07461339820374824,
+          "share_classes": 1
+        },
+        "Ações Invest. no Exterior": {
+          "median": -0.01230430675505767,
+          "share_classes": 2
+        },
+        "Ações Livre": {
+          "median": 0.11298636486054736,
+          "share_classes": 3
+        },
+        "Ações Índice Ativo": {
+          "median": 0.1161292246192791,
+          "share_classes": 1
+        },
+        "Multimercados Invest. no Exterior": {
+          "median": -0.028309567317935103,
+          "share_classes": 9
+        },
+        "Multimercados Livre": {
+          "median": -0.07442804238795575,
+          "share_classes": 1
+        },
+        "Multimercados Macro": {
+          "median": 0.07674152719822347,
+          "share_classes": 5
+        },
+        "Previdência Ações Ativo": {
+          "median": 0.1055733045747036,
+          "share_classes": 1
+        },
+        "Previdência Multimercado Livre": {
+          "median": 0.08010486394556338,
+          "share_classes": 18
+        },
+        "Renda Fixa Duração Livre Grau de Invest.": {
+          "median": 0.14187197397571727,
+          "share_classes": 1
+        }
+      },
+      "gaps": [
+        "classes ativas sem Informe Diário atualizado (FIDC: 6, FII: 2)"
+      ],
+      "open_conflicts": 0
+    },
+    {
+      "account_id": "org-kapitalo",
+      "canonical_name": "Kapitalo Investimentos",
+      "institution_type": "gestora independente",
+      "analysis_unit": "organização",
+      "primary_cnpj": "11180009000148",
+      "primary_cnpj_formatted": "11.180.009/0001-48",
+      "legal_name": "KAPITALO INVESTIMENTOS LTDA.",
+      "official_address": "AVENIDA BRIGADEIRO FARIA LIMA, N° 3.144, 11° ANDAR, JARDIM PAULISTANO, SÃO PAULO/SP, CEP 01451-000",
+      "official_phone": "+551139560600",
+      "entities_registered": 3,
+      "entities_found": 3,
+      "geocode_precision": "address",
+      "latitude": -23.583857,
+      "longitude": -46.6836902,
+      "portfolio_directors": 1,
+      "active_classes": 112,
+      "fic_classes": 71,
+      "classes_with_daily_report": 111,
+      "classes_without_daily_report_by_type": {
+        "FIP": 1
+      },
+      "share_classes_with_daily_report": 120,
+      "comparable_12m_share": 0.8416666666666667,
+      "nav_brl_non_fic": 36991636651.91,
+      "net_flow_12m_brl_non_fic": -1012368914.7900014,
+      "net_flow_nav_coverage": 0.861757675032852,
+      "median_return_12m_by_classification": {
+        "Ações Livre": {
+          "median": 0.22817584097783705,
+          "share_classes": 2
+        },
+        "Multimercados Invest. no Exterior": {
+          "median": 0.07586061832474678,
+          "share_classes": 9
+        },
+        "Multimercados Livre": {
+          "median": 0.06348916529786452,
+          "share_classes": 10
+        },
+        "Multimercados Macro": {
+          "median": 0.056297068981633336,
+          "share_classes": 7
+        },
+        "Previdência Multimercado Livre": {
+          "median": 0.07734849011515377,
+          "share_classes": 6
+        }
+      },
+      "gaps": [
+        "classes ativas sem Informe Diário atualizado (FIP: 1)"
+      ],
+      "open_conflicts": 0
+    },
+    {
+      "account_id": "org-ibiuna",
+      "canonical_name": "Ibiúna Investimentos",
+      "institution_type": "gestora independente",
+      "analysis_unit": "organização",
+      "primary_cnpj": "11918575000104",
+      "primary_cnpj_formatted": "11.918.575/0001-04",
+      "legal_name": "IBIUNA MACRO GESTÃO DE RECURSOS LTDA.",
+      "official_address": "AVENIDA SÃO GABRIEL, 477, 5º E 16º ANDARES, JARDIM PAULISTA, SÃO PAULO/SP, CEP 01435-001",
+      "official_phone": "+551133219360",
+      "entities_registered": 4,
+      "entities_found": 4,
+      "geocode_precision": "street",
+      "latitude": -23.5789272,
+      "longitude": -46.67101,
+      "portfolio_directors": 1,
+      "active_classes": 82,
+      "fic_classes": 42,
+      "classes_with_daily_report": 81,
+      "classes_without_daily_report_by_type": {
+        "FIP": 1
+      },
+      "share_classes_with_daily_report": 94,
+      "comparable_12m_share": 0.776595744680851,
+      "nav_brl_non_fic": 13130236042.43,
+      "net_flow_12m_brl_non_fic": -1492742892.349999,
+      "net_flow_nav_coverage": 0.727955353223876,
+      "median_return_12m_by_classification": {
+        "Ações Livre": {
+          "median": -0.11280297475216217,
+          "share_classes": 8
+        },
+        "Multimercados Balanceados": {
+          "median": 0.07505544601605885,
+          "share_classes": 1
+        },
+        "Multimercados Juros e Moedas": {
+          "median": 0.1362477932073325,
+          "share_classes": 2
+        },
+        "Multimercados L/S - Neutro": {
+          "median": 0.012036226664506877,
+          "share_classes": 1
+        },
+        "Multimercados Livre": {
+          "median": -0.4243198931885207,
+          "share_classes": 1
+        },
+        "Multimercados Macro": {
+          "median": 0.06572637879609078,
+          "share_classes": 6
+        },
+        "Previdência Multimercado Livre": {
+          "median": 0.09124904915725884,
+          "share_classes": 13
+        },
+        "Renda Fixa Duração Livre Crédito Livre": {
+          "median": 0.08110356066197877,
+          "share_classes": 1
+        },
+        "Renda Fixa Duração Livre Soberano": {
+          "median": 0.15887746296938854,
+          "share_classes": 2
+        },
+        "Renda Fixa Invest. no Exterior": {
+          "median": 0.049805612534012056,
+          "share_classes": 1
+        }
+      },
+      "gaps": [
+        "classes ativas sem Informe Diário atualizado (FIP: 1)",
+        "geocodificação da sede não exata (matched_approximate, precisão street)"
+      ],
+      "open_conflicts": 0
+    },
+    {
+      "account_id": "org-kinea",
+      "canonical_name": "Kinea Investimentos",
+      "institution_type": "gestora de grupo financeiro",
+      "analysis_unit": "organização",
+      "primary_cnpj": "08604187000144",
+      "primary_cnpj_formatted": "08.604.187/0001-44",
+      "legal_name": "KINEA INVESTIMENTOS LTDA.",
+      "official_address": "R. MINAS DE PRATA, 30, 4º ANDAR, VL. OLÍMPIA, SÃO PAULO/SP, CEP 04552-080",
+      "official_phone": "+551150199986",
+      "entities_registered": 2,
+      "entities_found": 2,
+      "geocode_precision": "street",
+      "latitude": -23.5912883,
+      "longitude": -46.6857131,
+      "portfolio_directors": 1,
+      "active_classes": 371,
+      "fic_classes": 33,
+      "classes_with_daily_report": 306,
+      "classes_without_daily_report_by_type": {
+        "FIAGRO": 3,
+        "FIDC": 3,
+        "FII": 26,
+        "FIP": 33
+      },
+      "share_classes_with_daily_report": 350,
+      "comparable_12m_share": 0.8371428571428572,
+      "nav_brl_non_fic": 118374498948.83997,
+      "net_flow_12m_brl_non_fic": -4773723027.819998,
+      "net_flow_nav_coverage": 0.8532715248810753,
+      "median_return_12m_by_classification": {
+        "Ações Livre": {
+          "median": -0.03034713893572366,
+          "share_classes": 4
+        },
+        "Multimercados Estrat. Específica": {
+          "median": 0.054338543243318105,
+          "share_classes": 3
+        },
+        "Multimercados Invest. no Exterior": {
+          "median": -0.006896261920453228,
+          "share_classes": 8
+        },
+        "Multimercados Livre": {
+          "median": 0.06656429333681169,
+          "share_classes": 12
+        },
+        "Multimercados Macro": {
+          "median": 0.09049292387852792,
+          "share_classes": 15
+        },
+        "Previdência Ações Ativo": {
+          "median": -0.03353548565944564,
+          "share_classes": 1
+        },
+        "Previdência Multimercado Livre": {
+          "median": 0.11478732527339208,
+          "share_classes": 8
+        },
+        "Previdência RF Duração Livre Crédito Liv": {
+          "median": 0.1377285474652079,
+          "share_classes": 10
+        },
+        "Previdência RF Duração Livre Grau de Inv": {
+          "median": 0.13911408772232758,
+          "share_classes": 1
+        },
+        "Renda Fixa Duração Livre Crédito Livre": {
+          "median": 0.026880766468058592,
+          "share_classes": 198
+        },
+        "Renda Fixa Duração Livre Grau de Invest.": {
+          "median": 0.07232110586597473,
+          "share_classes": 1
+        },
+        "Renda Fixa Invest. no Exterior": {
+          "median": 0.15872555459169035,
+          "share_classes": 1
+        }
+      },
+      "gaps": [
+        "classes ativas sem Informe Diário atualizado (FIAGRO: 3, FIDC: 3, FII: 26, FIP: 33)",
+        "geocodificação da sede não exata (matched_approximate, precisão street)"
+      ],
+      "open_conflicts": 0
+    },
+    {
+      "account_id": "org-patria",
+      "canonical_name": "Pátria Investimentos",
+      "institution_type": "gestora independente",
+      "analysis_unit": "organização",
+      "primary_cnpj": "12461756000117",
+      "primary_cnpj_formatted": "12.461.756/0001-17",
+      "legal_name": "PÁTRIA INVESTIMENTOS LTDA.",
+      "official_address": "AVENIDA CIDADE JARDIM 803, 9° ANDAR - SALA B, ITAIM BIBI, SÃO PAULO/SP, CEP 01453-000",
+      "official_phone": "+551130399000",
+      "entities_registered": 6,
+      "entities_found": 6,
+      "geocode_precision": "none",
+      "latitude": null,
+      "longitude": null,
+      "portfolio_directors": 4,
+      "active_classes": 139,
+      "fic_classes": 19,
+      "classes_with_daily_report": 25,
+      "classes_without_daily_report_by_type": {
+        "FIAGRO": 2,
+        "FIDC": 9,
+        "FII": 47,
+        "FIP": 56
+      },
+      "share_classes_with_daily_report": 25,
+      "comparable_12m_share": 0.84,
+      "nav_brl_non_fic": 3078006298.29,
+      "net_flow_12m_brl_non_fic": 765972596.92,
+      "net_flow_nav_coverage": 0.9099901228194638,
+      "median_return_12m_by_classification": {
+        "Ações Livre": {
+          "median": 0.12218861430170036,
+          "share_classes": 1
+        },
+        "Multimercados Estrat. Específica": {
+          "median": -0.005132861164714453,
+          "share_classes": 1
+        },
+        "Multimercados Invest. no Exterior": {
+          "median": 0.008007127108410339,
+          "share_classes": 3
+        },
+        "Multimercados Livre": {
+          "median": 0.12626591551475097,
+          "share_classes": 1
+        },
+        "Previdência Multimercado Livre": {
+          "median": 0.1353089021153635,
+          "share_classes": 2
+        },
+        "Renda Fixa Duração Livre Crédito Livre": {
+          "median": 0.1266053324398948,
+          "share_classes": 2
+        }
+      },
+      "gaps": [
+        "classes ativas sem Informe Diário atualizado (FIAGRO: 2, FIDC: 9, FII: 47, FIP: 56)",
+        "geocodificação da sede não exata (rejected_wrong_locality, precisão none)"
+      ],
+      "open_conflicts": 0
+    },
+    {
+      "account_id": "org-vinci-compass",
+      "canonical_name": "Vinci Compass",
+      "institution_type": "gestora independente",
+      "analysis_unit": "organização",
+      "primary_cnpj": "11077576000173",
+      "primary_cnpj_formatted": "11.077.576/0001-73",
+      "legal_name": "VINCI GESTORA DE RECURSOS LTDA",
+      "official_address": "AVENIDA BARTOLOMEU MITRE, 336, 5º ANDAR, PARTE, LEBLON, RIO DE JANEIRO/RJ, CEP 22431-002",
+      "official_phone": "+552121596000",
+      "entities_registered": 14,
+      "entities_found": 14,
+      "geocode_precision": "street",
+      "latitude": -22.9759073,
+      "longitude": -43.2253956,
+      "portfolio_directors": 1,
+      "active_classes": 396,
+      "fic_classes": 52,
+      "classes_with_daily_report": 280,
+      "classes_without_daily_report_by_type": {
+        "FIAGRO": 8,
+        "FIDC": 27,
+        "FIF": 1,
+        "FII": 18,
+        "FIP": 62
+      },
+      "share_classes_with_daily_report": 281,
+      "comparable_12m_share": 0.8896797153024911,
+      "nav_brl_non_fic": 31656329602.57001,
+      "net_flow_12m_brl_non_fic": -770205307.5900005,
+      "net_flow_nav_coverage": 0.9307840096954222,
+      "median_return_12m_by_classification": {
+        "Ações Dividendos": {
+          "median": 0.10453209357900595,
+          "share_classes": 3
+        },
+        "Ações Invest. no Exterior": {
+          "median": 0.10950609058542748,
+          "share_classes": 10
+        },
+        "Ações Livre": {
+          "median": 0.11379441028177695,
+          "share_classes": 23
+        },
+        "Ações Índice Ativo": {
+          "median": 0.12783687745156258,
+          "share_classes": 1
+        },
+        "Multimercados Estrat. Específica": {
+          "median": 0.11221339887265902,
+          "share_classes": 9
+        },
+        "Multimercados Invest. no Exterior": {
+          "median": 0.09610908294052989,
+          "share_classes": 62
+        },
+        "Multimercados Juros e Moedas": {
+          "median": 0.12270163075707463,
+          "share_classes": 2
+        },
+        "Multimercados Livre": {
+          "median": 0.11362248260472008,
+          "share_classes": 41
+        },
+        "Previdência Ações Ativo": {
+          "median": 0.11019520110182979,
+          "share_classes": 2
+        },
+        "Previdência Balanceados até 15": {
+          "median": 0.11763178528507678,
+          "share_classes": 1
+        },
+        "Previdência Multimercado Livre": {
+          "median": 0.11525085902687315,
+          "share_classes": 22
+        },
+        "Previdência Multimercados Juros e Moedas": {
+          "median": 0.1331817762975167,
+          "share_classes": 1
+        },
+        "Previdência RF Duração Baixa Grau de Inv": {
+          "median": 0.14748553103394335,
+          "share_classes": 1
+        },
+        "Previdência RF Duração Livre Crédito Liv": {
+          "median": 0.14289535670379316,
+          "share_classes": 7
+        },
+        "Previdência RF Duração Livre Soberano": {
+          "median": 0.14321506368526205,
+          "share_classes": 1
+        },
+        "Renda Fixa Duração Baixa Crédito Livre": {
+          "median": 0.14710195172159835,
+          "share_classes": 2
+        },
+        "Renda Fixa Duração Livre Crédito Livre": {
+          "median": 0.1444048313793127,
+          "share_classes": 9
+        },
+        "Renda Fixa Duração Livre Grau de Invest.": {
+          "median": 0.1282811452907684,
+          "share_classes": 8
+        }
+      },
+      "gaps": [
+        "classes ativas sem Informe Diário atualizado (FIAGRO: 8, FIDC: 27, FIF: 1, FII: 18, FIP: 62)",
+        "geocodificação da sede não exata (matched_approximate, precisão street)"
+      ],
+      "open_conflicts": 2
+    },
+    {
+      "account_id": "org-constellation",
+      "canonical_name": "Constellation Asset Management",
+      "institution_type": "gestora independente",
+      "analysis_unit": "organização",
+      "primary_cnpj": "06182127000155",
+      "primary_cnpj_formatted": "06.182.127/0001-55",
+      "legal_name": "CONSTELLATION INVESTIMENTOS E PARTICIPAÇÕES LTDA",
+      "official_address": "AV. BRIGADEIRO FARIA LIMA, 3311, 4 AND., CONJ. 41, ITAIM BIBI, SÃO PAULO/SP, CEP 04538-133",
+      "official_phone": null,
+      "entities_registered": 1,
+      "entities_found": 1,
+      "geocode_precision": "address",
+      "latitude": -23.5852746,
+      "longitude": -46.6826167,
+      "portfolio_directors": 1,
+      "active_classes": 45,
+      "fic_classes": 28,
+      "classes_with_daily_report": 45,
+      "classes_without_daily_report_by_type": {},
+      "share_classes_with_daily_report": 45,
+      "comparable_12m_share": 0.9555555555555556,
+      "nav_brl_non_fic": 997944897.4,
+      "net_flow_12m_brl_non_fic": -378249836.3,
+      "net_flow_nav_coverage": 0.9700864561081727,
+      "median_return_12m_by_classification": {
+        "Ações Livre": {
+          "median": -0.047288365952755096,
+          "share_classes": 7
+        },
+        "Previdência Ações Ativo": {
+          "median": -0.06525000143116977,
+          "share_classes": 2
+        },
+        "Previdência Ações Indexados": {
+          "median": -0.13430189851381136,
+          "share_classes": 1
+        },
+        "Previdência Balanceados de 30-49": {
+          "median": 0.07523322778179375,
+          "share_classes": 1
+        },
+        "Previdência Multimercado Livre": {
+          "median": -0.013434562998722255,
+          "share_classes": 4
+        }
+      },
+      "gaps": [],
+      "open_conflicts": 1
+    },
+    {
+      "account_id": "org-jive",
+      "canonical_name": "Jive Investments",
+      "institution_type": "gestora independente",
+      "analysis_unit": "organização",
+      "primary_cnpj": "12600032000107",
+      "primary_cnpj_formatted": "12.600.032/0001-07",
+      "legal_name": "JIVE INVESTMENTS GESTÃO DE RECURSOS E CONSULTORIA S.A.",
+      "official_address": "AV. BRIGADEIRO FARIA LIMA, 1485/18º ANDAR, JARDIM PAULISTANO, SÃO PAULO/SP, CEP 01452-002",
+      "official_phone": "+551135005055",
+      "entities_registered": 4,
+      "entities_found": 4,
+      "geocode_precision": "address",
+      "latitude": -23.5704197,
+      "longitude": -46.6908668,
+      "portfolio_directors": 1,
+      "active_classes": 144,
+      "fic_classes": 23,
+      "classes_with_daily_report": 50,
+      "classes_without_daily_report_by_type": {
+        "FIAGRO": 2,
+        "FIDC": 51,
+        "FIF": 2,
+        "FII": 32,
+        "FIP": 7
+      },
+      "share_classes_with_daily_report": 51,
+      "comparable_12m_share": 0.7254901960784313,
+      "nav_brl_non_fic": 11352914789.509996,
+      "net_flow_12m_brl_non_fic": -971990693.3299999,
+      "net_flow_nav_coverage": 0.8044397930123263,
+      "median_return_12m_by_classification": {
+        "Multimercados Balanceados": {
+          "median": -0.08015843657317012,
+          "share_classes": 1
+        },
+        "Multimercados Dinâmico": {
+          "median": 0.06932233632136253,
+          "share_classes": 6
+        },
+        "Multimercados Estrat. Específica": {
+          "median": 0.04364132334270532,
+          "share_classes": 5
+        },
+        "Multimercados Invest. no Exterior": {
+          "median": 0.05425394775852588,
+          "share_classes": 2
+        },
+        "Multimercados Livre": {
+          "median": -0.08336981130795384,
+          "share_classes": 6
+        },
+        "Previdência Multimercado Livre": {
+          "median": 0.16135912900316463,
+          "share_classes": 1
+        },
+        "Renda Fixa Duração Livre Crédito Livre": {
+          "median": 0.17572918383173786,
+          "share_classes": 1
+        }
+      },
+      "gaps": [
+        "classes ativas sem Informe Diário atualizado (FIAGRO: 2, FIDC: 51, FIF: 2, FII: 32, FIP: 7)"
+      ],
+      "open_conflicts": 2
+    },
+    {
+      "account_id": "org-portofino",
+      "canonical_name": "Portofino Gestão de Recursos",
+      "institution_type": "multi-family office",
+      "analysis_unit": "organização",
+      "primary_cnpj": "17590181000156",
+      "primary_cnpj_formatted": "17.590.181/0001-56",
+      "legal_name": "PORTOFINO GESTÃO DE RECURSOS LTDA.",
+      "official_address": "RUA LEOPOLDO COUTO MAGALHAES JUNIOR, 758, CJ 111 E 112, ITAIM BIBI, SÃO PAULO/SP, CEP 04542-000",
+      "official_phone": "+551125924484",
+      "entities_registered": 3,
+      "entities_found": 3,
+      "geocode_precision": "street",
+      "latitude": -23.5892049,
+      "longitude": -46.6839228,
+      "portfolio_directors": 1,
+      "active_classes": 167,
+      "fic_classes": 12,
+      "classes_with_daily_report": 149,
+      "classes_without_daily_report_by_type": {
+        "FIDC": 11,
+        "FIF": 2,
+        "FII": 5
+      },
+      "share_classes_with_daily_report": 151,
+      "comparable_12m_share": 0.7284768211920529,
+      "nav_brl_non_fic": 12852623626.930004,
+      "net_flow_12m_brl_non_fic": 126984319.26999997,
+      "net_flow_nav_coverage": 0.8250507731193018,
+      "median_return_12m_by_classification": {
+        "Ações Invest. no Exterior": {
+          "median": 0.09944861973716801,
+          "share_classes": 9
+        },
+        "Ações Livre": {
+          "median": 0.048295275030510565,
+          "share_classes": 2
+        },
+        "Multimercados Estrat. Específica": {
+          "median": -0.050104514618847906,
+          "share_classes": 1
+        },
+        "Multimercados Invest. no Exterior": {
+          "median": 0.14757843815525507,
+          "share_classes": 70
+        },
+        "Multimercados Livre": {
+          "median": 0.1368440241011568,
+          "share_classes": 5
+        },
+        "Previdência Multimercado Livre": {
+          "median": 0.13526133283504582,
+          "share_classes": 10
+        },
+        "Renda Fixa Duração Livre Crédito Livre": {
+          "median": 0.0715112582201537,
+          "share_classes": 10
+        },
+        "Renda Fixa Indexados": {
+          "median": 0.1418247171200624,
+          "share_classes": 1
+        }
+      },
+      "gaps": [
+        "classes ativas sem Informe Diário atualizado (FIDC: 11, FIF: 2, FII: 5)",
+        "geocodificação da sede não exata (matched_approximate, precisão street)"
+      ],
+      "open_conflicts": 0
+    },
+    {
+      "account_id": "org-btg-pactual",
+      "canonical_name": "BTG Pactual",
+      "institution_type": "banco",
+      "analysis_unit": "mesa/área",
+      "primary_cnpj": "09631542000137",
+      "primary_cnpj_formatted": "09.631.542/0001-37",
+      "legal_name": "BTG PACTUAL GESTORA DE RECURSOS LTDA",
+      "official_address": "AV BRIGADEIRO FARIA LIMA, 3477, 14º ANDAR, ITAIM BIBI, SÃO PAULO/SP, CEP 04538-133",
+      "official_phone": "+551133832000",
+      "entities_registered": 5,
+      "entities_found": 5,
+      "geocode_precision": "address",
+      "latitude": -23.5863292,
+      "longitude": -46.6817127,
+      "portfolio_directors": 1,
+      "active_classes": 2458,
+      "fic_classes": 445,
+      "classes_with_daily_report": 2134,
+      "classes_without_daily_report_by_type": {
+        "FIAGRO": 21,
+        "FIDC": 88,
+        "FIF": 12,
+        "FII": 45,
+        "FIIM": 35,
+        "FIP": 123
+      },
+      "share_classes_with_daily_report": 2161,
+      "comparable_12m_share": 0.8556223970384081,
+      "nav_brl_non_fic": 488283864303.59894,
+      "net_flow_12m_brl_non_fic": 16057332729.079992,
+      "net_flow_nav_coverage": 0.8750905351239353,
+      "median_return_12m_by_classification": {
+        "Ações Dividendos": {
+          "median": 0.15894740168872268,
+          "share_classes": 1
+        },
+        "Ações FMP - FGTS": {
+          "median": 0.13613452518697733,
+          "share_classes": 8
+        },
+        "Ações Indexados": {
+          "median": 0.1858885841978577,
+          "share_classes": 1
+        },
+        "Ações Invest. no Exterior": {
+          "median": 0.06372882043685224,
+          "share_classes": 143
+        },
+        "Ações Livre": {
+          "median": 0.07449903446818329,
+          "share_classes": 64
+        },
+        "Ações Setoriais": {
+          "median": 0.13248394211510073,
+          "share_classes": 1
+        },
+        "Ações Índice Ativo": {
+          "median": 0.08753193757074418,
+          "share_classes": 1
+        },
+        "Cambial": {
+          "median": 0.042579627579660606,
+          "share_classes": 3
+        },
+        "FMP-FGTS": {
+          "median": 0.9445892215336014,
+          "share_classes": 1
+        },
+        "Fechados de Ações": {
+          "median": 0.07253314878321526,
+          "share_classes": 27
+        },
+        "Multimercados Dinâmico": {
+          "median": 0.1010450793585691,
+          "share_classes": 3
+        },
+        "Multimercados Estrat. Específica": {
+          "median": 0.024510906330202253,
+          "share_classes": 14
+        },
+        "Multimercados Invest. no Exterior": {
+          "median": 0.0955621660794781,
+          "share_classes": 588
+        },
+        "Multimercados Juros e Moedas": {
+          "median": 0.13044449116890555,
+          "share_classes": 4
+        },
+        "Multimercados L/S - Direcional": {
+          "median": 0.08624888562421362,
+          "share_classes": 3
+        },
+        "Multimercados Livre": {
+          "median": 0.12912872542262677,
+          "share_classes": 85
+        },
+        "Multimercados Macro": {
+          "median": 0.1193876230871147,
+          "share_classes": 4
+        },
+        "Previdência Ações Ativo": {
+          "median": -0.0008659686830697622,
+          "share_classes": 3
+        },
+        "Previdência Ações Indexados": {
+          "median": -0.02618761024502725,
+          "share_classes": 1
+        },
+        "Previdência Multimercado Livre": {
+          "median": 0.11619242012311592,
+          "share_classes": 135
+        },
+        "Previdência Multimercados Juros e Moedas": {
+          "median": 0.15766342556698532,
+          "share_classes": 1
+        },
+        "Previdência RF Duração Alta Crédito Livr": {
+          "median": -5.1420074700436746e-05,
+          "share_classes": 2
+        },
+        "Previdência RF Duração Alta Soberano": {
+          "median": 0.11420250186374137,
+          "share_classes": 1
+        },
+        "Previdência RF Duração Livre Crédito Liv": {
+          "median": 0.1277271245483248,
+          "share_classes": 20
+        },
+        "Previdência RF Duração Livre Grau de Inv": {
+          "median": 0.14378516916141815,
+          "share_classes": 4
+        },
+        "Previdência RF Duração Livre Soberano": {
+          "median": 0.12146897649985489,
+          "share_classes": 2
+        },
+        "Previdência RF Indexados": {
+          "median": 0.1365775725935665,
+          "share_classes": 1
+        },
+        "Renda Fixa Duração Alta Crédito Livre": {
+          "median": 0.11938743211648606,
+          "share_classes": 2
+        },
+        "Renda Fixa Duração Alta Grau de Invest.": {
+          "median": 0.14434786742850658,
+          "share_classes": 2
+        },
+        "Renda Fixa Duração Baixa Crédito Livre": {
+          "median": 0.06553738531319309,
+          "share_classes": 1
+        },
+        "Renda Fixa Duração Baixa Grau de Invest.": {
+          "median": 0.1291287424160552,
+          "share_classes": 4
+        },
+        "Renda Fixa Duração Livre Crédito Livre": {
+          "median": 0.055701981258609146,
+          "share_classes": 246
+        },
+        "Renda Fixa Duração Livre Grau de Invest.": {
+          "median": 0.14235439550910378,
+          "share_classes": 31
+        },
+        "Renda Fixa Duração Livre Soberano": {
+          "median": 0.11787327893134125,
+          "share_classes": 7
+        },
+        "Renda Fixa Duração Média Crédito Livre": {
+          "median": 0.0415867999571784,
+          "share_classes": 1
+        },
+        "Renda Fixa Indexados": {
+          "median": 0.12146307013491531,
+          "share_classes": 4
+        },
+        "Renda Fixa Invest. no Exterior": {
+          "median": -7.485267553342112e-06,
+          "share_classes": 32
+        },
+        "Renda Fixa Simples": {
+          "median": 0.14299039021464832,
+          "share_classes": 7
+        }
+      },
+      "gaps": [
+        "dados prudenciais do banco dependem do IF.data (BCB) — indisponível nesta execução",
+        "mesas/áreas e decisores do banco exigem validação comercial",
+        "classes ativas sem Informe Diário atualizado (FIAGRO: 21, FIDC: 88, FIF: 12, FII: 45, FIIM: 35, FIP: 123)"
+      ],
+      "open_conflicts": 0
+    },
+    {
+      "account_id": "org-itau-bba",
+      "canonical_name": "Itaú BBA",
+      "institution_type": "banco",
+      "analysis_unit": "mesa/área",
+      "primary_cnpj": "60701190000104",
+      "primary_cnpj_formatted": "60.701.190/0001-04",
+      "legal_name": "ITAU UNIBANCO S.A.",
+      "official_address": "PC ALFREDO E.S. ARANHA, 100, T.O.SETUBAL, PRQ. JABAQUARA, SÃO PAULO/SP, CEP 04344-902",
+      "official_phone": "+551150199986",
+      "entities_registered": 1,
+      "entities_found": 1,
+      "geocode_precision": "none",
+      "latitude": null,
+      "longitude": null,
+      "portfolio_directors": 1,
+      "active_classes": 0,
+      "fic_classes": 0,
+      "classes_with_daily_report": 0,
+      "classes_without_daily_report_by_type": {},
+      "share_classes_with_daily_report": 0,
+      "comparable_12m_share": null,
+      "nav_brl_non_fic": null,
+      "net_flow_12m_brl_non_fic": null,
+      "net_flow_nav_coverage": null,
+      "median_return_12m_by_classification": {},
+      "gaps": [
+        "dados prudenciais do banco dependem do IF.data (BCB) — indisponível nesta execução",
+        "mesas/áreas e decisores do banco exigem validação comercial",
+        "nenhuma classe de fundo ativa mapeada às entidades da conta",
+        "geocodificação da sede não exata (no_match, precisão none)"
+      ],
+      "open_conflicts": 2
+    }
+  ],
+  "rules": [
+    "Fundos ligados a contas apenas por igualdade exata de CNPJ do gestor (registro_fundo.CPF_CNPJ_Gestor) contra o registro curado; sem similaridade de nome.",
+    "Retorno calculado por classe/subclasse, em BRL, somente com observação inicial até 7 dias antes do início da janela, sem lacunas > 10 dias e série atualizada até 5 dias da data de referência; caso contrário o campo fica nulo com o motivo.",
+    "Variação diária que se afasta mais de 25 p.p. da mediana do mesmo dia na mesma classificação CVM é tratada como suspeita de evento de cota (amortização, grupamento) e torna a janela não comparável; choques de mercado amplos continuam contando como retorno.",
+    "Data de referência = último dia reportado por pelo menos 50% das séries do dia mais completo, para não ancorar a janela num dia com poucas classes publicadas.",
+    "Captação líquida 12m só é somada quando a janela de 12m da série está completa.",
+    "PL agregado exclui classes FIC/CIC para reduzir dupla contagem e usa o nível de classe quando existe; ainda pode haver dupla contagem master-feeder.",
+    "Endereços geocodificados são apenas os registrados na CVM; 'address' só quando o número da porta retornado coincide. Excel não confirmado não é geocodificado.",
+    "E-mails individuais são descartados; apenas caixas institucionais/funcionais são mantidas.",
+    "Diretores coletados apenas para a função de gestão de carteiras (Res. CVM 21) das entidades principais; compliance, risco e PLD não são coletados.",
+    "Fontes sandbox/fictícias (ex.: ANBIMA sandbox) são bloqueadas no cache e no fetcher."
+  ],
+  "review_queue": "data/review/conflicts.csv",
+  "conflicts_total": 14,
+  "conflicts_pending": 9,
+  "counts": {
+    "legal_entities": 48,
+    "fund_classes": 6385,
+    "share_class_metrics": 3648,
+    "daily_rows": 917516,
+    "observations": 379,
+    "geocoded_addresses": 22,
+    "geocode_requests_this_run": 22,
+    "people_public_registry": 15
+  }
+}

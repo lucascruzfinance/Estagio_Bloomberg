@@ -1,0 +1,5 @@
+﻿higher,lower,output,higher_value,lower_value,status,rationale,fail_drivers
+org-btg-pactual:asset-management,org-constellation,fit,71.8811418680494,30.399912164085073,pass,Plataforma multiestratégia de grande porte vs boutique de ações de estratégia única.,
+org-kinea,org-constellation,fit,63.23668062497432,30.399912164085073,pass,Gestora multiproduto com alternativos vs boutique de ações.,
+org-itau-bba:sales-trading-treasury,org-itau-bba:investment-banking-e-mercados,fit,88.50000000000001,68.5,pass,Mesa de trading usa dados em tempo real e execução de forma mais intensa que banking.,
+org-spx-capital,org-portofino,fit,53.311364676673215,71.17728171039226,fail,Macro multiestratégia global vs multi-family office.,Complexidade e intensidade de dados do workflow (+10.5 pts para o esperado menor); Atuação internacional (+9.1 pts para o esperado menor)

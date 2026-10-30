@@ -1,0 +1,30 @@
+{
+  "model_version": "opportunity-v1.0.0",
+  "config_path": "config/scoring/opportunity_v1.yaml",
+  "config_sha256": "2b0ed4728f8c9515e9f1d5117788ccf797e3d90caa39fbfc45e6a3c8c3e80c21",
+  "as_of_date": "2026-10-27",
+  "inputs_sha256": {
+    "data/staging/pilot_accounts.csv": "ebded1a7b02c00cff4a087929381d381d2c7dd52ac76823dd43f012a4dc95cb3",
+    "data/enriched/fund_classes.csv": "0ab52fe358d1f789d46cd4cd5ed2d415876150e381ebc95d14afa0b7aa40bf76",
+    "data/enriched/fund_metrics.csv": "a34028208e3fa5c308dbb139fd5b0e67a32fd4acd30e9980d7e89fc62326b047",
+    "data/enriched/legal_entities.csv": "a833d5b1dcf55624c1ad7fba30f077dadde27694ec11a40a665bc819ac779e34",
+    "data/enriched/quality_report.json": "c608835c141c27c0077e3ef33c5ea44f2b4fa8f91db9fa8fd527ad23dc1ef4cd",
+    "data/reference/commercial_signals.csv": "be92bc6d632597d71a9640d2fed215d2d653427b20a6b85833c7ae2c97ef3aac"
+  },
+  "units_scored": 22,
+  "sensitivity": {
+    "draws": 1000.0,
+    "spearman_mean": 0.9474437297907711,
+    "spearman_p05": 0.8671328671328673
+  },
+  "sanity": {
+    "pass": 3,
+    "fail": 1,
+    "not_evaluable": 0
+  },
+  "outputs_sha256": {
+    "unit_scores.csv": "3d44c33ff604e065b95ff208ad0c30061107c7bb80689e4f438e6ad0f70458a9",
+    "product_fit.csv": "816397c58d9dffefd96ee31aa66cede6076cca4a6b908e89e044500803a7bf8a",
+    "score_explanations.json": "7dad08d01e3679250c14fcfe0ab0b750ad357d9204a8262347f0c883f465b6d8"
+  }
+}

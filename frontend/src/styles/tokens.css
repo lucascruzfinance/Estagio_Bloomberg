@@ -1,0 +1,59 @@
+/* Design tokens. Dark is the product's only theme (brief: black/graphite workstation). */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --black: #000000;
+  --panel: #17191c;
+  --panel-raised: #1f2226;
+  --panel-sunken: #0d0e10;
+  --line: #2c3035;
+  --line-strong: #41464d;
+
+  /* Ink (contrast on --panel: ink 15.6:1, ink-2 7.9:1, ink-3 4.9:1) */
+  --ink: #eceae4;
+  --ink-2: #b0afa7;
+  --ink-3: #8a8a84;
+
+  /* Accents with one job each */
+  --amber: #ffa21f; /* selection, focus, alerts */
+  --amber-wash: rgba(255, 162, 31, 0.12);
+  --blue: #0062dd; /* action fills (white text 5.4:1) */
+  --blue-ink: #6aa6ff; /* links on dark */
+  --up: #3fb950; /* variations only */
+  --down: #f26b68;
+
+  /* Series identity (dataviz dark slots, validated order) */
+  --series-fit: #3987e5;
+  --series-timing: #9085e9;
+  --band-range: #3a3f45;
+
+  /* Status: always paired with an icon + label */
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #d03b3b;
+  --status-critical-ink: #ff8a80; /* text on dark surfaces: 6.9:1 on --panel */
+
+  /* Type */
+  --font-ui: 'Inter', Arial, Helvetica, sans-serif;
+  --font-num: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --fs-xs: 11px;
+  --fs-sm: 12px;
+  --fs-md: 13px;
+  --fs-lg: 15px;
+  --fs-xl: 18px;
+  --fs-2xl: 24px;
+
+  /* Rhythm */
+  --row: 30px;
+  --gap-1: 4px;
+  --gap-2: 8px;
+  --gap-3: 12px;
+  --gap-4: 16px;
+  --gap-5: 24px;
+  --radius-s: 2px;
+  --radius-m: 4px;
+
+  --focus: 0 0 0 2px var(--black), 0 0 0 4px var(--amber);
+}

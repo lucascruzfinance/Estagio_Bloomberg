@@ -1,0 +1,297 @@
+schema_name: pilot_organization_profile
+schema_version: 1.0.0
+analysis_date: '2026-10-29'
+source_policy:
+  facts: Workbook values are source-stated until independently reverified.
+  missing: Missing data remain null; no proxy substitution.
+  provenance: Every row carries source and verification locators plus the workbook
+    hash.
+fields:
+  account_id:
+    type: string
+    nullable: false
+    validation: ^org-[a-z0-9-]+$
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  canonical_name:
+    type: string
+    nullable: false
+    validation: unique; trimmed
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  legal_name:
+    type: string
+    nullable: true
+    validation: official registry only
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  group_name:
+    type: string
+    nullable: false
+    validation: trimmed
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  institution_type:
+    type: string
+    nullable: false
+    validation: controlled vocabulary
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  strategy_profile:
+    type: string
+    nullable: false
+    validation: controlled vocabulary
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  analysis_unit:
+    type: string
+    nullable: false
+    validation: organização|mesa/área
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  business_unit_required:
+    type: boolean
+    nullable: false
+    validation: true|false
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  pilot_wave:
+    type: integer
+    nullable: false
+    validation: '>=1'
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  cnpj:
+    type: string
+    nullable: true
+    validation: 14 digits and check digits
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  linkedin_url:
+    type: url
+    nullable: true
+    validation: https; public company/profile URL
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  email_public:
+    type: email
+    nullable: true
+    validation: public professional address only
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  phone_public:
+    type: string
+    nullable: true
+    validation: E.164 after normalization
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  website_url:
+    type: url
+    nullable: true
+    validation: https preferred
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  careers_channel:
+    type: string
+    nullable: true
+    validation: source-stated; not a sales contact
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  address_raw:
+    type: string
+    nullable: true
+    validation: preserve source text
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  city:
+    type: string
+    nullable: true
+    validation: derived only when explicit in address
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  state:
+    type: string
+    nullable: true
+    validation: UF; multiple offices pipe-separated
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  verification_status:
+    type: string
+    nullable: true
+    validation: preserve workbook vocabulary
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  evidence_class:
+    type: string
+    nullable: false
+    validation: source_stated|verified_fact|inference|gap
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  confidence:
+    type: string
+    nullable: false
+    validation: high|medium|low|blocked
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  as_of_date:
+    type: date
+    nullable: true
+    validation: ISO 8601 YYYY-MM-DD on database load
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  source_sheet:
+    type: string
+    nullable: false
+    validation: existing workbook sheet
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  source_row:
+    type: integer
+    nullable: false
+    validation: '>=2'
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  source_locator:
+    type: string
+    nullable: false
+    validation: Excel A1 locator
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  verification_locator:
+    type: string
+    nullable: true
+    validation: Excel A1 locator
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  verification_source_url:
+    type: url
+    nullable: true
+    validation: source named in workbook
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  raw_aliases:
+    type: string
+    nullable: false
+    validation: pipe-separated; exact source names
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  missing_fields:
+    type: string
+    nullable: true
+    validation: pipe-separated field names
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  data_quality_flags:
+    type: string
+    nullable: true
+    validation: pipe-separated controlled flags
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  human_approval_required:
+    type: boolean
+    nullable: false
+    validation: true for Prompt 1
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact
+  source_workbook_sha256:
+    type: string
+    nullable: false
+    validation: 64 lowercase hex chars
+    unit: not_applicable
+    origin: source workbook or explicit normalization rule
+    date_semantics: as_of_date records the evidence date; blank means unavailable
+    confidence_semantics: row confidence never upgrades source-stated evidence to
+      verified fact

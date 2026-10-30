@@ -1,0 +1,11 @@
+-r project.in
+
+# Local analytics and quantitative research; excluded from the production image
+numpy
+scipy
+statsmodels
+scikit-learn
+duckdb
+pandera[pandas,polars]
+plotly
+requests-cache

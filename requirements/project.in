@@ -1,0 +1,28 @@
+# Data ingestion, spreadsheet inspection and validation
+pandas
+polars
+pyarrow
+openpyxl
+PyYAML
+jsonschema
+rapidfuzz
+Unidecode
+phonenumbers
+email-validator
+
+# Backend and persistence planned for subsequent prompts
+fastapi
+uvicorn[standard]
+pydantic-settings
+SQLAlchemy[asyncio]
+alembic
+asyncpg
+psycopg[binary]
+geoalchemy2
+shapely
+geopy
+httpx
+tenacity
+structlog
+prometheus-client
+
