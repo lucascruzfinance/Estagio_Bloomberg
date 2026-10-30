@@ -1,5 +1,27 @@
 # Prospecção de contas: sales intelligence explicável
 
+## Como abrir o app (passo a passo)
+
+1. Abra o **PowerShell** e entre na pasta do projeto:
+
+   ```powershell
+   cd C:\Users\Lucas\Desktop\Estagio_Bloomberg
+   ```
+
+2. Suba o app com um único comando (ele liga o banco sozinho se estiver desligado):
+
+   ```powershell
+   .\.venv\Scripts\python.exe scripts\demo.py
+   ```
+
+3. Espere aparecer a linha **`[demo] pronto: abra http://127.0.0.1:4173`** (cerca de 2 minutos).
+4. Abra no navegador: **http://127.0.0.1:4173**
+5. **Deixe a janela do PowerShell aberta** enquanto usa o app. Para encerrar, volte a ela e aperte `Ctrl+C`.
+
+Deu erro? Veja a tabela [Se algo der errado](#se-algo-der-errado) logo abaixo.
+
+---
+
 Ferramenta para o time de vendas da Bloomberg no Brasil decidir **quem visitar, em qual área e com qual conversa**. Ela separa **fit** (o workflow depende de dados?), **timing** (há uma mudança recente que abre conversa?) e **confiança** (quanto disso tem fonte recente), com fonte e data em cada número. Não é previsão de compra.
 
 > **Novo no projeto? Leia o [GUIA.md](GUIA.md)**: o que é, como funciona, critérios, pontuação, fontes, bibliotecas, números para citar e roteiro para os avaliadores.
@@ -11,29 +33,9 @@ O que tem dentro:
 
 ---
 
-## Como executar (Windows, nesta máquina)
+## Detalhes da execução
 
-Tudo no **PowerShell**, dentro da pasta do projeto:
-
-```powershell
-cd C:\Users\Lucas\Desktop\Estagio_Bloomberg
-```
-
-### Passo 1: subir o app (um comando)
-
-O comando liga sozinho o PostgreSQL local se ele estiver desligado.
-
-```powershell
-.\.venv\Scripts\python.exe scripts\demo.py
-```
-
-Espere a linha **`[demo] pronto: abra http://127.0.0.1:4173`**. Leva cerca de 2 minutos: o comando carrega o banco, compila o dashboard e sobe a API e o dashboard. **Deixe essa janela aberta** enquanto usa o app.
-
-### Passo 2: abrir no navegador
-
-**http://127.0.0.1:4173**
-
-O selo **DEMO** no topo indica a base congelada (dados públicos de outubro/2026). Para encerrar, volte ao PowerShell e aperte `Ctrl+C`.
+O `demo.py` carrega o banco a partir dos arquivos versionados (sem internet), compila o dashboard e sobe a API (porta 8000) e o dashboard (porta 4173). O selo **DEMO** no topo indica a base congelada (dados públicos de outubro/2026).
 
 ### Se algo der errado
 
